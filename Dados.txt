@@ -1,0 +1,44 @@
+Artigos
+
+-Artigo nvarchar(15)
+-ArtigoAnulado bit
+-Caracteristicas ntext
+-Desconto real
+-Descricao nvarchar(50)
+-DescricaoAbrev nvarchar(20)
+-DescricaoComercial nvarchar(255)
+-Familia nvarchar(10)
+-Iva nvarchar(2)
+-Marca nvarchar(10)
+-Modelo nvarchar(10)
+-PrazoEntrega smallint
+-STKActual float
+-SubFamilia nvarchar(10)
+-TipoArtigo nvarchar(2)
+
+ArtigoMoeda
+
+-Artigo nvarchar(15)
+-Moeda nvarchar(3)
+-PVP1(6) float
+
+Clientes
+
+-Cliente nvarchar(12)
+-ClienteAnulado bit
+-Desconto real
+-EncomendasPendentes float
+-Fac_Cp	 nvarchar(15)	Código postal.	
+-Fac_Cploc	nvarchar(50)	Localidade do código postal.	
+-Fac_Fax	nvarchar(20)	Número de fax.	
+-Fac_Local	nvarchar(50)	Localidade.	
+-Fac_Mor	nvarchar(50)	Morada.	
+-Fac_Tel	nvarchar(20)	Número de telefone.
+-Idioma	nvarchar(3)	Idioma utilizado pelo cliente.
+-ModoExp	nvarchar(2)	Modo de expedição.	
+-ModoPag	nvarchar(5)	Modo de pagamento.	
+-Moeda	nvarchar(3)	Moeda de trabalho com o cliente.	
+-NIB	nvarchar(24)	NIB da conta bancária.	
+-Nome	nvarchar(50)	Nome do cliente.
+-NumContrib	nvarchar(20)	Número de contribuinte do cliente.
+
