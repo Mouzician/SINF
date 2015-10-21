@@ -67,30 +67,44 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {
-            
-
-            GcpBECliente objCli = new GcpBECliente();
 
 
+            StdBELista objList;
+
+            //List<Model.Cliente> listClientes = new List<Model.Cliente>();
             Model.Cliente myCli = new Model.Cliente();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag  FROM  CLIENTES WHERE Cliente='" + codCliente + "'");
+               
+                while (!objList.NoFim())
                 {
-                    objCli = PriEngine.Engine.Comercial.Clientes.Edita(codCliente);
-                    myCli.CodCliente = objCli.get_Cliente();
-                    myCli.NomeCliente = objCli.get_Nome();
-                    myCli.Moeda = objCli.get_Moeda();
-                    myCli.NumContribuinte = objCli.get_NumContribuinte();
-                    myCli.Morada = objCli.get_Morada();
-                    return myCli;
+                    
+                        myCli.CodCliente = objList.Valor("Cliente");
+                        myCli.NomeCliente = objList.Valor("Nome");
+                        myCli.Moeda = objList.Valor("Moeda");
+                        myCli.NumContribuinte = objList.Valor("NumContribuinte");
+                        myCli.Morada = objList.Valor("campo_exemplo");
+                        myCli.ClienteBanido = objList.Valor("ClienteAnulado").ToString();
+                        myCli.Desconto = objList.Valor("Desconto").ToString();
+                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes").ToString();
+                        myCli.Localidade = objList.Valor("Fac_Local");
+                        myCli.Telemóvel = objList.Valor("Fac_Tel");
+                        myCli.ModoPag = objList.Valor("ModoPag");
+                        myCli.Desconto = objList.Valor("Desconto");
+                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes");
+                        //NIB = objList.Valor("NIB"),
+
+                   
+                    objList.Seguinte();
+
                 }
-                else
-                {
-                    return null;
-                }
+
+                return myCli;
             }
             else
                 return null;
@@ -125,7 +139,10 @@ namespace FirstREST.Lib_Primavera
                         objCli.set_NumContribuinte(cliente.NumContribuinte);
                         objCli.set_Moeda(cliente.Moeda);
                         objCli.set_Morada(cliente.Morada);
-
+                        objCli.set_Telefone(cliente.Telemóvel);
+                        objCli.set_Localidade(cliente.Localidade);
+                        objCli.set_ModoPag(cliente.ModoPag);
+                        //FALTA AQUI 3
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
                         erro.Erro = 0;
@@ -218,7 +235,13 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_NumContribuinte(cli.NumContribuinte);
                     myCli.set_Moeda(cli.Moeda);
                     myCli.set_Morada(cli.Morada);
+                    myCli.set_Telefone(cli.Telemóvel);
+                    myCli.set_Localidade(cli.Localidade);
+                    myCli.set_ModoPag(cli.ModoPag);
+                    PriEngine.Engine.Consulta("INSERT INTO CLIENTES (Nome, Moeda, NumContrib, Fac_Mor,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag) VALUES ('"+ cli.CodCliente+ "','"+ cli.NomeCliente+ "'));
+               
 
+                    //FALTA AQUI 3
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
                     erro.Erro = 0;
