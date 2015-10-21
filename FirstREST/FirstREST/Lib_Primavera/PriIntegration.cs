@@ -290,14 +290,27 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, ArtigoAnulado, Desconto, STKActual, PCPadrao, PrazoEntrega, Familia, SubFamilia, Marca, Modelo, TipoArtigo, Iva FROM  ARTIGO");
 
-                objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
+                    art.ArtigoAnulado = objList.Valor("ArtigoAnulado").ToString();
+                    art.Desconto = objList.Valor("desconto").ToString();
+                    art.STKActual = objList.Valor("stkactual").ToString();
+                    art.PCPadrao = objList.Valor("pcpadrao").ToString();
+                    art.PrazoEntrega = objList.Valor("prazoentrega").ToString();
+                    art.Familia = objList.Valor("familia");
+                    art.SubFamilia = objList.Valor("subfamilia");
+                    art.Marca = objList.Valor("marca");
+                    art.Modelo = objList.Valor("modelo");
+                    art.TipoArtigo = objList.Valor("tipoartigo");
+                    art.Iva = objList.Valor("iva");
+
 
                     listArts.Add(art);
                     objList.Seguinte();
