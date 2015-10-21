@@ -95,8 +95,8 @@ namespace FirstREST.Lib_Primavera
                         myCli.Localidade = objList.Valor("Fac_Local");
                         myCli.Telemóvel = objList.Valor("Fac_Tel");
                         myCli.ModoPag = objList.Valor("ModoPag");
-                        myCli.Desconto = objList.Valor("Desconto");
-                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes");
+                        myCli.Desconto = objList.Valor("Desconto").ToString();
+                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes").ToString();
                         //NIB = objList.Valor("NIB"),
 
                    
@@ -238,7 +238,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_Telefone(cli.Telemóvel);
                     myCli.set_Localidade(cli.Localidade);
                     myCli.set_ModoPag(cli.ModoPag);
-                    PriEngine.Engine.Consulta("INSERT INTO CLIENTES (Nome, Moeda, NumContrib, Fac_Mor,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag) VALUES ('"+ cli.CodCliente+ "','"+ cli.NomeCliente+ "'));
+                    PriEngine.Engine.Consulta("INSERT INTO CLIENTES (Nome, Moeda, NumContrib, Fac_Mor,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag) VALUES ('"+ cli.NomeCliente+ "','"+ cli.Moeda+ "','"+ cli.NumContribuinte +"','"+ cli.Morada+ "','" + cli.ClienteBanido+ "','"+ cli.Desconto+ "','"+ cli.EncomendasPendentes+ "','" + cli.Localidade+ "','" + cli.Telemóvel+ "','"+ cli.ModoPag+ "')");
                
 
                     //FALTA AQUI 3
