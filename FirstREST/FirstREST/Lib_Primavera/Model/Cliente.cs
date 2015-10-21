@@ -7,7 +7,7 @@ namespace FirstREST.Lib_Primavera.Model
 {
     public class Cliente
     {
-        public string Morada;
+        //public string Morada;
 
         /* Exemplo para POST e GET com valores específicos
          public string Morada
@@ -46,6 +46,54 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string ClienteBanido 
+        {
+            get;
+            set;
+        }
+
+        public string Desconto
+        {
+            get;
+            set;
+        }
+
+        public string EncomendasPendentes
+        {
+            get;
+            set;
+        }
+
+        public string Localidade
+        {
+            get;
+            set;
+        }
+
+        public string Morada
+        {
+            get;
+            set;
+        }
+
+        public string Telemóvel
+        {
+            get;
+            set;
+        }
+
+        public string ModoPag
+        {
+            get;
+            set;
+        }
+
+        /*public string NIB
+        {
+            get;
+            set;
+        }*/
 
     }
 }
