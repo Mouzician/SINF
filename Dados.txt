@@ -15,6 +15,7 @@ Artigos
 -STKActual float
 -SubFamilia nvarchar(10)
 -TipoArtigo nvarchar(2)
+-PCPadrao float
 
 ArtigoMoeda
 
