@@ -10,8 +10,6 @@ using ADODB;
 using Interop.IGcpBS800;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;  
-   
-
 
 namespace FirstREST.Lib_Primavera
 {
@@ -291,6 +289,17 @@ namespace FirstREST.Lib_Primavera
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
                     myArt.CodArtigo = objArtigo.get_Artigo();
                     myArt.DescArtigo = objArtigo.get_Descricao();
+                    myArt.ArtigoAnulado = objArtigo.get_Anulado().ToString();
+                    myArt.Desconto = objArtigo.get_Desconto().ToString();
+                    myArt.STKActual = objArtigo.get_StkActual().ToString();
+                    myArt.PCPadrao = objArtigo.get_PCPadrao().ToString();
+                    myArt.PrazoEntrega = objArtigo.get_PrazoEntrega().ToString();
+                    myArt.Familia = objArtigo.get_Familia();
+                    myArt.SubFamilia = objArtigo.get_SubFamilia();
+                    myArt.Marca = objArtigo.get_Marca();
+                    myArt.Modelo = objArtigo.get_Modelo();
+                    myArt.TipoArtigo = objArtigo.get_TipoArtigo();
+                    myArt.Iva = objArtigo.get_IVA();
 
                     return myArt;
                 }
@@ -350,9 +359,60 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        #endregion Artigo
+        public static Lib_Primavera.Model.RespostaErro InsereArtigoObj(Model.Artigo art)
+        {
 
-   
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+
+            GcpBEArtigo myArt = new GcpBEArtigo();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    myArt.set_Artigo(art.CodArtigo);
+                    myArt.set_Descricao(art.DescArtigo);
+                    myArt.set_Desconto(Convert.ToSingle(art.Desconto));
+                    myArt.set_StkActual(Convert.ToSingle(art.STKActual));
+                    myArt.set_PCPadrao(Convert.ToSingle(art.PCPadrao));
+                    myArt.set_PrazoEntrega(Convert.ToInt16(art.PrazoEntrega));
+                    myArt.set_Familia(art.Familia);
+                    myArt.set_SubFamilia(art.SubFamilia);
+                    myArt.set_Marca(art.Marca);
+                    myArt.set_Modelo(art.Modelo);
+                    myArt.set_TipoArtigo(art.TipoArtigo);
+                    myArt.set_IVA(art.Iva);
+                    //PriEngine.Engine.Consulta("INSERT INTO ARTIGO (Artigo, Desconto, Descricao, Familia, IVA, Marca, Modelo, PCPadrao, PrazoEntrega, SubFamilia, stkActual, TipoArtigo) VALUES ('" + art.CodArtigo + "','" + art.Desconto + "','" + art.DescArtigo + "','" + art.Familia + "','" + art.Iva + "','" + art.Marca + "','" + art.Modelo + "','" + art.PCPadrao + "','" + art.PrazoEntrega + "','" + art.SubFamilia + "','" + art.STKActual + "','" + art.TipoArtigo + "')");
+
+                    //FALTA AQUI 3
+                    PriEngine.Engine.Comercial.Artigos.Actualiza(myArt);
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+
+        }
+
+        #endregion Artigo
+  
 
         #region DocCompra
         

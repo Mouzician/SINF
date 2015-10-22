@@ -37,6 +37,27 @@ namespace FirstREST.Controllers
             }
         }
 
+        public HttpResponseMessage Post(Lib_Primavera.Model.Artigo artigo)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            erro = Lib_Primavera.PriIntegration.InsereArtigoObj(artigo);
+
+            if (erro.Erro == 0)
+            {
+                var response = Request.CreateResponse(
+                   HttpStatusCode.Created, artigo);
+                string uri = Url.Link("DefaultApi", new { CodArtigo = artigo.CodArtigo });
+                response.Headers.Location = new Uri(uri);
+                return response;
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+        }
+
     }
 }
 
