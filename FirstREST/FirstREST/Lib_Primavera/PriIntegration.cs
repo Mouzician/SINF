@@ -219,7 +219,7 @@ namespace FirstREST.Lib_Primavera
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            
+
 
             GcpBECliente myCli = new GcpBECliente();
 
@@ -236,10 +236,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_Telefone(cli.Telemóvel);
                     myCli.set_Localidade(cli.Localidade);
                     myCli.set_ModoPag(cli.ModoPag);
-                    PriEngine.Engine.Consulta("INSERT INTO CLIENTES (Nome, Moeda, NumContrib, Fac_Mor,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag) VALUES ('"+ cli.NomeCliente+ "','"+ cli.Moeda+ "','"+ cli.NumContribuinte +"','"+ cli.Morada+ "','" + cli.ClienteBanido+ "','"+ cli.Desconto+ "','"+ cli.EncomendasPendentes+ "','" + cli.Localidade+ "','" + cli.Telemóvel+ "','"+ cli.ModoPag+ "')");
-               
-
-                    //FALTA AQUI 3
+                   
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
                     erro.Erro = 0;
