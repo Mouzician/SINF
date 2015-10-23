@@ -21,49 +21,45 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.Cliente> ListaClientes()
         {
-            
-            
-            StdBELista objList;
+               StdBELista objList;
 
-            List<Model.Cliente> listClientes = new List<Model.Cliente>();
+               List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
-            {
+               if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+               {
 
-                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+                   //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag  FROM  CLIENTES");
+                   objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, NumContrib as NumContribuinte, Fac_Mor AS morada,  ClienteAnulado, Fac_Local, Fac_Tel, CDU_PASSWORD, EnderecoWeb  FROM  CLIENTES");
 
-                
-                while (!objList.NoFim())
-                {
-                    listClientes.Add(new Model.Cliente
-                    {
-                        CodCliente = objList.Valor("Cliente"),
-                        NomeCliente = objList.Valor("Nome"),
-                        Moeda = objList.Valor("Moeda"),
-                        NumContribuinte = objList.Valor("NumContribuinte"),
-                        Morada = objList.Valor("campo_exemplo"),
-                        ClienteBanido = objList.Valor("ClienteAnulado").ToString(),
-                        Desconto = objList.Valor("Desconto").ToString(),
-                        EncomendasPendentes = objList.Valor("EncomendasPendentes").ToString(),
-                        Localidade = objList.Valor("Fac_Local"),
-                        Telemóvel = objList.Valor("Fac_Tel"),
-                        ModoPag = objList.Valor("ModoPag"),
-                        //NIB = objList.Valor("NIB"),
 
-                    });
-                    objList.Seguinte();
+                   while (!objList.NoFim())
+                   {
+                       listClientes.Add(new Model.Cliente
+                       {
+                           ID = objList.Valor("Cliente"),
+                           NomeCliente = objList.Valor("Nome"),
+                           NumContribuinte = objList.Valor("NumContribuinte"),
+                           Morada = objList.Valor("morada"),
+                           ClienteBanido = objList.Valor("ClienteAnulado").ToString(),
+                           Localidade = objList.Valor("Fac_Local"),
+                           Telemóvel = objList.Valor("Fac_Tel"),
+                           Email = objList.Valor("EnderecoWeb"),
+                           Password = PriEngine.Platform.Criptografia.Descripta(objList.Valor("CDU_PASSWORD"), 50)
+                       });
+                       objList.Seguinte();
 
-                }
+                   }
 
-                return listClientes;
-            }
-            else
-                return null;
+                   return listClientes;
+               }
+               else
+                   return null;
+                  
         }
 
-        public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
+
+        public static Lib_Primavera.Model.Cliente GetCliente(string id)
         {
 
 
@@ -77,25 +73,19 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo,  ClienteAnulado, Desconto, EncomendasPendentes, Fac_Local, Fac_Tel, ModoPag  FROM  CLIENTES WHERE Cliente='" + codCliente + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo,  ClienteAnulado,  Fac_Local, Fac_Tel, EnderecoWeb FROM  CLIENTES WHERE Cliente='" + id + "'"); //supostamente nao se quer listar a password
                
                 while (!objList.NoFim())
                 {
                     
-                        myCli.CodCliente = objList.Valor("Cliente");
+                        myCli.ID = objList.Valor("Cliente");
                         myCli.NomeCliente = objList.Valor("Nome");
-                        myCli.Moeda = objList.Valor("Moeda");
                         myCli.NumContribuinte = objList.Valor("NumContribuinte");
                         myCli.Morada = objList.Valor("campo_exemplo");
                         myCli.ClienteBanido = objList.Valor("ClienteAnulado").ToString();
-                        myCli.Desconto = objList.Valor("Desconto").ToString();
-                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes").ToString();
                         myCli.Localidade = objList.Valor("Fac_Local");
                         myCli.Telemóvel = objList.Valor("Fac_Tel");
-                        myCli.ModoPag = objList.Valor("ModoPag");
-                        myCli.Desconto = objList.Valor("Desconto").ToString();
-                        myCli.EncomendasPendentes = objList.Valor("EncomendasPendentes").ToString();
-                        //NIB = objList.Valor("NIB"),
+                        myCli.Email = objList.Valor("EnderecoWeb");
 
                    
                     objList.Seguinte();
@@ -108,6 +98,7 @@ namespace FirstREST.Lib_Primavera
                 return null;
         }
 
+
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -115,13 +106,17 @@ namespace FirstREST.Lib_Primavera
 
             GcpBECliente objCli = new GcpBECliente();
 
+            StdBECampos campos = new StdBECampos();
+            StdBECampo campo = new StdBECampo();
+
+
             try
             {
 
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
 
-                    if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
+                    if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.ID) == false)
                     {
                         erro.Erro = 1;
                         erro.Descricao = "O cliente não existe";
@@ -130,17 +125,23 @@ namespace FirstREST.Lib_Primavera
                     else
                     {
 
-                        objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.CodCliente);
+                        objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.ID);
                         objCli.set_EmModoEdicao(true);
 
                         objCli.set_Nome(cliente.NomeCliente);
                         objCli.set_NumContribuinte(cliente.NumContribuinte);
-                        objCli.set_Moeda(cliente.Moeda);
+                        objCli.set_EnderecoWeb(cliente.Email);
                         objCli.set_Morada(cliente.Morada);
                         objCli.set_Telefone(cliente.Telemóvel);
                         objCli.set_Localidade(cliente.Localidade);
-                        objCli.set_ModoPag(cliente.ModoPag);
-                        //FALTA AQUI 3
+
+                        //EDITAR A PASSWORD
+                        campo.Nome = "CDU_Password";
+                        //FALTA mudar na base de dados.
+                        //campo.Valor = PriEngine.Platform.Criptografia.Encripta(cliente.Password, 50);
+                        campo.Valor = cliente.Password;
+                        campos.Insere(campo);
+                       
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
                         erro.Erro = 0;
@@ -168,7 +169,7 @@ namespace FirstREST.Lib_Primavera
         }
 
 
-        public static Lib_Primavera.Model.RespostaErro DelCliente(string codCliente)
+        public static Lib_Primavera.Model.RespostaErro DelCliente(string id)
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -180,7 +181,7 @@ namespace FirstREST.Lib_Primavera
 
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
-                    if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
+                    if (PriEngine.Engine.Comercial.Clientes.Existe(id) == false)
                     {
                         erro.Erro = 1;
                         erro.Descricao = "O cliente não existe";
@@ -189,7 +190,7 @@ namespace FirstREST.Lib_Primavera
                     else
                     {
 
-                        PriEngine.Engine.Comercial.Clientes.Remove(codCliente);
+                        PriEngine.Engine.Comercial.Clientes.Remove(id);
                         erro.Erro = 0;
                         erro.Descricao = "Sucesso";
                         return erro;
@@ -214,6 +215,33 @@ namespace FirstREST.Lib_Primavera
         }
 
 
+        public static bool existeEmail(string email)
+        {
+            StdBELista objList;
+            objList = PriEngine.Engine.Consulta("SELECT Cliente FROM  CLIENTES WHERE EnderecoWeb='" + email + "'");
+
+            if (objList != null)
+            {
+                if (objList.Vazia())
+                    return false;
+                return true;
+            }
+            return false;
+        }
+
+        public static bool existeNome(string nome)
+        {
+            StdBELista objList;
+            objList = PriEngine.Engine.Consulta("SELECT Cliente FROM  CLIENTES WHERE Nome='" + nome + "'");
+
+            if (objList != null)
+            {
+                if (objList.Vazia())
+                    return false;
+                return true;
+            }
+            return false;
+        }
 
         public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Cliente cli)
         {
@@ -223,20 +251,78 @@ namespace FirstREST.Lib_Primavera
 
             GcpBECliente myCli = new GcpBECliente();
 
+            StdBECampos campos = new StdBECampos();
+            StdBECampo campo = new StdBECampo();
+
             try
             {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
-
-                    myCli.set_Cliente(cli.CodCliente);
-                    myCli.set_Nome(cli.NomeCliente);
                     myCli.set_NumContribuinte(cli.NumContribuinte);
-                    myCli.set_Moeda(cli.Moeda);
                     myCli.set_Morada(cli.Morada);
                     myCli.set_Telefone(cli.Telemóvel);
                     myCli.set_Localidade(cli.Localidade);
-                    myCli.set_ModoPag(cli.ModoPag);
-                   
+                    myCli.set_Moeda("EUR");
+
+                    //Dar o id correto, e por acaso isto verifica se tem o mesmo id automaticamente
+                    List<Model.Cliente> clientes = ListaClientes();
+                    int id;
+
+                    if (clientes.Count >= 2)
+                    {
+                        id = clientes.Count;
+                    }
+                    else
+                        id = 1;
+
+                    myCli.set_Cliente(id.ToString());
+                    
+                    //Verificação Email
+                    if (cli.Email == null)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Introduza um email válido, por favor.";
+                        return erro;
+                    }
+                    else if (existeEmail(cli.Email))
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Email já existente.";
+                        return erro;
+                    }
+                    else
+                    {
+                        myCli.set_EnderecoWeb(cli.Email);
+                    }
+
+                    //Verificação nome
+                    if (cli.NomeCliente == null)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Introduza um nome, por favor.";
+                        return erro;
+                    }
+                    else if (existeNome(cli.NomeCliente))
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Introduza outro nome, por favor.";
+                        return erro;
+                    }
+                    else
+                    {
+                        myCli.set_Nome(cli.NomeCliente);
+                    }
+
+
+
+                    //inserir a password
+                    campo.Nome = "CDU_Password";
+                    //É preciso aumentar o espaço da base de dados, 20 nao chega para encripta-la tem que ter 50 para ai ou mais.
+                    //campo.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 20);
+                    campo.Valor = cli.Password;
+                    campos.Insere(campo);
+                    myCli.set_CamposUtil(campos);
+
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
                     erro.Erro = 0;
