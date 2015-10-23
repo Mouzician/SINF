@@ -371,6 +371,7 @@ namespace FirstREST.Lib_Primavera
 
                     myArt.set_Artigo(art.CodArtigo);
                     myArt.set_Descricao(art.DescArtigo);
+                    myArt.set_Anulado(false);
                     myArt.set_Desconto(Convert.ToSingle(art.Desconto));
                     myArt.set_StkActual(Convert.ToSingle(art.STKActual));
                     myArt.set_PCPadrao(Convert.ToSingle(art.PCPadrao));
