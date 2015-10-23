@@ -7,23 +7,8 @@ namespace FirstREST.Lib_Primavera.Model
 {
     public class Cliente
     {
-        //public string Morada;
-
-        /* Exemplo para POST e GET com valores específicos
-         public string Morada
-        {
-            get
-            {
-                return "MORADA: " + _morada;
-            }
-            set
-            {
-                _morada = value;
-            }
-        }
     
-*/       
-        public string CodCliente
+        public string ID
         {
             get;
             set;
@@ -41,25 +26,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string Moeda
-        {
-            get;
-            set;
-        }
-
         public string ClienteBanido 
-        {
-            get;
-            set;
-        }
-
-        public string Desconto
-        {
-            get;
-            set;
-        }
-
-        public string EncomendasPendentes
         {
             get;
             set;
@@ -83,17 +50,14 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string ModoPag
+        public string Password //CDU_Password(table)
         {
             get;
             set;
         }
 
-        /*public string NIB
-        {
-            get;
-            set;
-        }*/
+ 
+ 
 
     }
 }
