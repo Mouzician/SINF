@@ -7,37 +7,25 @@ namespace FirstREST.Lib_Primavera.Model
 {
     public class Artigo
     {
-        public string CodArtigo
+        public string ID
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public string DescArtigo //descriçao do artigo
         {
             get;
             set;
         }
 
-        public string ArtigoAnulado
-        {
-            get;
-            set;
-        }
-
-        public string Desconto
+         public string Desconto 
         {
             get;
             set;
         }
 
         public string Familia
-        {
-            get;
-            set;
-        }
-
-        public string Iva
         {
             get;
             set;
@@ -55,12 +43,6 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string PrazoEntrega
-        {
-            get;
-            set;
-        }
-
         public string STKActual
         {
             get;
@@ -73,13 +55,13 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string TipoArtigo
+        public string Preço //PCPadrao (table)
         {
             get;
             set;
         }
 
-        public string PCPadrao
+        public string[] imagens //imagens do artigo
         {
             get;
             set;

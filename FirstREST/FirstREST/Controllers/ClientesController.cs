@@ -37,7 +37,7 @@ namespace FirstREST.Controllers
         }
 
 
-        // POST api/Customers
+        // POST api/clientes
         [HttpPost]
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
         {

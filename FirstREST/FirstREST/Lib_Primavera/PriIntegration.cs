@@ -58,7 +58,6 @@ namespace FirstREST.Lib_Primavera
                   
         }
 
-
         public static Lib_Primavera.Model.Cliente GetCliente(string id)
         {
 
@@ -97,7 +96,6 @@ namespace FirstREST.Lib_Primavera
             else
                 return null;
         }
-
 
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
@@ -168,7 +166,6 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-
         public static Lib_Primavera.Model.RespostaErro DelCliente(string id)
         {
 
@@ -213,7 +210,6 @@ namespace FirstREST.Lib_Primavera
             }
 
         }
-
 
         public static bool existeEmail(string email)
         {
@@ -264,7 +260,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_Localidade(cli.Localidade);
                     myCli.set_Moeda("EUR");
 
-                    //Dar o id correto, e por acaso isto verifica se tem o mesmo id automaticamente
+                    //Dar o id correto (ainda nao esta muito bem) , e por acaso isto verifica se tem o mesmo id automaticamente
                     List<Model.Cliente> clientes = ListaClientes();
                     int id;
 
@@ -354,46 +350,87 @@ namespace FirstREST.Lib_Primavera
 
         #region Artigo
 
-        public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
+        public static Lib_Primavera.Model.Artigo GetArtigo(string id)
         {
             
-            GcpBEArtigo objArtigo = new GcpBEArtigo();
+            StdBELista objList;
+            
             Model.Artigo myArt = new Model.Artigo();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
-                {
-                    return null;
-                }
-                else
-                {
-                    objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
-                    myArt.CodArtigo = objArtigo.get_Artigo();
-                    myArt.DescArtigo = objArtigo.get_Descricao();
-                    myArt.ArtigoAnulado = objArtigo.get_Anulado().ToString();
-                    myArt.Desconto = objArtigo.get_Desconto().ToString();
-                    myArt.STKActual = objArtigo.get_StkActual().ToString();
-                    myArt.PCPadrao = objArtigo.get_PCPadrao().ToString();
-                    myArt.PrazoEntrega = objArtigo.get_PrazoEntrega().ToString();
-                    myArt.Familia = objArtigo.get_Familia();
-                    myArt.SubFamilia = objArtigo.get_SubFamilia();
-                    myArt.Marca = objArtigo.get_Marca();
-                    myArt.Modelo = objArtigo.get_Modelo();
-                    myArt.TipoArtigo = objArtigo.get_TipoArtigo();
-                    myArt.Iva = objArtigo.get_IVA();
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                    return myArt;
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo='" + id + "'"); 
+
+                while (!objList.NoFim())
+                {
+
+                    myArt.ID = objList.Valor("Artigo");
+                    float desconto = objList.Valor("Desconto");
+                    myArt.Desconto = desconto.ToString();
+                    myArt.DescArtigo = objList.Valor("Descricao");
+                    double stokeAtual = objList.Valor("STKActual");
+                    myArt.STKActual = stokeAtual.ToString();
+                    double preco = objList.Valor("PCPadrao");
+                    myArt.Preço = preco.ToString();
+                    myArt.Familia = objList.Valor("Familia");
+                    myArt.SubFamilia = objList.Valor("SubFamilia");
+                    myArt.Marca = objList.Valor("Marca");
+                    myArt.Modelo = objList.Valor("Modelo");
+
+                    objList.Seguinte();
+
                 }
-                
+
+                return myArt;
             }
             else
-            {
                 return null;
-            }
 
         }
+
+        public static Lib_Primavera.Model.Artigo GetArtigoByCategoria(string sub_familia) //Recomendados
+        {
+
+            StdBELista objList;
+
+            Model.Artigo myArt = new Model.Artigo();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE SubFamilia='" + sub_familia + "'");
+
+                while (!objList.NoFim())
+                {
+
+                    myArt.ID = objList.Valor("Artigo");
+                    float desconto = objList.Valor("Desconto");
+                    myArt.Desconto = desconto.ToString();
+                    myArt.DescArtigo = objList.Valor("Descricao");
+                    double stokeAtual = objList.Valor("STKActual");
+                    myArt.STKActual = stokeAtual.ToString();
+                    double preco = objList.Valor("PCPadrao");
+                    myArt.Preço = preco.ToString();
+                    myArt.Familia = objList.Valor("Familia");
+                    myArt.SubFamilia = objList.Valor("SubFamilia");
+                    myArt.Marca = objList.Valor("Marca");
+                    myArt.Modelo = objList.Valor("Modelo");
+
+                    objList.Seguinte();
+
+                }
+
+                return myArt;
+            }
+            else
+                return null;
+
+        } 
 
         public static List<Model.Artigo> ListaArtigos()
         {
@@ -405,27 +442,24 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, ArtigoAnulado, Desconto, STKActual, PCPadrao, PrazoEntrega, Familia, SubFamilia, Marca, Modelo, TipoArtigo, Iva FROM  ARTIGO");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO");
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
-                    art.CodArtigo = objList.Valor("artigo");
+                    art.ID = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
-                    art.ArtigoAnulado = objList.Valor("ArtigoAnulado").ToString();
                     art.Desconto = objList.Valor("desconto").ToString();
                     art.STKActual = objList.Valor("stkactual").ToString();
-                    art.PCPadrao = objList.Valor("pcpadrao").ToString();
-                    art.PrazoEntrega = objList.Valor("prazoentrega").ToString();
+                    art.Preço = objList.Valor("pcpadrao").ToString();
                     art.Familia = objList.Valor("familia");
                     art.SubFamilia = objList.Valor("subfamilia");
                     art.Marca = objList.Valor("marca");
                     art.Modelo = objList.Valor("modelo");
-                    art.TipoArtigo = objList.Valor("tipoartigo");
-                    art.Iva = objList.Valor("iva");
 
+                    //falta as imagens
 
                     listArts.Add(art);
                     objList.Seguinte();
@@ -455,22 +489,17 @@ namespace FirstREST.Lib_Primavera
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
 
-                    myArt.set_Artigo(art.CodArtigo);
+                    myArt.set_Artigo(art.ID);
                     myArt.set_Descricao(art.DescArtigo);
-                    myArt.set_Anulado(false);
                     myArt.set_Desconto(Convert.ToSingle(art.Desconto));
                     myArt.set_StkActual(Convert.ToSingle(art.STKActual));
-                    myArt.set_PCPadrao(Convert.ToSingle(art.PCPadrao));
-                    myArt.set_PrazoEntrega(Convert.ToInt16(art.PrazoEntrega));
+                    myArt.set_PCPadrao(Convert.ToSingle(art.Preço));
                     myArt.set_Familia(art.Familia);
                     myArt.set_SubFamilia(art.SubFamilia);
                     myArt.set_Marca(art.Marca);
                     myArt.set_Modelo(art.Modelo);
-                    myArt.set_TipoArtigo(art.TipoArtigo);
-                    myArt.set_IVA(art.Iva);
-                    //PriEngine.Engine.Consulta("INSERT INTO ARTIGO (Artigo, Desconto, Descricao, Familia, IVA, Marca, Modelo, PCPadrao, PrazoEntrega, SubFamilia, stkActual, TipoArtigo) VALUES ('" + art.CodArtigo + "','" + art.Desconto + "','" + art.DescArtigo + "','" + art.Familia + "','" + art.Iva + "','" + art.Marca + "','" + art.Modelo + "','" + art.PCPadrao + "','" + art.PrazoEntrega + "','" + art.SubFamilia + "','" + art.STKActual + "','" + art.TipoArtigo + "')");
-
-                    //FALTA AQUI 3
+                    myArt.set_IVA("23");
+                    
                     PriEngine.Engine.Comercial.Artigos.Actualiza(myArt);
 
                     erro.Erro = 0;
@@ -492,6 +521,114 @@ namespace FirstREST.Lib_Primavera
                 return erro;
             }
 
+
+        }
+
+        public static Lib_Primavera.Model.RespostaErro UpdArtigo(Lib_Primavera.Model.Artigo art)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+
+            GcpBEArtigo objArt = new GcpBEArtigo();
+
+
+            try
+            {
+
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    if (PriEngine.Engine.Comercial.Artigos.Existe(art.ID) == false)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "O artigo não existe";
+                        return erro;
+                    }
+                    else
+                    {
+
+                        objArt = PriEngine.Engine.Comercial.Artigos.Edita(art.ID);
+                        objArt.set_EmModoEdicao(true);
+
+                        objArt.set_Artigo(art.ID);
+                        objArt.set_Descricao(art.DescArtigo);
+                        objArt.set_Desconto(Convert.ToSingle(art.Desconto));
+                        objArt.set_StkActual(Convert.ToSingle(art.STKActual));
+                        objArt.set_PCPadrao(Convert.ToSingle(art.Preço));
+                        objArt.set_Familia(art.Familia);
+                        objArt.set_SubFamilia(art.SubFamilia);
+                        objArt.set_Marca(art.Marca);
+                        objArt.set_Modelo(art.Modelo);
+
+
+                        PriEngine.Engine.Comercial.Artigos.Actualiza(objArt);
+
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
+                    }
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+        }
+
+        public static Lib_Primavera.Model.RespostaErro DelArtigo(string id)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            GcpBEArtigo objArt = new GcpBEArtigo();
+
+
+            try
+            {
+
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    if (PriEngine.Engine.Comercial.Artigos.Existe(id) == false)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "O cliente não existe";
+                        return erro;
+                    }
+                    else
+                    {
+
+                        PriEngine.Engine.Comercial.Artigos.Remove(id);
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
+                    }
+                }
+
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
 
         }
 

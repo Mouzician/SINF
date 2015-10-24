@@ -21,6 +21,22 @@ namespace FirstREST.Controllers
             return Lib_Primavera.PriIntegration.ListaArtigos();
         }
 
+        //PAra os recomendados
+        // GET /api/artigos?familia=  
+        public Artigo GetByCategoria(string sub_familia)
+        {
+            Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigoByCategoria(sub_familia);
+            if (artigo == null)
+            {
+                throw new HttpResponseException(
+                  Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return artigo;
+            }
+        }
+
 
         // GET api/artigo/5    
         public Artigo Get(string id)
@@ -37,23 +53,77 @@ namespace FirstREST.Controllers
             }
         }
 
+        // POST api/artigos
         public HttpResponseMessage Post(Lib_Primavera.Model.Artigo artigo)
         {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro = Lib_Primavera.PriIntegration.InsereArtigoObj(artigo);
+            Lib_Primavera.Model.RespostaErro erro = Lib_Primavera.PriIntegration.InsereArtigoObj(artigo);
 
             if (erro.Erro == 0)
             {
                 var response = Request.CreateResponse(
-                   HttpStatusCode.Created, artigo);
-                string uri = Url.Link("DefaultApi", new { CodArtigo = artigo.CodArtigo });
-                response.Headers.Location = new Uri(uri);
+                   HttpStatusCode.Created, erro.Descricao);
                 return response;
             }
 
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
+
+
+        public HttpResponseMessage Put(string id, Lib_Primavera.Model.Artigo artigo)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+
+            try
+            {
+                erro = Lib_Primavera.PriIntegration.UpdArtigo(artigo);
+                if (erro.Erro == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
+                }
+            }
+
+            catch (Exception exc)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
+
+
+
+        public HttpResponseMessage Delete(string id)
+        {
+
+
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+
+            try
+            {
+
+                erro = Lib_Primavera.PriIntegration.DelArtigo(id);
+
+                if (erro.Erro == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
+                }
+
+            }
+
+            catch (Exception exc)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+
             }
 
         }
