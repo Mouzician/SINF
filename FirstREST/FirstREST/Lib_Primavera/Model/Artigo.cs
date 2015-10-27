@@ -61,7 +61,25 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string[] imagens //imagens do artigo
+        public String Wishlist
+        {
+            get;
+            set;
+        }
+
+        public String Rating
+        {
+            get;
+            set;
+        }
+
+        public List<String> imagens //imagens do artigo
+        {
+            get;
+            set;
+        }
+
+        public List<Model.Comentario> comentarios
         {
             get;
             set;

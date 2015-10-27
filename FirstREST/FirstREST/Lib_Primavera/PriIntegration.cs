@@ -15,8 +15,6 @@ namespace FirstREST.Lib_Primavera
 {
     public class PriIntegration
     {
-        
-
         # region Cliente
 
         public static List<Model.Cliente> ListaClientes()
@@ -354,6 +352,10 @@ namespace FirstREST.Lib_Primavera
         {
             
             StdBELista objList;
+            StdBELista objImage;
+            StdBELista objComents;
+            StdBELista objRating;
+            StdBELista objWishlist;
             
             Model.Artigo myArt = new Model.Artigo();
 
@@ -380,6 +382,51 @@ namespace FirstREST.Lib_Primavera
                     myArt.Marca = objList.Valor("Marca");
                     myArt.Modelo = objList.Valor("Modelo");
 
+                    objImage = PriEngine.Engine.Consulta("SELECT CDU_Caminho FROM TDU_Imagem, TDU_ImagemProduto WHERE CDU_idProduto='" + myArt.ID + "' AND TDU_Imagem.CDU_idImagem = TDU_ImagemProduto.CDU_idImagem");
+                    myArt.imagens = new List<String>();
+
+                    while (!objImage.NoFim())
+                    {
+                        
+                       myArt.imagens.Add(objImage.Valor("CDU_Caminho"));
+
+                       objImage.Seguinte();
+                    }
+
+
+
+                    objComents = PriEngine.Engine.Consulta("SELECT Nome, CDU_idComentario, CDU_idProduto, CDU_Conteudo FROM TDU_Comentario, CLIENTES WHERE CDU_idProduto='" + myArt.ID + "' AND CDU_idUtilizador = Cliente");
+                    myArt.comentarios = new List<Model.Comentario>();
+
+                    
+                    while (!objComents.NoFim())
+                    {
+                        Model.Comentario temp = new Model.Comentario();
+                        temp.idProduto = objComents.Valor("CDU_idProduto");
+                        temp.nomeCliente = objComents.Valor("Nome");
+                        temp.idComentario = objComents.Valor("CDU_idComentario").ToString();
+                        temp.Conteudo = objComents.Valor("CDU_Conteudo");
+
+                        myArt.comentarios.Add(temp);
+
+                        objComents.Seguinte();
+                    }
+
+                    objRating = PriEngine.Engine.Consulta("SELECT AVG(CDU_Valor) AS Media FROM TDU_Rating WHERE CDU_idProduto='" + myArt.ID + "'");
+                    while (!objRating.NoFim())
+                    {
+                        myArt.Rating = objRating.Valor("Media").ToString();
+                        objRating.Seguinte();
+                    }
+
+                    objWishlist = PriEngine.Engine.Consulta("SELECT * FROM TDU_Wishlist, TDU_WishlistProduto WHERE CDU_idUtilizador ='" + "ALCAD" + "' AND CDU_idProduto='" + myArt.ID + "' AND TDU_Wishlist.CDU_idWishlist = TDU_WishlistProduto.CDU_idWishlist");
+                    if (!objWishlist.NoFim())
+                    {
+                        myArt.Wishlist = "True";
+                    }
+                    else
+                        myArt.Wishlist = "False";
+                    
                     objList.Seguinte();
 
                 }
@@ -920,6 +967,7 @@ namespace FirstREST.Lib_Primavera
 
         #endregion DocsVenda
 
+
         # region Carrinho
 
         public static Lib_Primavera.Model.Carrinho GetCarrinhoUser(string id_user)
@@ -1062,5 +1110,80 @@ namespace FirstREST.Lib_Primavera
         }
 
         #endregion Carrinho
+
+
+        # region Pagamento
+
+        public static Lib_Primavera.Model.Pagamento GetPagamentoUser(string id_user)
+        {
+
+            StdBELista objListCarrinho;
+            StdBELista objList;
+
+
+            Model.Artigo art = new Model.Artigo();
+            Model.Pagamento pag = new Model.Pagamento();
+
+            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT ModoPag, CDU_idCarrinho, CDU_idCliente, CDU_idProduto FROM  CLIENTES, TDU_CarrinhoCompras, TDU_CarrinhoProduto  WHERE CDU_idCliente='" + id_user + "' AND Cliente='" + id_user + "' AND CDU_idCarrinho = CDU_idCarrinhoCompras");
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
+                {
+                    pag = new Model.Pagamento();
+                    pag.ID_Carrinho = objList.Valor("CDU_idCarrinho").ToString();
+                    pag.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
+                    pag.ModoPagamento = objList.Valor("ModoPag").ToString();
+                    String idTemp = objList.Valor("CDU_idProduto").ToString();
+
+                    objListCarrinho = PriEngine.Engine.Consulta(" SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo = '" + idTemp + "'");
+                    listArtigos = new List<Model.Artigo>();
+
+                    while (!objListCarrinho.NoFim())
+                    {
+                        art = new Model.Artigo();
+                        art.ID = objListCarrinho.Valor("artigo");
+                        art.DescArtigo = objListCarrinho.Valor("descricao");
+                        art.Desconto = objListCarrinho.Valor("desconto").ToString();
+                        art.STKActual = objListCarrinho.Valor("stkactual").ToString();
+                        art.Preço = objListCarrinho.Valor("pcpadrao").ToString();
+                        art.Familia = objListCarrinho.Valor("familia");
+                        art.SubFamilia = objListCarrinho.Valor("subfamilia");
+                        art.Marca = objListCarrinho.Valor("marca");
+                        art.Modelo = objListCarrinho.Valor("modelo");
+
+                        listArtigos.Add(art);
+                        objListCarrinho.Seguinte();
+                    }
+                    //falta as imagens
+                    pag.ID_Produtos = listArtigos;
+                    objList.Seguinte();
+                }
+
+                /*
+                 Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idCarrinhoCompras, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_idCarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idProduto = Artigo");
+
+                 * 
+                 * */
+
+
+                return pag;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
+
+        #endregion Pagamento
+    
     }
 }
