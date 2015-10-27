@@ -679,6 +679,9 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+
+
+
         #endregion Artigo
   
 
@@ -1255,6 +1258,48 @@ namespace FirstREST.Lib_Primavera
 
 
         #endregion Wishlist
+
+
+        # region Search
+        public static List<Model.Artigo> SearchArtigosNome(string id)
+        {
+            StdBELista objList;
+            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO  WHERE Descricao LIKE '%" + id + "%' OR Artigo LIKE '%" + id + "%'");
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+
+                while (!objList.NoFim())
+                {
+                    listArtigos.Add(new Model.Artigo
+                    {
+                        ID = objList.Valor("artigo"),
+                   DescArtigo = objList.Valor("descricao"),
+                   Desconto = objList.Valor("desconto").ToString(),
+                   STKActual = objList.Valor("stkactual").ToString(),
+                   Preço = objList.Valor("pcpadrao").ToString(),
+                   Familia = objList.Valor("familia"),
+                   SubFamilia = objList.Valor("subfamilia"),
+                   Marca = objList.Valor("marca"),
+                   Modelo = objList.Valor("modelo")
+                    });
+                    objList.Seguinte();
+
+                }
+
+
+                return listArtigos;
+            }
+            else
+                return null;
+        }
+
+        #endregion Search
     
 
     }
