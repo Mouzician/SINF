@@ -1184,6 +1184,78 @@ namespace FirstREST.Lib_Primavera
 
 
         #endregion Pagamento
+
+        # region Wishlist
+
+        public static Lib_Primavera.Model.Wishlist GetWishlistUser(string id_user)
+        {
+
+            StdBELista objList;
+            StdBELista objProdutos;
+
+
+            Model.Artigo art = new Model.Artigo();
+            Model.Wishlist wish = new Model.Wishlist();
+
+            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idWishlist FROM TDU_Wishlist WHERE CDU_idUtilizador='" + id_user + "' ");
+
+
+
+                while (!objList.NoFim())
+                {
+
+                    wish.idClient = id_user;
+                    wish.idWishlist = objList.Valor("CDU_idWishlist").ToString();
+
+                    objProdutos = PriEngine.Engine.Consulta(" SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_WishlistProduto WHERE Artigo = CDU_idProduto AND CDU_idWishlist = '" + wish.idWishlist + "'");
+                    listArtigos = new List<Model.Artigo>();
+
+                    while (!objProdutos.NoFim())
+                    {
+                        art = new Model.Artigo();
+                        art.ID = objProdutos.Valor("artigo");
+                        art.DescArtigo = objProdutos.Valor("descricao");
+                        art.Desconto = objProdutos.Valor("desconto").ToString();
+                        art.STKActual = objProdutos.Valor("stkactual").ToString();
+                        art.Preço = objProdutos.Valor("pcpadrao").ToString();
+                        art.Familia = objProdutos.Valor("familia");
+                        art.SubFamilia = objProdutos.Valor("subfamilia");
+                        art.Marca = objProdutos.Valor("marca");
+                        art.Modelo = objProdutos.Valor("modelo");
+
+                        listArtigos.Add(art);
+                        objProdutos.Seguinte();
+                    }
+                    //falta as imagens
+                    wish.ID_Produtos = listArtigos;
+                    objList.Seguinte();
+                }
+
+                /*
+                 Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idCarrinhoCompras, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_idCarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idProduto = Artigo");
+
+                 * 
+                 * */
+
+
+                return wish;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
+
+        #endregion Wishlist
     
+
     }
 }
