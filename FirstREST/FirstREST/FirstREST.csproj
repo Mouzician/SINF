@@ -261,6 +261,7 @@
     <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
+    <Compile Include="Controllers\DocVendaClienteController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagamentoController.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="Lib_Primavera\Model\Comentario.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_CarrinhoProduto.cs" />
     <Compile Include="Lib_Primavera\Model\Pagamento.cs" />
+    <Compile Include="Lib_Primavera\Model\TDU_WishlistProduto.cs" />
     <Compile Include="Lib_Primavera\Model\Wishlist.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />

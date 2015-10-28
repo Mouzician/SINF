@@ -27,5 +27,37 @@ namespace FirstREST.Controllers
             }
         }
 
+        //POST /api/Carrinho/
+        public HttpResponseMessage Post(TDU_WishlistProduto wishLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            erro = Lib_Primavera.PriIntegration.InsereWishlistObj(wishLinha);
+            if (erro.Erro == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.Created, erro.Descricao);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
+
+        //DELETE /api/Carrinho/
+        public HttpResponseMessage Delete(TDU_WishlistProduto wishLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            try
+            {
+                erro = Lib_Primavera.PriIntegration.DelArtigoWishlist(wishLinha);
+                if (erro.Erro == 0)
+                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
+                else return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
+            }
+            catch (Exception exc)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao + "|" + exc.Message);
+            }
+        }
+
     }
 }

@@ -1428,6 +1428,108 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static Lib_Primavera.Model.RespostaErro DelArtigoWishlist(Model.TDU_WishlistProduto wishLinha)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_wish = new StdBECamposChave();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    tdu_wish.AddCampoChave("CDU_idWishlist", wishLinha.CDU_idWishlist);
+                    tdu_wish.AddCampoChave("CDU_idProduto", wishLinha.CDU_idProduto);
+
+                    //se forem so estas as chaves da tabela CarrinhoProduto
+                    PriEngine.Engine.TabelasUtilizador.Remove("TDU_WishlistProduto", tdu_wish);
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+        public static Lib_Primavera.Model.RespostaErro InsereWishlistObj(Model.TDU_WishlistProduto wishLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_wish = new StdBECamposChave();
+            StdBERegistoUtil tdu_wishNovo = new StdBERegistoUtil();
+            StdBECampos cmps = new StdBECampos();
+            StdBECampo CDU_idWishlist = new StdBECampo();
+            StdBECampo CDU_idProduto = new StdBECampo();
+            StdBECampo CDU_idWishlistProduto = new StdBECampo();
+            StdBELista objList;
+
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idWishlistProduto) AS max FROM TDU_WishlistProduto");
+
+                    //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                    int nextid = 1;
+                    while (!objList.NoFim())
+                    {
+                        nextid += objList.Valor("max");
+
+                        objList.Seguinte();
+                    }
+
+                    CDU_idWishlist.Nome = "CDU_idWishlist";
+
+
+                     
+                    CDU_idProduto.Nome = "CDU_idProduto";
+                    CDU_idWishlistProduto.Nome = "CDU_idWishlistProduto";
+
+
+
+                    CDU_idWishlist.Valor = wishLinha.CDU_idWishlist;
+                    CDU_idProduto.Valor = wishLinha.CDU_idProduto;
+                    CDU_idWishlistProduto.Valor = nextid;
+
+
+                    cmps.Insere(CDU_idProduto);
+                    cmps.Insere(CDU_idWishlist);
+                    cmps.Insere(CDU_idWishlistProduto);
+                    tdu_wishNovo.set_Campos(cmps);
+                    PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_WishlistProduto", tdu_wishNovo);
+
+
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
 
         #endregion Wishlist
 
