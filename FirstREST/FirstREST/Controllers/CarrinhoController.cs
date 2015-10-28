@@ -35,5 +35,37 @@ namespace FirstREST.Controllers
                 return carrinho;
             }
         }
+
+        //POST /api/Carrinho/
+        public HttpResponseMessage Post(TDU_CarrinhoProduto carrinhoLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
+            if (erro.Erro == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.Created, erro.Descricao);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
+
+        //DELETE /api/Carrinho/
+        public HttpResponseMessage Delete(TDU_CarrinhoProduto carrinho)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            try
+            {
+                erro = Lib_Primavera.PriIntegration.DelArtigoCarrinho(carrinho);
+                if (erro.Erro == 0)
+                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
+                else return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
+            }
+            catch (Exception exc)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao + "|" + exc.Message);
+            }
+        }
     }
 }

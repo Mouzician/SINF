@@ -19,41 +19,41 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.Cliente> ListaClientes()
         {
-               StdBELista objList;
+            StdBELista objList;
 
-               List<Model.Cliente> listClientes = new List<Model.Cliente>();
+            List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
-               if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
-               {
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
 
-                   //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                   objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, NumContrib as NumContribuinte, Fac_Mor AS morada,  ClienteAnulado, Fac_Local, Fac_Tel, CDU_PASSWORD, EnderecoWeb  FROM  CLIENTES");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, NumContrib as NumContribuinte, Fac_Mor AS morada,  ClienteAnulado, Fac_Local, Fac_Tel, CDU_PASSWORD, EnderecoWeb  FROM  CLIENTES");
 
 
-                   while (!objList.NoFim())
-                   {
-                       listClientes.Add(new Model.Cliente
-                       {
-                           ID = objList.Valor("Cliente"),
-                           NomeCliente = objList.Valor("Nome"),
-                           NumContribuinte = objList.Valor("NumContribuinte"),
-                           Morada = objList.Valor("morada"),
-                           ClienteBanido = objList.Valor("ClienteAnulado").ToString(),
-                           Localidade = objList.Valor("Fac_Local"),
-                           Telemóvel = objList.Valor("Fac_Tel"),
-                           Email = objList.Valor("EnderecoWeb"),
-                           //Password = PriEngine.Platform.Criptografia.Descripta(objList.Valor("CDU_PASSWORD"), 50)
-                       });
-                       objList.Seguinte();
+                while (!objList.NoFim())
+                {
+                    listClientes.Add(new Model.Cliente
+                    {
+                        ID = objList.Valor("Cliente"),
+                        NomeCliente = objList.Valor("Nome"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        Morada = objList.Valor("morada"),
+                        ClienteBanido = objList.Valor("ClienteAnulado").ToString(),
+                        Localidade = objList.Valor("Fac_Local"),
+                        Telemóvel = objList.Valor("Fac_Tel"),
+                        Email = objList.Valor("EnderecoWeb"),
+                        //Password = PriEngine.Platform.Criptografia.Descripta(objList.Valor("CDU_PASSWORD"), 50)
+                    });
+                    objList.Seguinte();
 
-                   }
+                }
 
-                   return listClientes;
-               }
-               else
-                   return null;
-                  
+                return listClientes;
+            }
+            else
+                return null;
+
         }
 
         public static Lib_Primavera.Model.Cliente GetCliente(string id)
@@ -71,20 +71,20 @@ namespace FirstREST.Lib_Primavera
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo,  ClienteAnulado,  Fac_Local, Fac_Tel, EnderecoWeb FROM  CLIENTES WHERE Cliente='" + id + "'"); //supostamente nao se quer listar a password
-               
+
                 while (!objList.NoFim())
                 {
-                    
-                        myCli.ID = objList.Valor("Cliente");
-                        myCli.NomeCliente = objList.Valor("Nome");
-                        myCli.NumContribuinte = objList.Valor("NumContribuinte");
-                        myCli.Morada = objList.Valor("campo_exemplo");
-                        myCli.ClienteBanido = objList.Valor("ClienteAnulado").ToString();
-                        myCli.Localidade = objList.Valor("Fac_Local");
-                        myCli.Telemóvel = objList.Valor("Fac_Tel");
-                        myCli.Email = objList.Valor("EnderecoWeb");
 
-                   
+                    myCli.ID = objList.Valor("Cliente");
+                    myCli.NomeCliente = objList.Valor("Nome");
+                    myCli.NumContribuinte = objList.Valor("NumContribuinte");
+                    myCli.Morada = objList.Valor("campo_exemplo");
+                    myCli.ClienteBanido = objList.Valor("ClienteAnulado").ToString();
+                    myCli.Localidade = objList.Valor("Fac_Local");
+                    myCli.Telemóvel = objList.Valor("Fac_Tel");
+                    myCli.Email = objList.Valor("EnderecoWeb");
+
+
                     objList.Seguinte();
 
                 }
@@ -98,7 +98,7 @@ namespace FirstREST.Lib_Primavera
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-           
+
 
             GcpBECliente objCli = new GcpBECliente();
 
@@ -137,7 +137,7 @@ namespace FirstREST.Lib_Primavera
                         //campo.Valor = PriEngine.Platform.Criptografia.Encripta(cliente.Password, 50);
                         campo.Valor = cliente.Password;
                         campos.Insere(campo);
-                       
+
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
                         erro.Erro = 0;
@@ -270,7 +270,7 @@ namespace FirstREST.Lib_Primavera
                         id = 1;
 
                     myCli.set_Cliente(id.ToString());
-                    
+
                     //Verificação Email
                     if (cli.Email == null)
                     {
@@ -341,7 +341,7 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-       
+
 
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
@@ -350,13 +350,13 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string id)
         {
-            
+
             StdBELista objList;
             StdBELista objImage;
             StdBELista objComents;
             StdBELista objRating;
             StdBELista objWishlist;
-            
+
             Model.Artigo myArt = new Model.Artigo();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
@@ -364,7 +364,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo='" + id + "'"); 
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo='" + id + "'");
 
                 while (!objList.NoFim())
                 {
@@ -387,10 +387,10 @@ namespace FirstREST.Lib_Primavera
 
                     while (!objImage.NoFim())
                     {
-                        
-                       myArt.imagens.Add(objImage.Valor("CDU_Caminho"));
 
-                       objImage.Seguinte();
+                        myArt.imagens.Add(objImage.Valor("CDU_Caminho"));
+
+                        objImage.Seguinte();
                     }
 
 
@@ -398,7 +398,7 @@ namespace FirstREST.Lib_Primavera
                     objComents = PriEngine.Engine.Consulta("SELECT Nome, CDU_idComentario, CDU_idProduto, CDU_Conteudo FROM TDU_Comentario, CLIENTES WHERE CDU_idProduto='" + myArt.ID + "' AND CDU_idUtilizador = Cliente");
                     myArt.comentarios = new List<Model.Comentario>();
 
-                    
+
                     while (!objComents.NoFim())
                     {
                         Model.Comentario temp = new Model.Comentario();
@@ -426,7 +426,7 @@ namespace FirstREST.Lib_Primavera
                     }
                     else
                         myArt.Wishlist = "False";
-                    
+
                     objList.Seguinte();
 
                 }
@@ -477,11 +477,11 @@ namespace FirstREST.Lib_Primavera
             else
                 return null;
 
-        } 
+        }
 
         public static List<Model.Artigo> ListaArtigos()
         {
-                        
+
             StdBELista objList;
 
             Model.Artigo art = new Model.Artigo();
@@ -546,7 +546,7 @@ namespace FirstREST.Lib_Primavera
                     myArt.set_Marca(art.Marca);
                     myArt.set_Modelo(art.Modelo);
                     myArt.set_IVA("23");
-                    
+
                     PriEngine.Engine.Comercial.Artigos.Actualiza(myArt);
 
                     erro.Erro = 0;
@@ -683,14 +683,14 @@ namespace FirstREST.Lib_Primavera
 
 
         #endregion Artigo
-  
+
 
         #region DocCompra
-        
+
 
         public static List<Model.DocCompra> VGR_List()
         {
-                
+
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocCompra dc = new Model.DocCompra();
@@ -734,7 +734,7 @@ namespace FirstREST.Lib_Primavera
                     }
 
                     dc.LinhasDoc = listlindc;
-                    
+
                     listdc.Add(dc);
                     objListCab.Seguinte();
                 }
@@ -742,11 +742,11 @@ namespace FirstREST.Lib_Primavera
             return listdc;
         }
 
-                
+
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            
+
 
             GcpBEDocumentoCompra myGR = new GcpBEDocumentoCompra();
             GcpBELinhaDocumentoCompra myLin = new GcpBELinhaDocumentoCompra();
@@ -810,14 +810,14 @@ namespace FirstREST.Lib_Primavera
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBEDocumentoVenda myEnc = new GcpBEDocumentoVenda();
-             
+
             GcpBELinhaDocumentoVenda myLin = new GcpBELinhaDocumentoVenda();
 
             GcpBELinhasDocumentoVenda myLinhas = new GcpBELinhasDocumentoVenda();
-             
+
             PreencheRelacaoVendas rl = new PreencheRelacaoVendas();
             List<Model.LinhaDocVenda> lstlindv = new List<Model.LinhaDocVenda>();
-            
+
             try
             {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
@@ -837,7 +837,7 @@ namespace FirstREST.Lib_Primavera
                     }
 
 
-                   // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
+                    // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
 
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
@@ -864,11 +864,11 @@ namespace FirstREST.Lib_Primavera
             }
         }
 
-     
+
 
         public static List<Model.DocVenda> Encomendas_List()
         {
-            
+
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocVenda dv = new Model.DocVenda();
@@ -918,12 +918,12 @@ namespace FirstREST.Lib_Primavera
         }
 
 
-       
+
 
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
-            
-            
+
+
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocVenda dv = new Model.DocVenda();
@@ -932,7 +932,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                
+
 
                 string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
                 objListCab = PriEngine.Engine.Consulta(st);
@@ -975,7 +975,7 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Carrinho GetCarrinhoUser(string id_user)
         {
-     
+
             StdBELista objListCarrinho;
             StdBELista objList;
 
@@ -987,7 +987,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idProduto FROM  TDU_CarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idCliente='"+ id_user +"' AND CDU_idCarrinho = CDU_idCarrinhoCompras");
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idProduto FROM  TDU_CarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idCliente='" + id_user + "' AND CDU_idCarrinho = CDU_idCarrinhoCompras");
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -998,7 +998,7 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta(" SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo = '" + idTemp + "'");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Quantidade, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto WHERE Artigo = '" + idTemp + "' AND CDU_idProduto = Artigo");
                     listArtigos = new List<Model.Artigo>();
 
                     while (!objListCarrinho.NoFim())
@@ -1013,6 +1013,7 @@ namespace FirstREST.Lib_Primavera
                         art.SubFamilia = objListCarrinho.Valor("subfamilia");
                         art.Marca = objListCarrinho.Valor("marca");
                         art.Modelo = objListCarrinho.Valor("modelo");
+                        art.Quantidade = objListCarrinho.Valor("CDU_Quantidade").ToString();
 
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
@@ -1022,11 +1023,6 @@ namespace FirstREST.Lib_Primavera
                     objList.Seguinte();
                 }
 
-                /*
-                 Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idCarrinhoCompras, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_idCarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idProduto = Artigo");
-
-                 * 
-                 * */
 
 
                 return carr;
@@ -1040,10 +1036,116 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_CarrinhoProduto carrinho)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_carrinho = new StdBECamposChave();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    tdu_carrinho.AddCampoChave("CDU_idCarrinho", carrinho.CDU_idCarrinho);
+                    tdu_carrinho.AddCampoChave("CDU_idCarrinhoProduto", carrinho.CDU_idCarrinhoProduto);
+                    tdu_carrinho.AddCampoChave("CDU_idProduto", carrinho.CDU_idProduto);
+
+                    //se forem so estas as chaves da tabela CarrinhoProduto
+                    PriEngine.Engine.TabelasUtilizador.Remove("TDU_CarrinhoProduto", tdu_carrinho);
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+        public static Lib_Primavera.Model.RespostaErro InsereCarrinhoObj(Model.TDU_CarrinhoProduto carrinho)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_carrinho = new StdBECamposChave();
+            StdBERegistoUtil tdu_carrinhoNovo = new StdBERegistoUtil();
+            StdBECampos cmps = new StdBECampos();
+            StdBECampo quantidade = new StdBECampo();
+            StdBECampo CDU_idCarrinho = new StdBECampo();
+            StdBECampo CDU_idCarrinhoProduto = new StdBECampo();
+            StdBECampo CDU_idProduto = new StdBECampo();
+            StdBELista objList;
+
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+
+                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idCarrinhoProduto) AS max FROM TDU_CarrinhoProduto");
+
+                    //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                    int nextid = 1;
+                    while (!objList.NoFim())
+                    {
+                        nextid += objList.Valor("max");
+                        objList.Seguinte();
+                    }
+                    
+
+                    quantidade.Nome = "CDU_Quantidade";
+                    CDU_idCarrinho.Nome = "CDU_idCarrinho";
+                    CDU_idCarrinhoProduto.Nome = "CDU_idCarrinhoProduto";
+                    CDU_idProduto.Nome = "CDU_idProduto";
+
+
+
+                    quantidade.Valor = carrinho.CDU_Quantidade;
+                    CDU_idCarrinho.Valor = carrinho.CDU_idCarrinho;
+                    CDU_idCarrinhoProduto.Valor = nextid.ToString();
+                    CDU_idProduto.Valor = carrinho.CDU_idProduto;
+                    
+                    
+                    cmps.Insere(quantidade);
+                    cmps.Insere(CDU_idProduto);
+                    cmps.Insere(CDU_idCarrinho);
+                    cmps.Insere(CDU_idCarrinhoProduto);
+                    tdu_carrinhoNovo.set_Campos(cmps);
+                    PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_CarrinhoProduto", tdu_carrinhoNovo);
+
+
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
         public static List<Model.Carrinho> ListaCarrinhos()
         {
 
-      
+
             StdBELista objListCarrinho;
             StdBELista objList;
 
@@ -1164,6 +1266,11 @@ namespace FirstREST.Lib_Primavera
                     }
                     //falta as imagens
                     pag.ID_Produtos = listArtigos;
+                    float tempTotal = 0;
+                    for (int i = 0; i < pag.ID_Produtos.Count; i++)
+                        tempTotal += float.Parse(pag.ID_Produtos.ElementAt(i).Preço);
+
+                    pag.total = tempTotal.ToString();
                     objList.Seguinte();
                 }
 
@@ -1187,6 +1294,7 @@ namespace FirstREST.Lib_Primavera
 
 
         #endregion Pagamento
+
 
         # region Wishlist
 
@@ -1279,14 +1387,14 @@ namespace FirstREST.Lib_Primavera
                     listArtigos.Add(new Model.Artigo
                     {
                         ID = objList.Valor("artigo"),
-                   DescArtigo = objList.Valor("descricao"),
-                   Desconto = objList.Valor("desconto").ToString(),
-                   STKActual = objList.Valor("stkactual").ToString(),
-                   Preço = objList.Valor("pcpadrao").ToString(),
-                   Familia = objList.Valor("familia"),
-                   SubFamilia = objList.Valor("subfamilia"),
-                   Marca = objList.Valor("marca"),
-                   Modelo = objList.Valor("modelo")
+                        DescArtigo = objList.Valor("descricao"),
+                        Desconto = objList.Valor("desconto").ToString(),
+                        STKActual = objList.Valor("stkactual").ToString(),
+                        Preço = objList.Valor("pcpadrao").ToString(),
+                        Familia = objList.Valor("familia"),
+                        SubFamilia = objList.Valor("subfamilia"),
+                        Marca = objList.Valor("marca"),
+                        Modelo = objList.Valor("modelo")
                     });
                     objList.Seguinte();
 
@@ -1300,7 +1408,7 @@ namespace FirstREST.Lib_Primavera
         }
 
         #endregion Search
-    
+
 
     }
 }

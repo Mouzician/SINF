@@ -35,6 +35,12 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string total
+        {
+            get;
+            set;
+        }
     }
 
 }

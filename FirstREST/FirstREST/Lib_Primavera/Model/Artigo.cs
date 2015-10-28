@@ -84,5 +84,11 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string Quantidade //opcional para o carrinho
+        {
+            get;
+            set;
+        }
     }
 }
