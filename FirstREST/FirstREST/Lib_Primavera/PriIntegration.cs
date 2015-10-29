@@ -1600,5 +1600,58 @@ namespace FirstREST.Lib_Primavera
         #endregion Search
 
 
+        # region Banir
+        public static Lib_Primavera.Model.RespostaErro Ban(Model.UserBan cliente)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+
+            GcpBECliente objCli = new GcpBECliente();
+
+
+            try
+            {
+
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.ID) == false)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "O cliente não existe";
+                        return erro;
+                    }
+                    else
+                    {
+
+                        if(cliente.Action == "TRUE")
+                        PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.ID, "ClienteAnulado", 1);
+                        else if (cliente.Action == "FALSE")
+                            PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.ID, "ClienteAnulado", 0);
+
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
+                    }
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+        #endregion Banir
     }
 }
