@@ -261,6 +261,7 @@
     <Compile Include="Controllers\BanirController.cs" />
     <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ComentarioController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
     <Compile Include="Controllers\DocVendaClienteController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
@@ -273,7 +274,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Lib_Primavera\Model\Carrinho.cs" />
-    <Compile Include="Lib_Primavera\Model\Comentario.cs" />
+    <Compile Include="Lib_Primavera\Model\TDU_Comentario.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_CarrinhoProduto.cs" />
     <Compile Include="Lib_Primavera\Model\Pagamento.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_WishlistProduto.cs" />

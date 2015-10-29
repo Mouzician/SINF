@@ -396,16 +396,16 @@ namespace FirstREST.Lib_Primavera
 
 
                     objComents = PriEngine.Engine.Consulta("SELECT Nome, CDU_idComentario, CDU_idProduto, CDU_Conteudo FROM TDU_Comentario, CLIENTES WHERE CDU_idProduto='" + myArt.ID + "' AND CDU_idUtilizador = Cliente");
-                    myArt.comentarios = new List<Model.Comentario>();
+                    myArt.comentarios = new List<Model.TDU_Comentario>();
 
 
                     while (!objComents.NoFim())
                     {
-                        Model.Comentario temp = new Model.Comentario();
-                        temp.idProduto = objComents.Valor("CDU_idProduto");
+                        Model.TDU_Comentario temp = new Model.TDU_Comentario();
+                        temp.CDU_idProduto = objComents.Valor("CDU_idProduto");
                         temp.nomeCliente = objComents.Valor("Nome");
-                        temp.idComentario = objComents.Valor("CDU_idComentario").ToString();
-                        temp.Conteudo = objComents.Valor("CDU_Conteudo");
+                        temp.CDU_idComentario = objComents.Valor("CDU_idComentario").ToString();
+                        temp.CDU_Conteudo = objComents.Valor("CDU_Conteudo");
 
                         myArt.comentarios.Add(temp);
 
@@ -1653,5 +1653,118 @@ namespace FirstREST.Lib_Primavera
         }
 
         #endregion Banir
+
+
+        # region Comentario
+
+
+        public static Lib_Primavera.Model.RespostaErro DelComentario(Model.TDU_Comentario com)
+        {
+            StdBELista objList;
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_comentario = new StdBECamposChave();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    tdu_comentario.AddCampoChave("CDU_idComentario", com.CDU_idComentario);
+
+                    //se forem so estas as chaves da tabela CarrinhoProduto
+                    PriEngine.Engine.TabelasUtilizador.Remove("TDU_Comentario", tdu_comentario);
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+        public static Lib_Primavera.Model.RespostaErro InsereComentarioObj(Model.TDU_Comentario com)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBERegistoUtil tdu_comentario = new StdBERegistoUtil();
+            StdBECampos cmps = new StdBECampos();
+            StdBECampo CDU_idComentario = new StdBECampo();
+            StdBECampo CDU_idUtilizador = new StdBECampo();
+            StdBECampo CDU_Conteudo = new StdBECampo();
+            StdBECampo CDU_idProduto = new StdBECampo();
+            StdBELista objList;
+
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+
+                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idComentario) AS max FROM TDU_Comentario");
+
+                        //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                        int nextid = 1;
+                        while (!objList.NoFim())
+                        {
+                            nextid += objList.Valor("max");
+                            objList.Seguinte();
+                        }
+                        com.CDU_idComentario = nextid.ToString();
+
+                        CDU_idComentario.Nome = "CDU_idComentario";
+                        CDU_idUtilizador.Nome = "CDU_idUtilizador";
+                        CDU_idProduto.Nome = "CDU_idProduto";
+                        CDU_Conteudo.Nome = "CDU_Conteudo";
+
+
+
+                        CDU_idComentario.Valor = com.CDU_idComentario;
+                        CDU_idUtilizador.Valor = com.CDU_idUtilizador;
+                        CDU_idProduto.Valor = com.CDU_idProduto;
+                        CDU_Conteudo.Valor = com.CDU_Conteudo;
+
+
+                        cmps.Insere(CDU_idComentario);
+                        cmps.Insere(CDU_idProduto);
+                        cmps.Insere(CDU_Conteudo);
+                        cmps.Insere(CDU_idUtilizador);
+                        tdu_comentario.set_Campos(cmps);
+                        PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_Comentario", tdu_comentario);
+
+                    
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+
+        #endregion Comentario
+
+
     }
 }

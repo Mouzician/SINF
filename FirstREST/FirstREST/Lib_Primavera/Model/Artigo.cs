@@ -79,7 +79,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public List<Model.Comentario> comentarios
+        public List<Model.TDU_Comentario> comentarios
         {
             get;
             set;
