@@ -12,7 +12,7 @@ namespace FirstREST.Controllers
     public class ComentarioController : ApiController
     {
        
-        //POST /api/Carrinho/
+        //POST /api/Comentario/
         public HttpResponseMessage Post(TDU_Comentario comentario)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
@@ -27,7 +27,7 @@ namespace FirstREST.Controllers
             }
         }
 
-        //DELETE /api/Carrinho/
+        //DELETE /api/Comentario/
         public HttpResponseMessage Delete(TDU_Comentario comentario)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();

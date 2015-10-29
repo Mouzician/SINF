@@ -1765,6 +1765,80 @@ namespace FirstREST.Lib_Primavera
 
         #endregion Comentario
 
+        # region Rating
+
+        public static Lib_Primavera.Model.RespostaErro InsereRatingObj(Model.TDU_Rating rate)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBERegistoUtil tdu_rate = new StdBERegistoUtil();
+            StdBECampos cmps = new StdBECampos();
+            StdBECampo CDU_idRating = new StdBECampo();
+            StdBECampo CDU_idUtilizador = new StdBECampo();
+            StdBECampo CDU_Valor = new StdBECampo();
+            StdBECampo CDU_idProduto = new StdBECampo();
+            StdBELista objList;
+
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+
+                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idRating) AS max FROM TDU_Rating");
+
+                    //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                    int nextid = 1;
+                    while (!objList.NoFim())
+                    {
+                        nextid += objList.Valor("max");
+                        objList.Seguinte();
+                    }
+                    rate.CDU_idRating = nextid.ToString();
+
+                    CDU_idRating.Nome = "CDU_idRating";
+                    CDU_idUtilizador.Nome = "CDU_idUtilizador";
+                    CDU_idProduto.Nome = "CDU_idProduto";
+                    CDU_Valor.Nome = "CDU_Valor";
+
+
+
+                    CDU_idRating.Valor = rate.CDU_idRating;
+                    CDU_idUtilizador.Valor = rate.CDU_idUtilizador;
+                    CDU_idProduto.Valor = rate.CDU_idProduto;
+                    CDU_Valor.Valor = rate.CDU_Valor;
+
+
+                    cmps.Insere(CDU_idRating);
+                    cmps.Insere(CDU_idProduto);
+                    cmps.Insere(CDU_Valor);
+                    cmps.Insere(CDU_idUtilizador);
+                    tdu_rate.set_Campos(cmps);
+                    PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_Rating", tdu_rate);
+
+
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
+
+        #endregion Rating
 
     }
 }
