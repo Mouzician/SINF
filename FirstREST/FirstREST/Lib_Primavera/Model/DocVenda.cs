@@ -50,6 +50,12 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string DocType
+        {
+            set;
+            get;
+        }
+
 
     }
 }

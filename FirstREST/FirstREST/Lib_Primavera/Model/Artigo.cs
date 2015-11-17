@@ -73,7 +73,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public List<String> imagens //imagens do artigo
+        public String CDU_Imagem//imagens do artigo
         {
             get;
             set;

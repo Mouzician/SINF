@@ -364,7 +364,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE Artigo='" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo, CDU_Imagem FROM  ARTIGO WHERE Artigo='" + id + "'");
 
                 while (!objList.NoFim())
                 {
@@ -381,17 +381,9 @@ namespace FirstREST.Lib_Primavera
                     myArt.SubFamilia = objList.Valor("SubFamilia");
                     myArt.Marca = objList.Valor("Marca");
                     myArt.Modelo = objList.Valor("Modelo");
+                    myArt.CDU_Imagem = objList.Valor("CDU_Imagem");
 
-                    objImage = PriEngine.Engine.Consulta("SELECT CDU_Caminho FROM TDU_Imagem, TDU_ImagemProduto WHERE CDU_idProduto='" + myArt.ID + "' AND TDU_Imagem.CDU_idImagem = TDU_ImagemProduto.CDU_idImagem");
-                    myArt.imagens = new List<String>();
-
-                    while (!objImage.NoFim())
-                    {
-
-                        myArt.imagens.Add(objImage.Valor("CDU_Caminho"));
-
-                        objImage.Seguinte();
-                    }
+              
 
 
 
@@ -450,7 +442,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO WHERE SubFamilia='" + sub_familia + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo, CDU_Imagem FROM  ARTIGO WHERE SubFamilia='" + sub_familia + "'");
 
                 while (!objList.NoFim())
                 {
@@ -467,6 +459,7 @@ namespace FirstREST.Lib_Primavera
                     myArt.SubFamilia = objList.Valor("SubFamilia");
                     myArt.Marca = objList.Valor("Marca");
                     myArt.Modelo = objList.Valor("Modelo");
+                    myArt.CDU_Imagem = objList.Valor("CDU_Imagem");
 
                     objList.Seguinte();
 
@@ -489,7 +482,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo, CDU_Imagem FROM  ARTIGO");
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -505,8 +498,7 @@ namespace FirstREST.Lib_Primavera
                     art.SubFamilia = objList.Valor("subfamilia");
                     art.Marca = objList.Valor("marca");
                     art.Modelo = objList.Valor("modelo");
-
-                    //falta as imagens
+                    art.CDU_Imagem = objList.Valor("CDU_Imagem");
 
                     listArts.Add(art);
                     objList.Seguinte();
@@ -824,16 +816,29 @@ namespace FirstREST.Lib_Primavera
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
+
+                    string serie = "A";
+                    double desconto = 0.0;
+                    string armazem = "A2";
+
+
                     myEnc.set_Entidade(dv.Entidade);
-                    myEnc.set_Serie(dv.Serie);
-                    myEnc.set_Tipodoc("ECL");
+                    myEnc.set_Serie(serie);
+                    //myEnc.set_Serie(dv.Serie);
+                    myEnc.set_Tipodoc(dv.DocType);
                     myEnc.set_TipoEntidade("C");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
-                    PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
+
+                        PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
+              
+                    
+                    double pvp = 0; 
+                   
                     foreach (Model.LinhaDocVenda lin in lstlindv)
                     {
-                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, "", "", lin.PrecoUnitario, lin.Desconto);
+                        pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
+                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade,"", "", pvp, desconto);
                     }
 
 
@@ -857,7 +862,11 @@ namespace FirstREST.Lib_Primavera
             }
             catch (Exception ex)
             {
-                PriEngine.Engine.DesfazTransaccao();
+                try
+                {
+                    PriEngine.Engine.DesfazTransaccao();
+                }
+                catch { }
                 erro.Erro = 1;
                 erro.Descricao = ex.Message;
                 return erro;
@@ -1764,81 +1773,6 @@ namespace FirstREST.Lib_Primavera
 
 
         #endregion Comentario
-
-        # region Rating
-
-        public static Lib_Primavera.Model.RespostaErro InsereRatingObj(Model.TDU_Rating rate)
-        {
-            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            StdBERegistoUtil tdu_rate = new StdBERegistoUtil();
-            StdBECampos cmps = new StdBECampos();
-            StdBECampo CDU_idRating = new StdBECampo();
-            StdBECampo CDU_idUtilizador = new StdBECampo();
-            StdBECampo CDU_Valor = new StdBECampo();
-            StdBECampo CDU_idProduto = new StdBECampo();
-            StdBELista objList;
-
-
-            try
-            {
-                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
-                {
-
-
-                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idRating) AS max FROM TDU_Rating");
-
-                    //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
-                    int nextid = 1;
-                    while (!objList.NoFim())
-                    {
-                        nextid += objList.Valor("max");
-                        objList.Seguinte();
-                    }
-                    rate.CDU_idRating = nextid.ToString();
-
-                    CDU_idRating.Nome = "CDU_idRating";
-                    CDU_idUtilizador.Nome = "CDU_idUtilizador";
-                    CDU_idProduto.Nome = "CDU_idProduto";
-                    CDU_Valor.Nome = "CDU_Valor";
-
-
-
-                    CDU_idRating.Valor = rate.CDU_idRating;
-                    CDU_idUtilizador.Valor = rate.CDU_idUtilizador;
-                    CDU_idProduto.Valor = rate.CDU_idProduto;
-                    CDU_Valor.Valor = rate.CDU_Valor;
-
-
-                    cmps.Insere(CDU_idRating);
-                    cmps.Insere(CDU_idProduto);
-                    cmps.Insere(CDU_Valor);
-                    cmps.Insere(CDU_idUtilizador);
-                    tdu_rate.set_Campos(cmps);
-                    PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_Rating", tdu_rate);
-
-
-
-                    erro.Erro = 0;
-                    erro.Descricao = "Sucesso";
-                    return erro;
-                }
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
-                    return erro;
-                }
-            }
-            catch (Exception ex)
-            {
-                erro.Erro = 1;
-                erro.Descricao = ex.Message;
-                return erro;
-            }
-        }
-
-
-        #endregion Rating
 
     }
 }
