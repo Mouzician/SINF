@@ -14,10 +14,13 @@ namespace FirstREST
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+              name: "ArtigoPage",
+              url : "ArtigoPage/{id}",
+              defaults: new {controller = "ArtigoPage",action="Index", id = UrlParameter.Optional }
             );
+
         }
+
+     
     }
 }
