@@ -50,14 +50,16 @@ namespace FirstREST.Controllers
                    HttpStatusCode.Created, dv.id);
                 string uri = Url.Link("DefaultApi", new { DocId = dv.id });
                 response.Headers.Location = new Uri(uri);
+                response.Content = new StringContent(erro.Descricao);
                 return response;
             }
 
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.BadRequest);
+                error.Content = new StringContent(erro.Descricao);
+                return error;
             }
-
         }
     }
 }

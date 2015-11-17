@@ -817,7 +817,7 @@ namespace FirstREST.Lib_Primavera
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
 
-                    string serie = "A";
+                    string serie = "C";
                     double desconto = 0.0;
                     string armazem = "A2";
 
@@ -838,7 +838,7 @@ namespace FirstREST.Lib_Primavera
                     foreach (Model.LinhaDocVenda lin in lstlindv)
                     {
                         pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
-                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade,"", "", pvp, desconto);
+                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade,armazem, "", pvp, desconto);
                     }
 
 
