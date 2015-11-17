@@ -67,11 +67,6 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public String Rating
-        {
-            get;
-            set;
-        }
 
         public String CDU_Imagem//imagens do artigo
         {

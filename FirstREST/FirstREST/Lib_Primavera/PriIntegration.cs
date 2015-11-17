@@ -404,13 +404,7 @@ namespace FirstREST.Lib_Primavera
                         objComents.Seguinte();
                     }
 
-                    objRating = PriEngine.Engine.Consulta("SELECT AVG(CDU_Valor) AS Media FROM TDU_Rating WHERE CDU_idProduto='" + myArt.ID + "'");
-                    while (!objRating.NoFim())
-                    {
-                        myArt.Rating = objRating.Valor("Media").ToString();
-                        objRating.Seguinte();
-                    }
-
+                 
                     objWishlist = PriEngine.Engine.Consulta("SELECT * FROM TDU_Wishlist, TDU_WishlistProduto WHERE CDU_idUtilizador ='" + "ALCAD" + "' AND CDU_idProduto='" + myArt.ID + "' AND TDU_Wishlist.CDU_idWishlist = TDU_WishlistProduto.CDU_idWishlist");
                     if (!objWishlist.NoFim())
                     {
