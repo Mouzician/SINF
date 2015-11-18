@@ -27,10 +27,5 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string CDU_Quantidade //nao precisa para remover, so para inserir
-        {
-            get;
-            set;
-        }
     }
 }

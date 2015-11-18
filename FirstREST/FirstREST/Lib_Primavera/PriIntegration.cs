@@ -1065,7 +1065,7 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Quantidade, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto WHERE Artigo = '" + idTemp + "' AND CDU_idProduto = Artigo");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto WHERE Artigo = '" + idTemp + "' AND CDU_idProduto = Artigo");
                     listArtigos = new List<Model.Artigo>();
 
                     while (!objListCarrinho.NoFim())
@@ -1080,7 +1080,7 @@ namespace FirstREST.Lib_Primavera
                         art.SubFamilia = objListCarrinho.Valor("subfamilia");
                         art.Marca = objListCarrinho.Valor("marca");
                         art.Modelo = objListCarrinho.Valor("modelo");
-                        art.Quantidade = objListCarrinho.Valor("CDU_Quantidade").ToString();
+               
 
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
@@ -1151,7 +1151,6 @@ namespace FirstREST.Lib_Primavera
             StdBECamposChave tdu_carrinho = new StdBECamposChave();
             StdBERegistoUtil tdu_carrinhoNovo = new StdBERegistoUtil();
             StdBECampos cmps = new StdBECampos();
-            StdBECampo CDU_Quantidade = new StdBECampo();
             StdBECampo CDU_idCarrinho = new StdBECampo();
             StdBECampo CDU_idCarrinhoProduto = new StdBECampo();
             StdBECampo CDU_idProduto = new StdBECampo();
@@ -1172,9 +1171,6 @@ namespace FirstREST.Lib_Primavera
                         tdu_carrinho.AddCampoChave("CDU_idCarrinho", carrinho.CDU_idCarrinho);
                         tdu_carrinho.AddCampoChave("CDU_idCarrinhoProduto", carrinho.CDU_idCarrinhoProduto);
                         tdu_carrinho.AddCampoChave("CDU_idProduto", carrinho.CDU_idProduto);
-
-
-                        PriEngine.Engine.TabelasUtilizador.ActualizaValorAtributo("TDU_CarrinhoProduto", tdu_carrinho, "CDU_Quantidade", carrinho.CDU_Quantidade);
                    
 
                     }
@@ -1192,20 +1188,20 @@ namespace FirstREST.Lib_Primavera
                     }
                     carrinho.CDU_idCarrinhoProduto = nextid.ToString();
 
-                    CDU_Quantidade.Nome = "CDU_Quantidade";
+                 
                     CDU_idCarrinho.Nome = "CDU_idCarrinho";
                     CDU_idCarrinhoProduto.Nome = "CDU_idCarrinhoProduto";
                     CDU_idProduto.Nome = "CDU_idProduto";
 
 
 
-                    CDU_Quantidade.Valor = carrinho.CDU_Quantidade;
+                    
                     CDU_idCarrinho.Valor = carrinho.CDU_idCarrinho;
                     CDU_idCarrinhoProduto.Valor = carrinho.CDU_idCarrinhoProduto;
                     CDU_idProduto.Valor = carrinho.CDU_idProduto;
 
 
-                    cmps.Insere(CDU_Quantidade);
+                    
                     cmps.Insere(CDU_idProduto);
                     cmps.Insere(CDU_idCarrinho);
                     cmps.Insere(CDU_idCarrinhoProduto);
