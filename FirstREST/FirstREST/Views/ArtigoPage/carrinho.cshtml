@@ -1,0 +1,194 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Cart</title>
+    <link href="/Content/site/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="/Content/site/css/cart.css" rel='stylesheet' type='text/css' />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/Content/site/js/jquery.min.js"></script>
+    <!-- Custom Theme files -->
+    <link href="/Content/site/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/Content/site/css/form.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Pakhi Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--webfont-->
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <!-- dropdown -->
+    <script src="/Content/site/js/jquery.easydropdown.js"></script>
+    <link href="/Content/site/css/nav.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="/Content/site/js/hover_pack.js"></script>
+    <link rel="stylesheet" href="/Content/site/css/etalage.css">
+    <script src="/Content/site/js/jquery.etalage.min.js"></script>
+</head>
+<body>
+        <!-- header-section-starts -->
+        <div class="c-header" id="home">
+            <div class="top-header">
+                <div class="container">
+                    <div class="logo">
+                        <a href="index.html"><img src="images/logo.png" alt="" /></a>
+                    </div>
+                    <div class="header-top-right">
+                        <!-- start search-->
+                        <div class="search-box">
+                            <div id="sb-search" class="sb-search">
+                                <form>
+                                    <input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+                                    <input class="sb-search-submit" type="submit" value="">
+                                    <span class="sb-icon-search"> </span>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- search-scripts -->
+                        <script src="js/classie.js"></script>
+                        <script src="js/uisearch.js"></script>
+                        <script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+                        </script>
+                        <!-- //search-scripts -->
+
+                        <a href="cart.html"><i class="cart"></i></a>
+                    </div>
+                    <div class="navigation">
+                        <div>
+                            <label class="mobile_menu" for="mobile_menu">
+                                <span>Menu</span>
+                            </label>
+                            <input id="mobile_menu" type="checkbox">
+                            <ul class="nav">
+                                <li class="active"><a href="index.html">Home</a></li>
+                                <li class="dropdown1">
+                                    <a href="#">Dresses</a>
+                                    <ul class="dropdown2">
+                                        <li><a href="products.html">Dress Materials</a></li>
+                                        <li><a href="products.html">Kurta & Kurti</a></li>
+                                        <li><a href="products.html">Sarees</a></li>
+                                        <li><a href="products.html">Chudidars</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown1">
+                                    <a href="#">Bags</a>
+                                    <ul class="dropdown2">
+                                        <li><a href="products.html">Latest</a></li>
+                                        <li><a href="products.html">Leather Bags</a></li>
+                                        <li><a href="products.html">Hand Bags</a></li>
+                                    </ul>
+                                </li>
+                                </li>
+                                <li class="dropdown1">
+                                    <a href="#">Shoes</a>
+                                    <ul class="dropdown2">
+                                        <li><a href="products.html">Sports Shoes</a></li>
+                                        <li><a href="products.html">Casual Shoes</a></li>
+                                        <li><a href="products.html">Formal Shoes</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">Contact US</a></li>
+                                <div class="clearfix"></div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- start Contact-page -->
+        <!-- content-section-starts -->
+    <br />
+    <div class="container">
+        <h1>This Shopping Cart belongs to: @ViewBag.owner</h1>
+    </div>
+    <br />
+    <br />
+    
+    @foreach (var cart in ViewBag.produtos) { 
+    <!-- list of products in the cart -->
+    <div class="row">
+        <input type="hidden" name="idP" value="{$pps.idProduto}">
+        <ul class='item-list'>
+            <li class='item'>
+                <div class='item__information'>
+                    <div class='item__image'>
+                        <img src="/Content/site/images/products/@cart.CDU_Imagem">
+                    </div>
+                    <div class='item__body'>
+                        <h2 class='item__title'>@cart.Marca</h2>
+                        <p class='item__description'>@cart.DescArtigo</p>
+                    </div>
+                    <div class='item__price' id="{$pps.nome}price">@cart.Preço</div>
+                    <input type="hidden" id="{$pps.nome}hidden" value="{$pps.preco}">
+
+                    <div style="position:absolute;right:40px; top:40px;">
+                        <form action="{$BASE_URL}actions/users/removecart.php" method="post">
+                            <input type="hidden" name="precoind" id="precoind" value="{$pps.nome}">
+                            <input type="submit" class="btn btn-info" value="Remover Produto!" onclick="">
+                        </form>
+                    </div>
+                </div>
+                <div class='item__interactions'>
+                    <button class='item-increase' onclick="Increase('{$pps.nome}');return false;">+</button>
+                    <button class='item-decrease' onclick="Decrease('{$pps.nome}');return false;">-</button>
+                    <span id="{$pps.nome}">1</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    }
+
+    <div class='summary js-summary'>
+        <ul class='steps'>
+            <li>
+                <b>Subtotal:</b>
+                <div class='sum'></div>
+            </li>
+            <li>
+                <b>Taxes (5%):</b>
+                <span class='taxes'></span>
+            </li>
+            <li>
+                <b>Shipping:</b>
+                <span class='total'></span>
+            </li>
+        </ul>
+        <ul class='checkout'>
+            <li>
+                <b>Total:</b>
+                <span class='total js-total' id="checkoutt"></span>
+            </li>
+            <li id="checkout-bt">
+                <a class='button js-checkout-button' href="#" onclick="CheckItOut();return false;">Checkout</a>
+            </li>
+        </ul>
+    </div>
+
+
+        <!-- content-section-ends -->
+
+        <div class="footer">
+            <div class="up-arrow">
+                <a class="scroll" href="#home"><img src="images/up.png" alt="" /></a>
+            </div>
+            <div class="container">
+                <div class="copyrights">
+                    <p>Copyright &copy; 2015 All rights reserved | Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
+                </div>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fb"></i></a>
+                    <a href="#"><i class="tw"></i></a>
+                    <a href="#"><i class="in"></i></a>
+                    <a href="#"><i class="pt"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </body>
+</html>
+</html>

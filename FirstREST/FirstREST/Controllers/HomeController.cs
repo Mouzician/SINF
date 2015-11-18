@@ -24,13 +24,14 @@ namespace FirstREST.Controllers
 
                     IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(6);
 
 
                     ViewBag.artigos = temp;
 
                     return View("/Views/ArtigoPage/produtos.cshtml");
                 }
+
                 else
                 {
 
@@ -38,7 +39,7 @@ namespace FirstREST.Controllers
 
                     ViewBag.id = artigo.ID;
                     ViewBag.preco = artigo.Preço;
-                    ViewBag.descricao = artigo.DescArtigo;
+                    ViewBag.descricao = artigo.Descricao;
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
 
@@ -48,11 +49,67 @@ namespace FirstREST.Controllers
                     return View("/Views/ArtigoPage/Index.cshtml");
                 }
             }
+            else if (op == "Carrinho")
+            {
+
+                if (Session["username"] == null)
+                    return View("/Views/Home/Index.cshtml");
+
+                else
+                {
+                    string session = Session["username"].ToString();
+
+                    Lib_Primavera.Model.Carrinho cart = Lib_Primavera.PriIntegration.GetCarrinhoUser(session);
+
+                    ViewBag.owner = cart.ID_Cliente;
+                    ViewBag.produtos = cart.ID_Produtos;
+                   
+
+                    return View("/Views/ArtigoPage/carrinho.cshtml");
+                }
+            }
+
+            else if (op == "Login")
+            {
+
+                return View("/Views/Home/Login.cshtml");
+
+            }
+
+       
             else
                 return null;
         }
 
-    }
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Index(String Username, String Password,String Remember)
+        {
+            IEnumerable<Lib_Primavera.Model.Cliente> clientes = Lib_Primavera.PriIntegration.ListaClientes();
+            bool encontrou = false;
+            string idCli = "";
+
+            foreach (var cli in clientes)
+            {
+                if (cli.NomeCliente.Equals(Username))
+                {
+                    idCli = cli.ID;
+                    encontrou = true;
+                }
+            }
+
+            ViewBag.Username = Username;
+            ViewBag.Password = Password;
+
+            if (!encontrou)
+                return View("/Views/Home/Login.cshtml");
+            else
+            {
+                Session["username"] = idCli;
+                return View("/Views/Home/Index.cshtml");
+            }
+        }
+
        
+    }
 }
 

@@ -13,7 +13,13 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string DescArtigo //descriçao do artigo
+        public string DescArtigo //nao e descriçao do artigo
+        {
+            get;
+            set;
+        }
+
+        public string Descricao //descriçao do artigo
         {
             get;
             set;
