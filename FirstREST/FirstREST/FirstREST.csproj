@@ -481,6 +481,8 @@
     <Content Include="Views\ArtigoPage\Index.cshtml" />
     <Content Include="Views\ArtigoPage\produtos.cshtml" />
     <Content Include="Views\ArtigoPage\teste.cshtml" />
+    <Content Include="Views\ArtigoPage\carrinho.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
