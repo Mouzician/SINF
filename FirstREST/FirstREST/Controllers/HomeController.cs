@@ -63,7 +63,7 @@ namespace FirstREST.Controllers
 
                     ViewBag.owner = cart.ID_Cliente;
                     ViewBag.produtos = cart.ID_Produtos;
-
+                   
 
                     return View("/Views/ArtigoPage/carrinho.cshtml");
                 }
@@ -76,6 +76,7 @@ namespace FirstREST.Controllers
 
             }
 
+       
             else
                 return null;
         }
@@ -108,6 +109,7 @@ namespace FirstREST.Controllers
             }
         }
 
+       
     }
 }
 

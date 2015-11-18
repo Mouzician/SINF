@@ -1066,22 +1066,22 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto WHERE Artigo = '" + idTemp + "' AND CDU_idProduto = Artigo");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
                     listArtigos = new List<Model.Artigo>();
 
                     while (!objListCarrinho.NoFim())
                     {
                         art = new Model.Artigo();
                         art.ID = objListCarrinho.Valor("artigo");
-                        art.DescArtigo = objListCarrinho.Valor("descricao");
+                        art.DescArtigo = objListCarrinho.Valor("CDU_Descricao");
                         art.Desconto = objListCarrinho.Valor("desconto").ToString();
                         art.STKActual = objListCarrinho.Valor("stkactual").ToString();
-                        art.Preço = objListCarrinho.Valor("pcpadrao").ToString();
+                        art.Preço = objListCarrinho.Valor("PVP1").ToString();
                         art.Familia = objListCarrinho.Valor("familia");
                         art.SubFamilia = objListCarrinho.Valor("subfamilia");
                         art.Marca = objListCarrinho.Valor("marca");
                         art.Modelo = objListCarrinho.Valor("modelo");
-               
+                        art.CDU_Imagem = objListCarrinho.Valor("CDU_Imagem");
 
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
