@@ -24,7 +24,7 @@ namespace FirstREST.Controllers
 
                     IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(6);
 
 
                     ViewBag.artigos = temp;
@@ -38,7 +38,7 @@ namespace FirstREST.Controllers
 
                     ViewBag.id = artigo.ID;
                     ViewBag.preco = artigo.Preço;
-                    ViewBag.descricao = artigo.DescArtigo;
+                    ViewBag.descricao = artigo.Descricao;
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
 
