@@ -424,42 +424,43 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        public static Lib_Primavera.Model.Artigo GetArtigoByCategoria(string sub_familia) //Recomendados
+        public static List<Model.Artigo> GetArtigosByCategoria(string sub_familia) //Recomendados
         {
 
             StdBELista objList;
 
-            Model.Artigo myArt = new Model.Artigo();
+           
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
-
-                objList = PriEngine.Engine.Consulta("SELECT ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Descricao, Desconto, STKActual, Familia, SubFamilia, Marca, Modelo, CDU_Imagem, PVP1 FROM  ARTIGO, ArtigoMoeda WHERE SubFamilia='" + sub_familia + "'");
+                List<Model.Artigo> listArts = new List<Model.Artigo>();
+                objList = PriEngine.Engine.Consulta("SELECT ARTIGO.Artigo, CDU_Descricao, Desconto, STKActual, Familia, SubFamilia, Marca, Modelo, CDU_Imagem, PVP1 FROM  ARTIGO, ArtigoMoeda WHERE SubFamilia='"+sub_familia+"' AND ArtigoMoeda.Artigo = ARTIGO.Artigo");
 
                 while (!objList.NoFim())
                 {
-
+                    Model.Artigo myArt = new Model.Artigo();
                     myArt.ID = objList.Valor("Artigo");
                     float desconto = objList.Valor("Desconto");
                     myArt.Desconto = desconto.ToString();
-                    myArt.DescArtigo = objList.Valor("CDU_Descricao");
+                    //myArt.DescArtigo = objList.Valor("Descricao");
                     double stokeAtual = objList.Valor("STKActual");
                     myArt.STKActual = stokeAtual.ToString();
-                    //float preco = objList.Valor(555.5);
-                    //myArt.Preço = preco.ToString();
+                    double preco = objList.Valor("PVP1");
+                    myArt.Preço = preco.ToString();
                     myArt.Familia = objList.Valor("Familia");
                     myArt.SubFamilia = objList.Valor("SubFamilia");
                     myArt.Marca = objList.Valor("Marca");
                     myArt.Modelo = objList.Valor("Modelo");
                     myArt.CDU_Imagem = objList.Valor("CDU_Imagem");
-
+                    myArt.Descricao = objList.Valor("CDU_Descricao");
+                    listArts.Add(myArt);
                     objList.Seguinte();
 
                 }
 
-                return myArt;
+                return listArts;
             }
             else
                 return null;

@@ -2,12 +2,12 @@
     ViewBag.Title = "teste";
 }
 
-<h2>teste</h2>
 <table>
     @foreach (var artigo in ViewBag.artigos)
     {
         <tr>
             <td>@artigo.ID</td>
+            <td>@artigo.SubFamilia</td>
         </tr>
     }
     <table>

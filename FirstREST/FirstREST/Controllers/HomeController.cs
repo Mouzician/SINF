@@ -43,6 +43,12 @@ namespace FirstREST.Controllers
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
 
+
+                    List<Lib_Primavera.Model.Artigo> listArts = Lib_Primavera.PriIntegration.GetArtigosByCategoria(artigo.SubFamilia);
+                    ViewBag.artigos = listArts.Take(3);
+
+
+
                     //fazer os recomendados , que acho que nao esta a dar a outra funçao.
                     //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
 

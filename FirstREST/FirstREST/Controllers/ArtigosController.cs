@@ -23,9 +23,9 @@ namespace FirstREST.Controllers
 
         //PAra os recomendados
         // GET /api/artigos?familia=  
-        public Artigo GetByCategoria(string sub_familia)
+        public IEnumerable<Lib_Primavera.Model.Artigo> GetByCategoria(string sub_familia)
         {
-            Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigoByCategoria(sub_familia);
+            IEnumerable<Lib_Primavera.Model.Artigo> artigo = Lib_Primavera.PriIntegration.GetArtigosByCategoria(sub_familia);
             if (artigo == null)
             {
                 throw new HttpResponseException(
