@@ -17,21 +17,30 @@ namespace FirstREST.Controllers
         {
             //string idString = id.ToString();
 
-            Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
+            if (id == null)
+            {
+                IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-            ViewBag.id = artigo.ID;
-            ViewBag.preco = artigo.Preço;
-            ViewBag.descricao = artigo.DescArtigo;
-            ViewBag.stoke = artigo.SubFamilia;
-            ViewBag.imagem = artigo.CDU_Imagem;
-           
-            //fazer os recomendados , que acho que nao esta a dar a outra funçao.
-            //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
+                ViewBag.artigos = artigos;
 
-            return View();
-        }
+                return View("/Views/ArtigoPage/teste.cshtml");
+            }
+            else
+            {
+                Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
 
-       
+                ViewBag.id = artigo.ID;
+                ViewBag.preco = artigo.Preço;
+                ViewBag.descricao = artigo.DescArtigo;
+                ViewBag.stoke = artigo.SubFamilia;
+                ViewBag.imagem = artigo.CDU_Imagem;
+
+                //fazer os recomendados , que acho que nao esta a dar a outra funçao.
+                //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
+
+                return View("/Views/ArtigoPage/Index.cshtml");
+            }
+        }       
 
    
     }
