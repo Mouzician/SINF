@@ -24,9 +24,12 @@ namespace FirstREST.Controllers
 
                     IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-                    ViewBag.artigos = artigos;
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
 
-                    return View("/Views/ArtigoPage/teste.cshtml");
+
+                    ViewBag.artigos = temp;
+
+                    return View("/Views/ArtigoPage/produtos.cshtml");
                 }
                 else
                 {
