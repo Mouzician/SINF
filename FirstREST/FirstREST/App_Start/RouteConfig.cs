@@ -14,6 +14,16 @@ namespace FirstREST
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "HomePost",
+                "Home/POST/{action}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index"
+                }
+                );
+
+            routes.MapRoute(
                 "Home",
                 "Home/{op}/{op_dois}",
                 new

@@ -74,9 +74,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                     </div>
                     <!-- search-scripts -->
-                    <script src="js/classie.js"></script>
-                    <script src="js/uisearch.js"></script>
-                    <script>
+                    <script src="~/Content/site/js/classie.js"></script>
+                    <script src="~/Content/site/js/uisearch.js"></script>
+                    <script> 
                         new UISearch(document.getElementById('sb-search'));
                     </script>
                     <!-- //search-scripts -->
@@ -205,7 +205,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </div>
                                 <div class="product_price">
                                     <span class="price-access">€ @artigo.Preço</span>
-                                    <button class="button1"><span>Add to cart</span></button>
+                                    <form method="post" action="/Home/POST/addCarrinho">
+                                        <input hidden name="idProduto" type="text" id="idProduto" value="@artigo.ID" />
+                                        <button class="button1"><span>Add to cart</span></button>
+                                    </form>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

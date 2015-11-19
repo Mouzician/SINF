@@ -87,6 +87,22 @@ namespace FirstREST.Controllers
                 return null;
         }
 
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult addCarrinho(string idProduto)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
+            carrinhoLinha.CDU_idProduto = idProduto;
+            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
+            carrinhoLinha.CDU_idCarrinho = carrinho.ID;
+
+            erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
+
+
+            return View();
+        }
+
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(String Username, String Password,String Remember)
         {

@@ -1183,10 +1183,18 @@ namespace FirstREST.Lib_Primavera
 
                     //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                     int nextid = 1;
+                    string max_str = objList.Valor("max").ToString();
+
+                    if (max_str == "")
+                        nextid = 1;
+                    else
+                    { 
+                    int max_sum = Int32.Parse(max_str);
                     while (!objList.NoFim())
                     {
-                        nextid += objList.Valor("max");
+                        nextid += max_sum;
                         objList.Seguinte();
+                    }
                     }
                     carrinho.CDU_idCarrinhoProduto = nextid.ToString();
 
