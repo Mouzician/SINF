@@ -90,7 +90,7 @@
                     <div class='item__image'>
                         <img src="/Content/site/images/products/@cart.CDU_Imagem">
                     </div>
-                    <div class='item__body'>
+                    <div class='item__body' style="margin-left:auto; margin-right:auto; width:800px; height: 120px; overflow-y: scroll;">
                         <h2 class='item__title'>@cart.Marca</h2>
                         <p class='item__description'>@cart.DescArtigo</p>
                     </div>
@@ -135,7 +135,9 @@
                 <span class='total js-total' id="checkoutt"></span>
             </li>
             <li id="checkout-bt">
-                <a class='button js-checkout-button' href="#" onclick="CheckItOut();return false;">Checkout</a>
+                <form action="/Home/POST/pagamento" method="post">
+                    <button type="submit" class='button js-checkout-button' >Checkout</button>
+                </form>
             </li>
         </ul>
     </div>

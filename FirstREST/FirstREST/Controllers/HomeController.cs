@@ -102,6 +102,7 @@ namespace FirstREST.Controllers
                     Lib_Primavera.Model.Carrinho cart = Lib_Primavera.PriIntegration.GetCarrinhoUser(session);
 
                     ViewBag.owner = cart.ID_Cliente;
+
                     ViewBag.produtos = cart.ID_Produtos;
                    
 
@@ -165,6 +166,20 @@ namespace FirstREST.Controllers
             }
         }
 
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult pagamento(string s)
+        {
+
+            Lib_Primavera.Model.DocVenda  dv = new   Lib_Primavera.Model.DocVenda();
+            dv.Entidade = Session["username"].ToString();
+            dv.DocType = "FA";
+            Lib_Primavera.PriIntegration.Encomendas_New(dv);
+
+
+            return View();
+        
+        }
        
     }
 }
