@@ -826,15 +826,28 @@ namespace FirstREST.Lib_Primavera
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
 
-                        PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
-              
+                    PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
+
+
                     
-                    double pvp = 0; 
+                       
                    
-                    foreach (Model.LinhaDocVenda lin in lstlindv)
+                    double pvp = 0;
+                    if (dv.LinhasDoc != null)
+                        foreach (Model.LinhaDocVenda lin in lstlindv)
+                        {
+                            pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
+                            PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, armazem, "", pvp, desconto);
+                        }
+                    else
                     {
-                        pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
-                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade,armazem, "", pvp, desconto);
+
+                        List<Model.Artigo> temp = GetCarrinhoUser(dv.Entidade).ID_Produtos;
+                        foreach (Model.Artigo lin in temp)
+                        {
+                            pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.ID, "EUR", "UN", "PVP1", false, 0);
+                            PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.ID, 1, armazem, "", pvp, desconto);
+                        }
                     }
 
 

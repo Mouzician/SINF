@@ -164,7 +164,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <span class='total js-total' id="checkoutt"></span>
             </li>
             <li id="checkout-bt">
-                <a class='button js-checkout-button' href="#" onclick="CheckItOut();return false;">Checkout</a>
+                <form action="/Home/POST/pagamento" method="post">
+                    <button type="submit" class='button js-checkout-button' >Checkout</button>
+                </form>
             </li>
         </ul>
     </div>
