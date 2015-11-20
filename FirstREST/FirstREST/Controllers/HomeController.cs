@@ -15,8 +15,42 @@ namespace FirstREST.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index(String op, String op_dois)
         {
+            if (op == "Categoria")
+            {
+                if (op_dois == null)
+                {
+                    return View("/Views/Home/Index.cshtml");
+                }
 
-            if (op == "Artigos")
+                else
+                {
+
+                    List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+                    List<Lib_Primavera.Model.Artigo> artigos2 = new List<Lib_Primavera.Model.Artigo>();
+
+                    foreach (var ar in artigos)
+                    {
+                        if (ar.Familia == op_dois)
+                        {
+                            artigos2.Add(ar);
+                        }
+                    }
+
+                    if(artigos2.Count() == 0)
+                        return View("/Views/Home/Index.cshtml");
+
+                    else{
+                        ViewBag.artigos = artigos2;
+                        return View("/Views/ArtigoPage/produtos.cshtml");
+
+                    }
+
+                }
+
+            }
+
+
+            else if (op == "Artigos")
             {
 
                 if (op_dois == null)
