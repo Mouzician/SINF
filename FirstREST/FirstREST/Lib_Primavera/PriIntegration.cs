@@ -1051,7 +1051,6 @@ namespace FirstREST.Lib_Primavera
 
             Model.Artigo art = new Model.Artigo();
             Model.Carrinho carr = new Model.Carrinho();
-
             List<Model.Artigo> listArtigos = new List<Model.Artigo>();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
@@ -1068,7 +1067,7 @@ namespace FirstREST.Lib_Primavera
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
                     objListCarrinho = PriEngine.Engine.Consulta("SELECT ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
-                    listArtigos = new List<Model.Artigo>();
+                   
 
                     while (!objListCarrinho.NoFim())
                     {

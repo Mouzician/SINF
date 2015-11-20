@@ -68,6 +68,7 @@ namespace FirstREST.Controllers
                     Lib_Primavera.Model.Carrinho cart = Lib_Primavera.PriIntegration.GetCarrinhoUser(session);
 
                     ViewBag.owner = cart.ID_Cliente;
+
                     ViewBag.produtos = cart.ID_Produtos;
                    
 
