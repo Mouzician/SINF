@@ -169,9 +169,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <h3>@ViewBag.id</h3>
                             <p> @ViewBag.preco €</p>
 
-
+                            
                             <div class="btn_form">
-                                <a href="single.html">buy now</a>
+                                <form method="post" action="/Home/POST/addCarrinho">
+                                    <input hidden name="idProduto" type="text" id="idProduto" value="@ViewBag.id" />
+                                    <button class="button1"><span>Add to cart</span></button>
+                                </form>
+                         
                             </div>
                             <a href="#"><span>login to save in wishlist </span></a>
 
