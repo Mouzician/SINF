@@ -30,20 +30,20 @@ namespace FirstREST.Controllers
 
                     foreach (var ar in artigos)
                     {
-                        if (ar.Familia == op_dois)
+                        if (ar.SubFamilia == op_dois)
                         {
                             artigos2.Add(ar);
                         }
                     }
 
-                    if(artigos2.Count() == 0)
-                        return View("/Views/Home/Index.cshtml");
+                    //if(artigos2.Count() == 0)
+                    //    return View("/Views/Home/Index.cshtml");
 
-                    else{
+                    //else{
                         ViewBag.artigos = artigos2;
                         return View("/Views/ArtigoPage/produtos.cshtml");
 
-                    }
+                    //}
 
                 }
 
@@ -117,6 +117,10 @@ namespace FirstREST.Controllers
 
             }
 
+            else if (op == null && op_dois == null)
+            {
+                return View("/Views/Home/Index.cshtml");
+            }
        
             else
                 return null;
