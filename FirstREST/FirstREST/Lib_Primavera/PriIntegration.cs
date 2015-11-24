@@ -44,6 +44,7 @@ namespace FirstREST.Lib_Primavera
                         Telemóvel = objList.Valor("Fac_Tel"),
                         Email = objList.Valor("EnderecoWeb"),
                         //Password = PriEngine.Platform.Criptografia.Descripta(objList.Valor("CDU_PASSWORD"), 50)
+                        Password = objList.Valor("CDU_PASSWORD")
                     });
                     objList.Seguinte();
 
@@ -133,8 +134,7 @@ namespace FirstREST.Lib_Primavera
 
                         //EDITAR A PASSWORD
                         campo.Nome = "CDU_Password";
-                        //FALTA mudar na base de dados.
-                        //campo.Valor = PriEngine.Platform.Criptografia.Encripta(cliente.Password, 50);
+                        PriEngine.Platform.Criptografia.Encripta(cliente.Password, 50);
                         campo.Valor = cliente.Password;
                         campos.Insere(campo);
 
@@ -313,6 +313,7 @@ namespace FirstREST.Lib_Primavera
                     campo.Nome = "CDU_Password";
                     //É preciso aumentar o espaço da base de dados, 20 nao chega para encripta-la tem que ter 50 para ai ou mais.
                     //campo.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 20);
+                    PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
                     campo.Valor = cli.Password;
                     campos.Insere(campo);
                     myCli.set_CamposUtil(campos);
