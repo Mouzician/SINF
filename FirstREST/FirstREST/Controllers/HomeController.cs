@@ -151,7 +151,7 @@ namespace FirstREST.Controllers
 
             foreach (var cli in clientes)
             {
-                if (cli.NomeCliente.Equals(Username))
+                if (cli.NomeCliente.Equals(Username) && cli.Password.Equals(Password))
                 {
                     idCli = cli.ID;
                     encontrou = true;

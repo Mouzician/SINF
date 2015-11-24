@@ -4,27 +4,23 @@
 
 <html>
 <body>
-    <div class="container">
-        <div class="card card-container">
-            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" id='your-form-name' action='/Home/POST/Index' method='POST'>
-                <span id="reauth-email" class="reauth-email"></span>
-                @Html.TextBox("Username")
-                <br />
-                @Html.TextBox("Password")
-                <div id="remember" class="checkbox">
+        <div class="container">
+
+            <form class="form-signin" action='/Home/POST/Index' method='POST'>
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <label for="inputEmail" class="sr-only">Username</label>
+                @Html.TextBox("Username", "", new { type = "name", id = "inputEmail", Class = "form-control", placeholder = "Username"})
+                <label for="inputPassword" class="sr-only">Password</label>
+                @Html.TextBox("Password", "", new {type="password", id="inputPassword", Class="form-control",placeholder="Password"})
+                <div class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
-            </form><!-- /form -->
-            <a href="#" class="forgot-password">
-                Forgot the password?
-            </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
+        </div> <!-- /container -->
+  
 </body>
 </html>
