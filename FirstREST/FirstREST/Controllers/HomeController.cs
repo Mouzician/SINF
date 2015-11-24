@@ -77,11 +77,23 @@ namespace FirstREST.Controllers
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
 
+                    var index = 0;
+                    var index2 = 0;
 
                     List<Lib_Primavera.Model.Artigo> listArts = Lib_Primavera.PriIntegration.GetArtigosByCategoria(artigo.SubFamilia);
+
+                    foreach (var v in listArts)
+                    {
+                        if (v.ID.Equals(artigo.ID))
+                        {
+                            index2 = index;
+
+                        }
+                        index++;
+                    }
+
+                    listArts.RemoveAt(index2);
                     ViewBag.artigos = listArts.Take(3);
-
-
 
                     //fazer os recomendados , que acho que nao esta a dar a outra funçao.
                     //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
@@ -102,7 +114,7 @@ namespace FirstREST.Controllers
                     Lib_Primavera.Model.Carrinho cart = Lib_Primavera.PriIntegration.GetCarrinhoUser(session);
 
                     ViewBag.owner = cart.ID_Cliente;
-
+                    ViewBag.Nome = Session["name"];
                     ViewBag.produtos = cart.ID_Produtos;
                    
 
@@ -119,6 +131,12 @@ namespace FirstREST.Controllers
 
             else if (op == null && op_dois == null)
             {
+                return View("/Views/Home/Index.cshtml");
+            }
+
+            else if (op == "Logout")
+            {
+                Session.Clear();
                 return View("/Views/Home/Index.cshtml");
             }
        
@@ -166,6 +184,7 @@ namespace FirstREST.Controllers
             else
             {
                 Session["username"] = idCli;
+                Session["name"] = Username;
                 return View("/Views/Home/Index.cshtml");
             }
         }
@@ -183,6 +202,21 @@ namespace FirstREST.Controllers
 
             return View();
         
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Search(string wordsearch)
+        {
+
+            IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.SearchArtigosNome(wordsearch);
+
+            IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(6);
+
+
+            ViewBag.artigos = temp;
+
+            return View("/Views/ArtigoPage/produtos.cshtml");
+
         }
        
     }

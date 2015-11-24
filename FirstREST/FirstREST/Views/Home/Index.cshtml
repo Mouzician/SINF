@@ -4,16 +4,36 @@
     <!-- header-section-starts -->
     <div class="header" >
         <div class="banner">
-            <div class="signing text-right">
+            <div>
+
                 <div class="container">
-                    <div class="sign-in">
-                        <a href="signin.html">Sign In</a>
-                    </div>
-                    <div class="sign-up1">
-                        <a href="signin.html">Sign Up</a>
-                    </div>
+
+                    @{
+
+                        if (Session["Username"] == null)
+                        {
+                            <div class="sign-up1">
+                                <a href="/Home/Login">Sign Up</a>
+                            </div>
+
+                            <div class="sign-in">
+                                <a href="/Home/Login">Sign In</a>
+                            </div>
+
+                        }
+
+                        else
+                        {
+                            <div class="sign-in">
+                                <a href="/Home/Logout">Logout @Session["name"]</a>
+                            </div>
+                        }
+                    }
+
+
                     <div class="clearfix"></div>
                 </div>
+
             </div>
             <div class="banner-info text-center">
                 <i class="shipping"></i>

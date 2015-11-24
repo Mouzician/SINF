@@ -5,7 +5,7 @@
     <title>Primavera Online Store</title>
     <link href="/Content/site/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link href="/Content/site/css/cart.css" rel='stylesheet' type='text/css' />
-    <link href="~/Content/site/css/signin.css" rel='stylesheet' type='text/css' />
+    <link href="/Content/site/css/signin.css" rel='stylesheet' type='text/css' />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/Content/site/js/jquery.min.js"></script>
     <!-- Custom Theme files -->
@@ -63,11 +63,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- start search-->
                     <div class="search-box">
                         <div id="sb-search" class="sb-search">
-                            <form>
-                                <input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+                            <form method="post" action="/Home/POST/Search">
+                                <input class="sb-search-input" placeholder="Enter your search term..." type="wordsearch" name="wordsearch" id="wordsearch">
                                 <input class="sb-search-submit" type="submit" value="">
                                 <span class="sb-icon-search"> </span>
                             </form>
+
+                            
                         </div>
                     </div>
                     <!-- search-scripts -->
@@ -78,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </script>
                     <!-- //search-scripts -->
 
-                    <a href="cart.html"><i class="cart"></i></a>
+                    <a href="/Home/Carrinho"><i class="cart"></i></a>
                 </div>
                 <div class="navigation">
                     <div>

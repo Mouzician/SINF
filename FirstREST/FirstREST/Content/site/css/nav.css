@@ -24,7 +24,6 @@ ul.nav{
 .nav > li {
 	display: inline-block;
 	float:left;
-	background: url(../images/menu-divider.png) no-repeat right;
 	margin: 0 17px;
 }
 .nav li.active, .nav li a:hover {

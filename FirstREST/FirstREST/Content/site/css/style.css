@@ -214,7 +214,7 @@ i.shipping {
 	font-size: 1.2em;
 	text-decoration:none;
 	letter-spacing: 1px;
-	font-weight: 400;
+	font-weight: 600;
 	background: #16a085;
 	padding: 10px 22px;
 	border-top-left-radius: 9px;
@@ -238,12 +238,14 @@ i.shipping {
 	background: #2A576C;
 }
 .sign-in {
-	width: 89%;
-	float: left;
+	/* width: 89%; */
+	margin-top: 2%;
+	float: right;
 }
 .sign-up1 {
 	width: 11%;
-	float: left;
+	margin-top: 2.0%;
+	float: right;
 }
 .signing {
 	margin: 3em 0;

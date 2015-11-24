@@ -1589,8 +1589,8 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO  WHERE Descricao LIKE '%" + id + "%' OR Artigo LIKE '%" + id + "%'");
-
+                objList = PriEngine.Engine.Consulta("SELECT DISTINCT ARTIGO.Artigo, ArtigoMoeda.Artigo,  CDU_Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo,  CDU_Imagem, PVP1 FROM  ARTIGO, ArtigoMoeda  WHERE ARTIGO.Artigo = ArtigoMoeda.Artigo AND (CDU_Descricao LIKE '%" + id + "%' OR Marca LIKE '%" + id + "%' )");
+       
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
 
@@ -1599,17 +1599,17 @@ namespace FirstREST.Lib_Primavera
                     listArtigos.Add(new Model.Artigo
                     {
                         ID = objList.Valor("artigo"),
-                        DescArtigo = objList.Valor("descricao"),
+                        Descricao = objList.Valor("CDU_Descricao"),
                         Desconto = objList.Valor("desconto").ToString(),
                         STKActual = objList.Valor("stkactual").ToString(),
-                        Preço = objList.Valor("pcpadrao").ToString(),
+                        Preço = objList.Valor("PVP1").ToString(),
                         Familia = objList.Valor("familia"),
                         SubFamilia = objList.Valor("subfamilia"),
                         Marca = objList.Valor("marca"),
-                        Modelo = objList.Valor("modelo")
+                        Modelo = objList.Valor("modelo"),
+                        CDU_Imagem = objList.Valor("CDU_Imagem")
                     });
                     objList.Seguinte();
-
                 }
 
 
