@@ -193,14 +193,19 @@ namespace FirstREST.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult pagamento(string s)
         {
-
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocVenda  dv = new   Lib_Primavera.Model.DocVenda();
             dv.Entidade = Session["username"].ToString();
             dv.DocType = "FA";
-            Lib_Primavera.PriIntegration.Encomendas_New(dv);
+            erro = Lib_Primavera.PriIntegration.Encomendas_New(dv);
+
+            if (erro.Erro == 0)
+            {
+                ;
+            }
 
 
-            return View();
+            return View("/Views/Home/Index.cshtml");
         
         }
 

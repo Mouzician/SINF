@@ -1,18 +1,13 @@
 ﻿
 <!DOCTYPE html>
-
 <html>
-<head>
-   
-    <script src="/Content/site/js/jquery.etalage.min.js"></script>
-</head>
+
 <body>
-   
     <!-- start Contact-page -->
     <!-- content-section-starts -->
     <br />
     <div class="container">
-        <h1>This Shopping Cart belongs to: @ViewBag.Nome</h1>
+        <h1>This Shopping Cart belongs to: @ViewBag.owner</h1>
     </div>
     <br />
     <br />
@@ -28,13 +23,12 @@
                         <div class='item__image'>
                             <img src="/Content/site/images/products/@cart.CDU_Imagem">
                         </div>
-                        <div class='item__body'>
+                        <div class='item__body' style="margin-left:auto; margin-right:auto; width:800px; height: 120px; overflow-y: scroll;">
                             <h2 class='item__title'>@cart.Marca</h2>
                             <p class='item__description'>@cart.DescArtigo</p>
                         </div>
                         <div class='item__price' id="{$pps.nome}price">@cart.Preço</div>
                         <input type="hidden" id="{$pps.nome}hidden" value="{$pps.preco}">
-
                         <div style="position:absolute;right:40px; top:40px;">
                             <form action="{$BASE_URL}actions/users/removecart.php" method="post">
                                 <input type="hidden" name="precoind" id="precoind" value="{$pps.nome}">
@@ -51,7 +45,6 @@
             </ul>
         </div>
     }
-
     <div class='summary js-summary'>
         <ul class='steps'>
             <li>
@@ -73,14 +66,14 @@
                 <span class='total js-total' id="checkoutt"></span>
             </li>
             <li id="checkout-bt">
-                <a class='button js-checkout-button' href="#" onclick="CheckItOut();return false;">Checkout</a>
+                <form action="/Home/POST/pagamento" method="post">
+                    <button type="submit" class='button js-checkout-button'>Checkout</button>
+                </form>
             </li>
         </ul>
     </div>
 
-
     <!-- content-section-ends -->
-
     <div class="footer">
         <div class="up-arrow">
             <a class="scroll" href="#home"><img src="images/up.png" alt="" /></a>
