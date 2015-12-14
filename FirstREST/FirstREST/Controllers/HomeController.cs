@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Http;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace FirstREST.Controllers
 {
@@ -40,6 +41,7 @@ namespace FirstREST.Controllers
                     //    return View("/Views/Home/Index.cshtml");
 
                     //else{
+                     ViewBag.cat = op_dois;
                         ViewBag.artigos = artigos2;
                         return View("/Views/ArtigoPage/produtos.cshtml");
 
@@ -58,10 +60,8 @@ namespace FirstREST.Controllers
 
                     IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(6);
 
-
-                    ViewBag.artigos = temp;
+                    ViewBag.artigos = artigos;
 
                     return View("/Views/ArtigoPage/produtos.cshtml");
                 }
@@ -131,6 +131,16 @@ namespace FirstREST.Controllers
 
             else if (op == null && op_dois == null)
             {
+
+                List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                artigos.Sort((y, x) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+
+                IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                ViewBag.top = temp;
+
+
                 return View("/Views/Home/Index.cshtml");
             }
 
@@ -156,8 +166,33 @@ namespace FirstREST.Controllers
 
             erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
 
+            if (erro.Erro == 0)
+            {
+                Console.Write(idProduto);
+            }
 
-            return View();
+            Console.Write(idProduto);
+            return View("/Views/Home/Index.cshtml");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult removeCarrinho(string idProduto)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
+            carrinhoLinha.CDU_idProduto = idProduto;
+            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
+            carrinhoLinha.CDU_idCarrinho = carrinho.ID;
+
+            erro = Lib_Primavera.PriIntegration.DelArtigoCarrinho(carrinhoLinha);
+
+            if (erro.Erro == 0)
+            {
+                ;
+            }
+
+
+            return View("/Views/Home/Index.cshtml");
         }
 
         [System.Web.Mvc.HttpPost]
@@ -224,6 +259,63 @@ namespace FirstREST.Controllers
 
         }
        
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Filtro(string filtro, string categoria)
+        {
+
+            List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+            List<Lib_Primavera.Model.Artigo> artigos2 = new List<Lib_Primavera.Model.Artigo>();
+
+            foreach (var ar in artigos)
+            {
+                if (ar.SubFamilia.Equals(categoria))
+                {
+                    artigos2.Add(ar);             
+                }
+            }
+
+            if (filtro == "caro")
+            {
+                artigos2.Sort((y, x) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+            }
+
+            else
+            {
+                artigos2.Sort((x, y) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+
+            }
+
+            ViewBag.cat = categoria;
+            ViewBag.artigos = artigos2;
+            
+            return View("/Views/ArtigoPage/produtos.cshtml");
+
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Filtro2(string priceMaximum, string priceMinimun, string categoria)
+        {
+
+            List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+            List<Lib_Primavera.Model.Artigo> artigos2 = new List<Lib_Primavera.Model.Artigo>();
+
+            foreach (var ar in artigos)
+            {
+                if (ar.SubFamilia.Equals(categoria) && float.Parse(ar.Preço) <= float.Parse(priceMaximum) && float.Parse(ar.Preço) >= float.Parse(priceMinimun))
+                {
+                    artigos2.Add(ar);
+                }
+            }
+
+            
+
+            ViewBag.cat = categoria;
+            ViewBag.artigos = artigos2;
+
+            return View("/Views/ArtigoPage/produtos.cshtml");
+
+        }
+
     }
 }
 

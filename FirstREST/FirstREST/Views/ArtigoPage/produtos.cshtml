@@ -1,10 +1,4 @@
-﻿<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <body>
     <!-- start Dresses-page -->
@@ -14,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <ul class="breadcrumbs">
 
                 <li class="home">
-                    <a href="index.html" title="Go to Home Page"><img src="~/Content/site/images/home.png" alt="" /></a>&nbsp;
+                    <a href="/Home/POST/Index" title="Go to Home Page"><img src="~/Content/site/images/home.png" alt="" /></a>&nbsp;
                     <span>&gt;</span>
                 </li>
                 <li>
@@ -26,7 +20,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </li>
             </ul>
             <ul class="previous">
-                <li><a href="index.html">Back to Previous Page</a></li>
+                <li><a href="/Home/POST/Index">Back to Previous Page</a></li>
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -37,42 +31,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="mens-toolbar">
                     <div class="sort">
                         <div class="sort-by">
-                            <label>Sort By</label>
-                            <select>
-                                <option value="">
-                                    Popularity
-                                </option>
-                                <option value="">
-                                    Price : High to Low
-                                </option>
-                                <option value="">
-                                    Price : Low to High
-                                </option>
-                            </select>
-                            <a href=""><img src="images/arrow2.gif" alt="" class="v-middle"></a>
+                            <form id="myform" method="post" action="/Home/POST/Filtro">
+                                <input name="categoria" type="hidden" value="@ViewBag.cat" hidden>
+                                <select name="filtro" onchange="change()">
+                                    <option disabled selected> -- select an option -- </option>
+                                    <option value="caro">Preço: mais caro</option>
+                                    <option value="barato">Preço: mais barato</option>
+                                </select>
+                            </form>
+                            <script>
+									function change(){
+	    								document.getElementById("myform").submit();
+									}
+                            </script>
+                            <br />
                         </div>
-                    </div>
-                    <div class="pager">
-                        <div class="limiter visible-desktop">
-                            <label>Show</label>
-                            <select>
-                                <option value="" selected="selected">
-                                    9
-                                </option>
-                                <option value="">
-                                    15
-                                </option>
-                                <option value="">
-                                    30
-                                </option>
-                            </select> per page
-                        </div>
-                        <ul class="dc_pagination dc_paginationA dc_paginationA06">
-                            <li><a href="#" class="previous">Pages</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                        </ul>
-                        <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -84,7 +57,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 {
 
                     <div class="box1">
-                        <div class="col_1_of_single1 span_1_of_single1" style='height:380px'>
+                        <div class="col_1_of_single1 span_1_of_single1" style='height:310px'>
 
                             <div class="view1 view-fifth1">
                                 <div class="top_box">
@@ -93,7 +66,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <!--<p class="m_2">{$cat.nome}</p>-->
                                     <a href="/Home/Artigos/@artigo.ID">
                                         <div class="grid_img">
-                                            <div class="css3"><img src="~/Content/site/images/products/@artigo.CDU_Imagem" alt="" /></div>
+                                            <div class="css3"><img src="~/Content/site/images/products/@artigo.CDU_Imagem" style="min-width:148px;min-height:121px" /></div>
                                             <div class="mask1">
                                                 <div class="info">Ver Produto</div>
                                             </div>
@@ -104,18 +77,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     </a>
                                 </div>
                             </div>
-
-                            <ul class="list2">
-                                <li>
-                                    <img src="/Content/site/images/plus.png" alt="" />
-                                    <ul class="icon1 sub-icon1 profile_img">
-                                        <li>
-                                            <a class="active-icon c1" href="~/Home/Artigos/@artigo.ID">Add To Bag </a>
-
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -124,50 +85,41 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="clearfix"></div>
             </div>
 
-
-
-
-
-
-
-
             <div class="rsidebar span_1_of_left">
-
                 <section class="sky-form">
-                    <h4>Price</h4>
+
+                    <h4>Price range</h4>
+
                     <div class="row row1 scroll-pane">
-                        <div class="col col-4">
-                            <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>$50.00 and Under (30)</label>
-                        </div>
-                        <div class="col col-4">
-                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$100.00 and Under (30)</label>
-                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$200.00 and Under (30)</label>
-                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$300.00 and Under (30)</label>
-                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$400.00 and Under (30)</label>
-                        </div>
+                        <form class="form-inline" role="form" action="/Home/POST/Filtro2" method="post">
+                            <div class="col col-4">
+                                <input name="categoria" type="hidden" value="@ViewBag.cat" hidden>
+                                <label for=fader>Maximum Price</label>
+                                <input type=range name=priceMaximum min=0 max=2000 value=2000 id=fader step=1 oninput="outputUpdateMax(value)">
+                                <output for=fader id=pmax>2000</output>
+                                <label for=fader>Minimum Price</label>
+                                <input type=range name=priceMinimun min=0 max=2000 value=0 id=fader step=1 oninput="outputUpdateMin(value)">
+                                <output for=fader id=pmin>0</output>
+                                <div class="form-group">
+                                    <input id="submit" type="submit" value="Submit" class="btn btn-default">
+                                </div>
+                                <script>
+                                    function outputUpdateMin(pmin) {
+                                        document.querySelector('#pmin').value = pmin;
+                                    }
+                                </script>
+                                <script>
+                                    function outputUpdateMax(pmax) {
+                                        document.querySelector('#pmax').value = pmax;
+                                    }
+                                </script>
+                            </div>
+                        </form>
                     </div>
                 </section>
-
             </div>
             <div class="clearfix"></div>
             <!-- content-section-ends -->
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="up-arrow">
-        </div>
-        <div class="container">
-            <div class="copyrights">
-                <p>Copyright &copy; 2015 All rights reserved | Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
-            </div>
-            <div class="footer-social-icons">
-                <a href="#"><i class="fb"></i></a>
-                <a href="#"><i class="tw"></i></a>
-                <a href="#"><i class="in"></i></a>
-                <a href="#"><i class="pt"></i></a>
-            </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </body>

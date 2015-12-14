@@ -2,7 +2,7 @@
 <html>
 <body>
     <!-- header-section-starts -->
-    <div class="header" >
+    <div class="header">
         <div class="banner">
             <div>
 
@@ -43,240 +43,65 @@
             </div>
         </div>
     </div>
-        <div class="container">
-            <div class="recommand-section">
-                <div class="recommand-section-head text-center">
-                    <h3><span>R</span>ecommended</h3>
-                    <p>“check out some recommended products also”</p>
-                </div>
-                <div class="recommand-section-grids">
 
-                    <div class="standards">
-                        <ul class="selectors_wrapper">
-                            <div class="tags">
-                                <h3>Tags  <img src="images/tag.png" alt="" /></h3>
-                            </div>
-                            <li class="selector active" data-selector="1">Popular</li>
-                            <li class="selector" data-selector="2">Sales</li>
-                            <li class="selector" data-selector="3">Seller</li>
-                            <li class="selector" data-selector="4">Rate</li>
-                        </ul>
+    <div class="container">
+        <div class="recommand-section">
+            <div class="recommand-section-head text-center">
+                <h3><span>R</span>ecommended</h3>
+                <p>Check out some recommended products also!</p>
+            </div>
+            </div>
+        <div class="recommand-section-grids" style="padding-right:5.5cm; padding-bottom:2cm;">
+            <div class="standards">
+                <div class="standard_content">
+                    <!-- 1st product -->
+                    <div class="tag-grid" style="height: 320px">
+                        <div class="portfolio app mix_all" data-cat="app">
+                            <div class="portfolio-wrapper">
+                                <a href="" class="b-link-stripe b-animate-go  thickbox">
+                                    <img src="~/Content/site/images/products/@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(0).CDU_Imagem)" class="img-responsive" alt="" />
+                                </a>
+                                <div class="r-title">
 
-                        <div class="standard_content">
-                            <div class="standard active" data-selector="1">
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic7.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Lolona Bag</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h3>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(0).Marca)</h3>
+                                    <h4>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(0).Preço)</h4>
                                 </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic8.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Jism Watch</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic9.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Sunny Dress</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="standard" data-selector="2">
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic7.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Lolona Bag</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic9.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Sunny Dress</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic8.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Jism Watch</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="standard" data-selector="3">
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic9.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Sunny Dress</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic7.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Lolona Bag</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic8.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Jism Watch</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="standard" data-selector="4">
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic7.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Jism Watch</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic9.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Lolona Bag</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-grid">
-                                    <div class="portfolio app mix_all  data-cat=" app" style="display: inline-block; opacity: 1;">
-                                        <div class="portfolio-wrapper">
-                                            <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                                                <img src="images/pic8.jpg" class="img-responsive" alt="" /><div class="b-wrapper">
-                                                    <div class="atc"><p>Add To Cart</p></div><div class="clearfix"></div><h2 class="b-animate b-from-left    b-delay03 "><img src="images/icon-eye.png" class="img-responsive go" alt="" /></h2>
-                                                </div>
-                                            </a>
-                                            <div class="r-title">
-                                                <h3>Sunny Dress</h3>
-                                                <h4>$30</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
+                    <!-- 2nd product -->
+                    <div class="tag-grid" style="height: 350px">
+                        <div class="portfolio app mix_all" data-cat="app">
+                            <div class="portfolio-wrapper">
+                                <a href="" class="b-link-stripe b-animate-go  thickbox">
+                                    <img src="~/Content/site/images/products/@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(1).CDU_Imagem)" class="img-responsive" alt="" />
+                                </a>
+                                <div class="r-title">
+                                    <h3>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(1).Marca)</h3>
+                                    <h4>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(1).Preço)</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 3rd product -->
+                    <div class="tag-grid" style="height: 380px">
+                        <div class="portfolio app mix_all" data-cat="app">
+                            <div class="portfolio-wrapper">
+                                <a href="" class="b-link-stripe b-animate-go  thickbox">
+                                    <img src="~/Content/site/images/products/@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(2).CDU_Imagem)" class="img-responsive" alt="" />
+                                </a>
+                                <div class="r-title">
+                                    <h3>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(2).Marca)</h3>
+                                    <h4>@((ViewBag.top as IEnumerable<FirstREST.Lib_Primavera.Model.Artigo>).ElementAt(2).Preço)</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
+                <div class="clearfix"></div>
             </div>
         </div>
-        
-    <div class="footer">
-        <div class="up-arrow">
-            <a class="scroll" href="#home"><img src="images/up.png" alt="" /></a>
-        </div>
-        <div class="container">
-            <div class="copyrights">
-                <p>Copyright &copy; 2015 All rights reserved | Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
-            </div>
-            <div class="footer-social-icons">
-                <a href="#"><i class="fb"></i></a>
-                <a href="#"><i class="tw"></i></a>
-                <a href="#"><i class="in"></i></a>
-                <a href="#"><i class="pt"></i></a>
-            </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </body>

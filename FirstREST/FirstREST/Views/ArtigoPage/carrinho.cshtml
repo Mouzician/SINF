@@ -12,11 +12,16 @@
     <br />
     <br />
 
-    @foreach (var cart in ViewBag.produtos)
+    @if (ViewBag.produtos == null)
+    {
+        Response.Redirect("/Home/POST/Index");
+    }
+    else { 
+    foreach (var cart in ViewBag.produtos)
     {
     <!-- list of products in the cart -->
         <div class="row">
-            <input type="hidden" name="idP" value="{$pps.idProduto}">
+            <input type="hidden" name="idP" value="@cart.ID">
             <ul class='item-list'>
                 <li class='item'>
                     <div class='item__information'>
@@ -27,23 +32,24 @@
                             <h2 class='item__title'>@cart.Marca</h2>
                             <p class='item__description'>@cart.DescArtigo</p>
                         </div>
-                        <div class='item__price' id="{$pps.nome}price">@cart.Preço</div>
-                        <input type="hidden" id="{$pps.nome}hidden" value="{$pps.preco}">
+                        <div class='item__price' id="@cart.Marca + price">@cart.Preço</div>
+                        <input type="hidden" id="@cart.Marca + hide" value="@cart.Preço">
                         <div style="position:absolute;right:40px; top:40px;">
-                            <form action="{$BASE_URL}actions/users/removecart.php" method="post">
-                                <input type="hidden" name="precoind" id="precoind" value="{$pps.nome}">
+                            <form action="/Home/POST/removeCarrinho" method="POST">
+                                <input hidden name="idProduto" type="text" id="idProduto" value="@cart.ID" />
                                 <input type="submit" class="btn btn-info" value="Remover Produto!" onclick="">
                             </form>
                         </div>
                     </div>
                     <div class='item__interactions'>
-                        <button class='item-increase' onclick="Increase('{$pps.nome}');return false;">+</button>
-                        <button class='item-decrease' onclick="Decrease('{$pps.nome}');return false;">-</button>
-                        <span id="{$pps.nome}">1</span>
+                        <button class='item-increase' onclick="Increase('@cart.Marca');return false;">+</button>
+                        <button class='item-decrease' onclick="Decrease('@cart.Marca');return false;">-</button>
+                        <span id="@cart.Marca">1</span>
                     </div>
                 </li>
             </ul>
         </div>
+    }
     }
     <div class='summary js-summary'>
         <ul class='steps'>
@@ -74,23 +80,9 @@
     </div>
 
     <!-- content-section-ends -->
-    <div class="footer">
-        <div class="up-arrow">
-            <a class="scroll" href="#home"><img src="images/up.png" alt="" /></a>
-        </div>
-        <div class="container">
-            <div class="copyrights">
-                <p>Copyright &copy; 2015 All rights reserved | Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
-            </div>
-            <div class="footer-social-icons">
-                <a href="#"><i class="fb"></i></a>
-                <a href="#"><i class="tw"></i></a>
-                <a href="#"><i class="in"></i></a>
-                <a href="#"><i class="pt"></i></a>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
+    <!-- Scripts -->
+    <script src="~/Scripts/auxx.js"></script>
+    <script src="~/Scripts/soma.js"></script>
+
 </body>
-</html>
 </html>
