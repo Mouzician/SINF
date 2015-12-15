@@ -91,7 +91,20 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public string Quantidade //opcional para o carrinho
+        //opcional para o carrinho
+
+        public string Quantidade 
+        {
+            get;
+            set;
+        }
+
+        public string Armazem
+        {
+            get;
+            set;
+        }
+        public string CDU_idCarrinhoProduto
         {
             get;
             set;

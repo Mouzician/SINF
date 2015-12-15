@@ -1141,7 +1141,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idProduto FROM  TDU_CarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idCliente='" + id_user + "' AND CDU_idCarrinho = CDU_idCarrinhoCompras");
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idCarrinho , CDU_idCliente, CDU_idProduto FROM  TDU_CarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idCliente='" + id_user + "' AND CDU_idCarrinho = CDU_idCarrinhoCompras");
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -1152,7 +1152,7 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_NomeArtigo, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_idCarrinhoProduto, CDU_NomeArtigo, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
                    
 
                     while (!objListCarrinho.NoFim())
@@ -1169,6 +1169,7 @@ namespace FirstREST.Lib_Primavera
                         art.Modelo = objListCarrinho.Valor("modelo");
                         art.CDU_Imagem = objListCarrinho.Valor("CDU_Imagem");
                         art.Nome = objListCarrinho.Valor("CDU_NomeArtigo");
+                        art.CDU_idCarrinhoProduto = objListCarrinho.Valor("CDU_idCarrinhoProduto").ToString();
 
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
