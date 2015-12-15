@@ -795,6 +795,75 @@ namespace FirstREST.Lib_Primavera
 
         #region DocsVenda
 
+        public static List<Model.DocVenda> GET_Pedidos(string idCliente)
+        {
+            StdBELista objList, objListLin, objDataLiq;
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
+            Model.LinhaDocVenda lindv;
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("select Id,Data,TotalMerc, TotalIva, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'FA' and Entidade = '" + idCliente + "' order By NumDoc DESC");
+                while (!objList.NoFim())
+                {
+                    Model.DocVenda dv = new Model.DocVenda();
+                    dv.id = objList.Valor("Id");
+                    dv.Data = objList.Valor("Data");
+                    dv.PrecoFinal = (double.Parse(objList.Valor("TotalMerc").ToString()) + double.Parse((objList.Valor("TotalIva").ToString())));
+                    //dv.PrecoFinal = objList.Valor("TotalMerc") + "€ + IVA";
+                    
+                    if (objList.Valor("Estado") == "T")
+                    {
+                        dv.estado = "Pronto";
+                    }
+                    else if (objList.Valor("Estado") == "P")
+                    {
+                        dv.estado = "Pendente";
+                    }
+                    else dv.estado = "Anulado";
+
+                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "'");
+                    listlindv = new List<Model.LinhaDocVenda>();
+
+                    while (!objListLin.NoFim())
+                    {
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.DescArtigo = objListLin.Valor("Descricao");
+                        lindv.CodArtigo = objListLin.Valor("Artigo");
+                        lindv.Quantidade = objListLin.Valor("Quantidade");
+                        listlindv.Add(lindv);
+                        objListLin.Seguinte();
+                    }
+
+                    objDataLiq = PriEngine.Engine.Consulta("SELECT DataLiq from Historico where idDoc='" + dv.id + "'");
+
+                    try {
+                        
+                        dv.DataLiq = objDataLiq.Valor("DataLiq").ToString();
+                        if (dv.DataLiq != "")
+                        dv.DataLiq = "Pago";
+                        else
+                            dv.DataLiq = "Por Pagar";
+                        
+
+                    }
+                    catch (Exception e)
+                    {
+                        dv.DataLiq = "Por Pagar";
+                    }
+                    
+                    
+
+                    dv.LinhasDoc = listlindv;
+
+                    listdv.Add(dv);
+                    objList.Seguinte();
+                }
+            }
+            return listdv;
+        }
+
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -1117,6 +1186,45 @@ namespace FirstREST.Lib_Primavera
             }
 
         }
+
+        public static Lib_Primavera.Model.Carrinho getCarrinhoID(string id_user)
+        {
+
+            StdBELista objList;
+
+
+            Model.Artigo art = new Model.Artigo();
+            Model.Carrinho carr = new Model.Carrinho();
+            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idCarrinhoCompras, CDU_idCliente FROM  TDU_CarrinhoCompras WHERE CDU_idCliente='" + id_user+ "'");
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
+                {
+                    carr = new Model.Carrinho();
+                    carr.ID = objList.Valor("CDU_idCarrinhoCompras").ToString();
+                    carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
+                
+                    objList.Seguinte();
+                }
+
+
+
+                return carr;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
 
         public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_CarrinhoProduto carrinho)
         {
@@ -1736,10 +1844,13 @@ namespace FirstREST.Lib_Primavera
 
                         //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                         int nextid = 1;
-                        while (!objList.NoFim())
+                        if (objList != null)
                         {
-                            nextid += objList.Valor("max");
-                            objList.Seguinte();
+                            while (!objList.NoFim())
+                            {
+                                nextid += objList.Valor("max");
+                                objList.Seguinte();
+                            }
                         }
                         com.CDU_idComentario = nextid.ToString();
 
@@ -1782,6 +1893,42 @@ namespace FirstREST.Lib_Primavera
                 erro.Descricao = ex.Message;
                 return erro;
             }
+        }
+
+        public static List<Model.TDU_Comentario> ListaComentarios(String id)
+        {
+
+            StdBELista objList;
+
+            Model.TDU_Comentario com = new Model.TDU_Comentario();
+            List<Model.TDU_Comentario> listComs = new List<Model.TDU_Comentario>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idProduto, CDU_idComentario, CDU_Conteudo FROM TDU_Comentario WHERE CDU_idProduto ='" + id + "'");
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
+                {
+                    com = new Model.TDU_Comentario();
+                    com.CDU_idProduto = objList.Valor("CDU_idProduto").ToString();
+                    com.CDU_idComentario = objList.Valor("CDU_idComentario").ToString();
+                    com.CDU_Conteudo = objList.Valor("CDU_Conteudo").ToString();
+
+                    listComs.Add(com);
+                    objList.Seguinte();
+                }
+
+                return listComs;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
         }
 
 
