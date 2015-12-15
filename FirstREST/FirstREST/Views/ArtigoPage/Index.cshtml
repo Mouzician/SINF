@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <span>&gt;</span>
                 </li>
                 <li>
-                    Sales
+                    Produto
                 </li>&nbsp;
                 <span>&gt;</span>
                 <li>products</a></li>
@@ -51,13 +51,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <h3>@ViewBag.model</h3>
                             <p> @ViewBag.preco €</p>
 
-
                             <div class="btn_form">
-                                @if (Session["name"] != null) { 
-                                    <form method="post" action="/Home/POST/addCarrinho">
-                                        <input hidden name="idProduto" type="text" id="idProduto" value="@ViewBag.id" />
-                                        <button class="button1"><span>Add to cart</span></button>
-                                    </form>
+                                @if (Session["name"] != null)
+                                {
+
+                                    if (ViewBag.stk != "0")
+                                    {
+                                        <br />
+                                        <button type="button" class="btn btn-success"><span>Stock Disponível</span></button>
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                        <button  type="button" class="btn btn-danger">Stock Indisponível</button>
+                                           <br />                                    
+                                    }
+
+
+
+                                         <form method="post" action="/Home/POST/addCarrinho">
+                                            <input hidden name="idProduto" type="text" id="idProduto" value="@ViewBag.id" />
+                                            <button class="button1"><span>Add to cart</span></button>
+                                        </form>
+                                
+
                                 }
                                 else
                                 {

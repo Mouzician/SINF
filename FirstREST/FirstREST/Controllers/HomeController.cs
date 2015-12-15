@@ -78,7 +78,8 @@ namespace FirstREST.Controllers
                     ViewBag.descricao = artigo.Descricao;
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
-
+                    ViewBag.stk = artigo.STKActual;
+    
                     var index = 0;
                     var index2 = 0;
 
@@ -97,11 +98,15 @@ namespace FirstREST.Controllers
                     listArts.RemoveAt(index2);
                     ViewBag.artigos = listArts.Take(3);
 
+
+                     //fazer os recomendados , que acho que nao esta a dar a outra funçao.
+
                     List<Lib_Primavera.Model.TDU_Comentario> listComs = Lib_Primavera.PriIntegration.ListaComentarios(artigo.ID);
 
                     ViewBag.comentarios = listComs;
 
                     //fazer os recomendados , que acho que nao esta a dar a outra funçao.
+
                     //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
 
                     return View("/Views/ArtigoPage/Index.cshtml");
@@ -122,7 +127,10 @@ namespace FirstREST.Controllers
                     ViewBag.owner = cart.ID_Cliente;
                     ViewBag.Nome = Session["name"];
                     ViewBag.produtos = cart.ID_Produtos;
-                   
+
+                    List<Lib_Primavera.Model.Armazem> listArms = Lib_Primavera.PriIntegration.ListaArmazens();
+
+                    ViewBag.armazens = listArms;
 
                     return View("/Views/ArtigoPage/carrinho.cshtml");
                 }
@@ -141,7 +149,6 @@ namespace FirstREST.Controllers
 
                     ViewBag.Nome = Session["name"];
                     ViewBag.Encomendas = encomendas;
-
 
 
                     return View("/Views/ArtigoPage/Encomendas.cshtml");
