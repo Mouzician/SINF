@@ -123,6 +123,33 @@ namespace FirstREST.Controllers
                     return View("/Views/ArtigoPage/carrinho.cshtml");
                 }
             }
+            else if (op == "Encomendas")
+            {
+
+                if (Session["username"] == null)
+                    return View("/Views/Home/Index.cshtml");
+
+                else
+                {
+                    string session = Session["username"].ToString();
+
+                    List<Lib_Primavera.Model.DocVenda> encomendas = Lib_Primavera.PriIntegration.GET_Pedidos(session);
+
+                    ViewBag.Nome = Session["name"];
+
+                    
+                        ViewBag.encomendas = encomendas.First();
+
+                        return Content(encomendas.ToString(), "application/json");
+                        
+                    
+
+                   
+
+
+                    return View("/Views/Home/teste.cshtml");
+                }
+            }
 
             else if (op == "Login")
             {
@@ -163,7 +190,7 @@ namespace FirstREST.Controllers
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
             carrinhoLinha.CDU_idProduto = idProduto;
-            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
+            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.getCarrinhoID(Session["username"].ToString());
             carrinhoLinha.CDU_idCarrinho = carrinho.ID;
 
             erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
