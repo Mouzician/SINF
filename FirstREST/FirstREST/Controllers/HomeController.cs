@@ -136,18 +136,11 @@ namespace FirstREST.Controllers
                     List<Lib_Primavera.Model.DocVenda> encomendas = Lib_Primavera.PriIntegration.GET_Pedidos(session);
 
                     ViewBag.Nome = Session["name"];
-
-                    
-                        ViewBag.encomendas = encomendas.First();
-
-                        return Content(encomendas.ToString(), "application/json");
-                        
-                    
-
-                   
+                    ViewBag.Encomendas = encomendas;
 
 
-                    return View("/Views/Home/teste.cshtml");
+
+                    return View("/Views/ArtigoPage/Encomendas.cshtml");
                 }
             }
 

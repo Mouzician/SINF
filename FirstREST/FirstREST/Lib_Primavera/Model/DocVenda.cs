@@ -57,7 +57,7 @@ namespace FirstREST.Lib_Primavera.Model
         }
 
         public string estado { set; get; }
-        public DateTime DataLiq { set; get; }
+        public string DataLiq { set; get; }
 
     }
 }
