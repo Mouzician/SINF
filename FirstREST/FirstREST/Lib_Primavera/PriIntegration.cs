@@ -797,30 +797,33 @@ namespace FirstREST.Lib_Primavera
 
         public static List<Model.DocVenda> GET_Pedidos(string idCliente)
         {
-            StdBELista objList, objListLin;
+            StdBELista objList, objListLin, objDataLiq;
             List<Model.DocVenda> listdv = new List<Model.DocVenda>();
             List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
             Model.LinhaDocVenda lindv;
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("select Id,Data, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'ECL' and Entidade = '" + idCliente + "'");
+                objList = PriEngine.Engine.Consulta("select Id,Data,TotalMerc, TotalIva, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'FA' and Entidade = '" + idCliente + "' order By NumDoc DESC");
                 while (!objList.NoFim())
                 {
                     Model.DocVenda dv = new Model.DocVenda();
                     dv.id = objList.Valor("Id");
                     dv.Data = objList.Valor("Data");
+                    dv.PrecoFinal = (double.Parse(objList.Valor("TotalMerc").ToString()) + double.Parse((objList.Valor("TotalIva").ToString())));
+                    //dv.PrecoFinal = objList.Valor("TotalMerc") + "€ + IVA";
+                    
                     if (objList.Valor("Estado") == "T")
                     {
                         dv.estado = "Pronto";
                     }
                     else if (objList.Valor("Estado") == "P")
                     {
-                        dv.estado = "Em Espera";
+                        dv.estado = "Pendente";
                     }
                     else dv.estado = "Anulado";
 
-                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "'");
                     listlindv = new List<Model.LinhaDocVenda>();
 
                     while (!objListLin.NoFim())
@@ -832,6 +835,25 @@ namespace FirstREST.Lib_Primavera
                         listlindv.Add(lindv);
                         objListLin.Seguinte();
                     }
+
+                    objDataLiq = PriEngine.Engine.Consulta("SELECT DataLiq from Historico where idDoc='" + dv.id + "'");
+
+                    try {
+                        
+                        dv.DataLiq = objDataLiq.Valor("DataLiq").ToString();
+                        if (dv.DataLiq != "")
+                        dv.DataLiq = "Pago";
+                        else
+                            dv.DataLiq = "Por Pagar";
+                        
+
+                    }
+                    catch (Exception e)
+                    {
+                        dv.DataLiq = "Por Pagar";
+                    }
+                    
+                    
 
                     dv.LinhasDoc = listlindv;
 
