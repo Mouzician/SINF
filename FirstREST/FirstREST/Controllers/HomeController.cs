@@ -97,6 +97,10 @@ namespace FirstREST.Controllers
                     listArts.RemoveAt(index2);
                     ViewBag.artigos = listArts.Take(3);
 
+                    List<Lib_Primavera.Model.TDU_Comentario> listComs = Lib_Primavera.PriIntegration.ListaComentarios(artigo.ID);
+
+                    ViewBag.comentarios = listComs;
+
                     //fazer os recomendados , que acho que nao esta a dar a outra funçao.
                     //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
 
@@ -224,11 +228,11 @@ namespace FirstREST.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult addComentario(string idProduto, string comentario)
+        public void addComentario(string idProduto, string comment)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.TDU_Comentario linhaComentario = new Lib_Primavera.Model.TDU_Comentario();
-            linhaComentario.CDU_Conteudo = comentario;
+            linhaComentario.CDU_Conteudo = comment;
             linhaComentario.CDU_idProduto = idProduto;
             linhaComentario.CDU_idUtilizador = Session["username"].ToString();
 
@@ -236,11 +240,11 @@ namespace FirstREST.Controllers
 
             if (erro.Erro == 0)
             {
-                Console.Write(comentario);
+                Console.Write(comment);
             }
 
             Console.Write(idProduto);
-            return View("/Views/Home/Index.cshtml");
+            Response.Redirect("/Home/Artigos");
         }
 
         [System.Web.Mvc.HttpPost]

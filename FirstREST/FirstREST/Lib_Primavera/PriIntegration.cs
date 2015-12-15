@@ -1822,10 +1822,13 @@ namespace FirstREST.Lib_Primavera
 
                         //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                         int nextid = 1;
-                        while (!objList.NoFim())
+                        if (objList == null)
                         {
-                            nextid += objList.Valor("max");
-                            objList.Seguinte();
+                            while (!objList.NoFim())
+                            {
+                                nextid += objList.Valor("max");
+                                objList.Seguinte();
+                            }
                         }
                         com.CDU_idComentario = nextid.ToString();
 
@@ -1868,6 +1871,43 @@ namespace FirstREST.Lib_Primavera
                 erro.Descricao = ex.Message;
                 return erro;
             }
+        }
+
+        public static List<Model.TDU_Comentario> ListaComentarios(String id)
+        {
+
+            StdBELista objList;
+
+            Model.TDU_Comentario com = new Model.TDU_Comentario();
+            List<Model.TDU_Comentario> listComs = new List<Model.TDU_Comentario>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idProduto, CDU_idComentario, CDU_Conteudo, CDU_idUtilizador FROM TDU_Comentario WHERE CDU_idProduto ='" + id + "'");
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
+                {
+                    com = new Model.TDU_Comentario();
+                    com.CDU_idProduto = objList.Valor("CDU_idProduto").ToString();
+                    com.CDU_idComentario = objList.Valor("CDU_idComentario").ToString();
+                    com.CDU_Conteudo = objList.Valor("CDU_Conteudo").ToString();
+                    com.CDU_idUtilizador = objList.Valor("CDU_idUtilizador").ToString();
+
+                    listComs.Add(com);
+                    objList.Seguinte();
+                }
+
+                return listComs;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
         }
 
 
