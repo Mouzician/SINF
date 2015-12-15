@@ -1822,7 +1822,7 @@ namespace FirstREST.Lib_Primavera
 
                         //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                         int nextid = 1;
-                        if (objList == null)
+                        if (objList != null)
                         {
                             while (!objList.NoFim())
                             {

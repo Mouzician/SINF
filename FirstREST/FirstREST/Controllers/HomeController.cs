@@ -244,7 +244,7 @@ namespace FirstREST.Controllers
             }
 
             Console.Write(idProduto);
-            Response.Redirect("/Home/Artigos");
+            Response.Redirect("/Home/Artigos/" + idProduto);
         }
 
         [System.Web.Mvc.HttpPost]
