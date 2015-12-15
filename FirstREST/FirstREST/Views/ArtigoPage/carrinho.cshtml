@@ -16,55 +16,60 @@
     {
         Response.Redirect("/Home/POST/Index");
     }
-    else { 
-    foreach (var cart in ViewBag.produtos)
+    else
     {
+        foreach (var cart in ViewBag.produtos)
+        {
     <!-- list of products in the cart -->
-        <div class="row">
-            <input type="hidden" name="idP" value="@cart.ID">
-            <ul class='item-list'>
-                <li class='item'>
-                    <div class='item__information'>
-                        <div class='item__image'>
-                            <img src="/Content/site/images/products/@cart.CDU_Imagem">
+            <div class="row">
+                <input type="hidden" name="idP" value="@cart.ID">
+                <ul class='item-list'>
+                    <li class='item'>
+                        <div class='item__information'>
+                            <div class='item__image'>
+                                <img src="/Content/site/images/products/@cart.CDU_Imagem">
+                            </div>
+                            <div class='item__body' style="margin-left:auto; margin-right:auto; width:800px; height: 120px; overflow-y: scroll;">
+                                <h2 class='item__title'>@cart.Nome</h2>
+                                <p class='item__description'>@cart.DescArtigo</p>
+                            </div>
+                            <div class='item__price' id="@cart.Marca + price">@cart.Preço</div>
+                            <input type="hidden" id="@cart.Marca + hide" value="@cart.Preço">
+                            <div style="position:absolute;right:40px; top:40px;">
+                                <form action="/Home/POST/removeCarrinho" method="POST">
+                                    <input hidden name="idProduto" type="text" id="idProduto" value="@cart.ID" />
+                                    <input type="submit" class="btn btn-info" value="Remover Produto!" onclick="">
+                                </form>
+                            </div>
                         </div>
-                        <div class='item__body' style="margin-left:auto; margin-right:auto; width:800px; height: 120px; overflow-y: scroll;">
-                            <h2 class='item__title'>@cart.Nome</h2>
-                            <p class='item__description'>@cart.DescArtigo</p>
-                        </div>
-                        <div class='item__price' id="@cart.Marca + price">@cart.Preço</div>
-                        <input type="hidden" id="@cart.Marca + hide" value="@cart.Preço">
-                        <div style="position:absolute;right:40px; top:40px;">
-                            <form action="/Home/POST/removeCarrinho" method="POST">
-                                <input hidden name="idProduto" type="text" id="idProduto" value="@cart.ID" />
-                                <input type="submit" class="btn btn-info" value="Remover Produto!" onclick="">
-                            </form>
-                        </div>
-                    </div>
-                    <div class='item__interactions'>
-                        <button class='item-increase' onclick="Increase('@cart.Marca');return false;">+</button>
-                        <button class='item-decrease' onclick="Decrease('@cart.Marca');return false;">-</button>
-                        <span id="@cart.Marca">1</span>
-                   
-                    </div>
-                    <select>
+                        <form action="/Home/POST/atualizaCarrinho" method="POST">
+                            <input name="idCarrinhoProduto" value="@cart.CDU_idCarrinhoProduto" hidden />
+                            <div class='item__interactions'>
+                                <button class='item-increase' onclick="Increase('@cart.Marca');Increase('hiddenQuantidade');return false;">+</button>
+                                <button class='item-decrease' onclick="Decrease('@cart.Marca');Decrease('hiddenQuantidade');return false;">-</button>
+                                <span id="@cart.Marca">1</span>
+                                <input id="hiddenQuantidade" name="Quantidade" value="1" hidden />
+                            </div>
+                            <select name="Armazem">
+                                @foreach (var armazem in ViewBag.armazens)
+                                {
+                                    <option value="@armazem.ID">@armazem.ID</option>
+
+                                }
+                            </select>
+                            <div style="position:absolute;right:40px; top:40px;">
+                                <input type="submit" class="btn btn-info" value="Atualizar" onclick="">
+                                </div>
+                        </form>
 
 
-                        @foreach (var armazem in ViewBag.armazens)
-                        {
-                            <option value="@armazem.ID">@armazem.ID</option>
-
-                        }
-                    </select>
-
-              
-                </li>
-            </ul>
-        </div>
+                    </li>
+                </ul>
+            </div>
+        }
     }
-    }   
 
-  
+
 
     <div class='summary js-summary'>
         <ul class='steps'>

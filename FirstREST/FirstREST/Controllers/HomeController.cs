@@ -243,6 +243,29 @@ namespace FirstREST.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
+        public void atualizaCarrinho(string idCarrinhoProduto, string Quantidade, string Armazem)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
+            carrinhoLinha.CDU_idCarrinhoProduto = idCarrinhoProduto;
+            carrinhoLinha.CDU_Quantidade = Quantidade;
+            carrinhoLinha.CDU_Armazem = armazem;
+
+            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
+            carrinhoLinha.CDU_idCarrinho = carrinho.ID;
+
+            erro = Lib_Primavera.PriIntegration.atualizaCarrinho(carrinhoLinha);
+
+            if (erro.Erro == 0)
+            {
+                Console.Write(erro.Descricao);
+            }
+
+
+            Response.Redirect("/Home/Artigos");
+        }
+
+        [System.Web.Mvc.HttpPost]
         public void addComentario(string idProduto, string comment)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();

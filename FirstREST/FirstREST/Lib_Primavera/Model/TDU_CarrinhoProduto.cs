@@ -27,5 +27,18 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string CDU_Quantidade //Quantidade no carrinho
+        {
+            get;
+            set;
+        }
+
+        public string CDU_Armazem //Quantidade no carrinho
+        {
+            get;
+            set;
+        }
+
+
     }
 }
