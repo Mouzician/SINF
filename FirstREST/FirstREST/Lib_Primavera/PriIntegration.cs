@@ -1883,7 +1883,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CDU_idProduto, CDU_idComentario, CDU_Conteudo, CDU_idUtilizador FROM TDU_Comentario WHERE CDU_idProduto ='" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT CDU_idProduto, CDU_idComentario, CDU_Conteudo FROM TDU_Comentario WHERE CDU_idProduto ='" + id + "'");
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -1893,7 +1893,6 @@ namespace FirstREST.Lib_Primavera
                     com.CDU_idProduto = objList.Valor("CDU_idProduto").ToString();
                     com.CDU_idComentario = objList.Valor("CDU_idComentario").ToString();
                     com.CDU_Conteudo = objList.Valor("CDU_Conteudo").ToString();
-                    com.CDU_idUtilizador = objList.Valor("CDU_idUtilizador").ToString();
 
                     listComs.Add(com);
                     objList.Seguinte();
