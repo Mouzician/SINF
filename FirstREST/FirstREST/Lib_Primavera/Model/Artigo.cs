@@ -96,5 +96,11 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string Armazem //opcional para o carrinho
+        {
+            get;
+            set;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace FirstREST.Controllers
         }
 
 
-        // GET api/cliente/5    
+        // GET api/Carrinho/5    
         public Carrinho Get(string id)
         {
             Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(id);
