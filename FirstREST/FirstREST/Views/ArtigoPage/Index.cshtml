@@ -107,7 +107,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <label>Deixe aqui a sua opinião sobre o produto</label>
                         </div>
                         <div class="actionBox">
-                            @if (ViewBag.comentarios != null && ViewBag.comentarios.Length > 0)
+                            @if (ViewBag.comentarios != null)
                             {
                                 foreach (var comentario in ViewBag.comentarios)
                                 {
