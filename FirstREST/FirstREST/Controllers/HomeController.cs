@@ -196,6 +196,26 @@ namespace FirstREST.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
+        public ActionResult addComentario(string idProduto, string comentario)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_Comentario linhaComentario = new Lib_Primavera.Model.TDU_Comentario();
+            linhaComentario.CDU_Conteudo = comentario;
+            linhaComentario.CDU_idProduto = idProduto;
+            linhaComentario.CDU_idUtilizador = Session["username"].ToString();
+
+            erro = Lib_Primavera.PriIntegration.InsereComentarioObj(linhaComentario);
+
+            if (erro.Erro == 0)
+            {
+                Console.Write(comentario);
+            }
+
+            Console.Write(idProduto);
+            return View("/Views/Home/Index.cshtml");
+        }
+
+        [System.Web.Mvc.HttpPost]
         public ActionResult Index(String Username, String Password,String Remember)
         {
             IEnumerable<Lib_Primavera.Model.Cliente> clientes = Lib_Primavera.PriIntegration.ListaClientes();
