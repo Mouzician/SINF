@@ -79,13 +79,14 @@ namespace FirstREST.Controllers
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
                     ViewBag.stk = artigo.STKActual;
+                    ViewBag.Nome = artigo.Nome;
     
                     var index = 0;
                     var index2 = 0;
 
                     List<Lib_Primavera.Model.Artigo> listArts = Lib_Primavera.PriIntegration.GetArtigosByCategoria(artigo.SubFamilia);
 
-                   /* foreach (var v in listArts)
+                    foreach (var v in listArts)
                     {
                         if (v.ID.Equals(artigo.ID))
                         {
@@ -95,7 +96,7 @@ namespace FirstREST.Controllers
                         index++;
                     }
 
-                    listArts.RemoveAt(index2);*/
+                    listArts.RemoveAt(index2);
                     ViewBag.artigos = listArts.Take(3);
 
 

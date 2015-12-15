@@ -29,7 +29,7 @@
                             <img src="/Content/site/images/products/@cart.CDU_Imagem">
                         </div>
                         <div class='item__body' style="margin-left:auto; margin-right:auto; width:800px; height: 120px; overflow-y: scroll;">
-                            <h2 class='item__title'>@cart.Marca</h2>
+                            <h2 class='item__title'>@cart.Nome</h2>
                             <p class='item__description'>@cart.DescArtigo</p>
                         </div>
                         <div class='item__price' id="@cart.Marca + price">@cart.Preço</div>
@@ -47,20 +47,16 @@
                         <span id="@cart.Marca">1</span>
                    
                     </div>
-                        
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                            Armazem
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                            @foreach (var armazem in ViewBag.armazens)
-                            {
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@armazem.ID</a></li>
-                                
-                            }
-                        </ul>
-                    </div>
+                    <select>
+
+
+                        @foreach (var armazem in ViewBag.armazens)
+                        {
+                            <option value="@armazem.ID">@armazem.ID</option>
+
+                        }
+                    </select>
+
               
                 </li>
             </ul>

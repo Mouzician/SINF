@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html>
-
 <head>
     <title>Primavera Online Store</title>
     <link href="/Content/site/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -15,8 +14,6 @@
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Pakhi Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--webfont-->
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
@@ -25,24 +22,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="/Content/site/css/nav.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="/Content/site/css/etalage.css">
     <script src="/Content/site/js/jquery.etalage.min.js"></script>
-
     <script>
-    jQuery(document).ready(function ($) {
-
-        $('#etalage').etalage({
-            thumb_image_width: 300,
-            thumb_image_height: 400,
-            source_image_width: 800,
-            source_image_height: 1000,
-            show_hint: true,
-            click_callback: function (image_anchor, instance_id) {
-                alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
-            }
+        jQuery(document).ready(function ($) {
+            $('#etalage').etalage({
+                thumb_image_width: 300,
+                thumb_image_height: 400,
+                source_image_width: 800,
+                source_image_height: 1000,
+                show_hint: true,
+                click_callback: function (image_anchor, instance_id) {
+                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+                }
+            });
         });
-
-    });
     </script>
-
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -51,25 +44,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         });
     </script>
-
-    <script>
-    jQuery(document).ready(function ($) {
-
-        $('#etalage').etalage({
-            thumb_image_width: 300,
-            thumb_image_height: 400,
-            source_image_width: 800,
-            source_image_height: 1000,
-            show_hint: true,
-            click_callback: function (image_anchor, instance_id) {
-                alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
-            }
-        });
-
-    });
-    </script>
-
-
 </head>
 <body>
     <!-- header-section-starts -->
@@ -89,7 +63,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span class="sb-icon-search"> </span>
                             </form>
 
-                            
                         </div>
                     </div>
                     <!-- search-scripts -->
@@ -99,12 +72,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         new UISearch(document.getElementById('sb-search'));
                     </script>
                     <!-- //search-scripts -->
-                    
+
                     <a href="/Home/Carrinho"><i class="cart"></i></a>
                     <a href="/Home/Encomendas"><i class="cart" style="background: url('/Content/site/images/document.png');"></i></a>
-
                 </div>
-
                 <div class="navigation">
                     <div>
                         <label class="mobile_menu" for="mobile_menu">
@@ -137,7 +108,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <li><a href="/Home/Categoria/GPS">GPS</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/Home/Contacto">Contacte-nos</a></li>
+                            <li><a href="contact.html">Contacte-nos</a></li>
                             <div class="clearfix"></div>
                         </ul>
                     </div>
@@ -145,10 +116,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     </div>
-
     @RenderBody()
-
-
     <div class="footer">
         <div class="up-arrow">
             <a class="scroll" href="#home"><img src="" alt="" /></a>
@@ -164,7 +132,5 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="clearfix"></div>
         </div>
     </div>
-
-
 </body>
 </html>
