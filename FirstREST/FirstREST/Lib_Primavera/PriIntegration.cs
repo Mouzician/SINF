@@ -1929,17 +1929,13 @@ namespace FirstREST.Lib_Primavera
                 {
 
 
-                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idComentario) AS max FROM TDU_Comentario");
-
+                    objList = PriEngine.Engine.Consulta("SELECT COUNT(*) AS numC FROM TDU_Comentario");
                         //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                         int nextid = 1;
                         if (objList != null)
                         {
-                            while (!objList.NoFim())
-                            {
-                                nextid += objList.Valor("max");
-                                objList.Seguinte();
-                            }
+                            nextid += objList.Valor("numC");
+                            objList.Seguinte();
                         }
                         com.CDU_idComentario = nextid.ToString();
 
