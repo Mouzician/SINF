@@ -45,10 +45,10 @@
                         <form action="/Home/POST/atualizaCarrinho" method="POST">
                             <input name="idCarrinhoProduto" value="@cart.CDU_idCarrinhoProduto" hidden />
                             <div class='item__interactions'>
-                                <button class='item-increase' onclick="Increase('@cart.Marca');Increase('hiddenQuantidade');return false;">+</button>
-                                <button class='item-decrease' onclick="Decrease('@cart.Marca');Decrease('hiddenQuantidade');return false;">-</button>
-                                <span id="@cart.Marca">1</span>
-                                <input id="hiddenQuantidade" name="Quantidade" value="1" hidden />
+                                <button class='item-increase' onclick="Increase('span @cart.CDU_idCarrinhoProduto');return false;">+</button>
+                                <button class='item-decrease' onclick="Decrease('span @cart.CDU_idCarrinhoProduto');return false;">-</button>
+                                <span id="span @cart.CDU_idCarrinhoProduto">1</span>
+                                <input id="hidden @cart.CDU_idCarrinhoProduto" name="Quantidade" value="1" hidden />
                             </div>
                             <select name="Armazem">
                                 @foreach (var armazem in ViewBag.armazens)
