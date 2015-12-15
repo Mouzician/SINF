@@ -11,7 +11,6 @@
     <!-- Custom Theme files -->
     <link href="/Content/site/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/Content/site/css/form.css" rel="stylesheet" type="text/css" media="all" />
-
     <link href="/Content/site/css/coments.css" rel="stylesheet" type="text/css" media="all" />
     <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,28 +23,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- dropdown -->
     <script src="/Content/site/js/jquery.easydropdown.js"></script>
     <link href="/Content/site/css/nav.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="/Content/site/js/hover_pack.js"></script>
     <link rel="stylesheet" href="/Content/site/css/etalage.css">
     <script src="/Content/site/js/jquery.etalage.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script>
-        jQuery(document).ready(function ($) {
+    jQuery(document).ready(function ($) {
 
-            $('#etalage').etalage({
-                thumb_image_width: 300,
-                thumb_image_height: 400,
-                source_image_width: 800,
-                source_image_height: 1000,
-                show_hint: true,
-                click_callback: function (image_anchor, instance_id) {
-                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
-                }
-            });
-
+        $('#etalage').etalage({
+            thumb_image_width: 300,
+            thumb_image_height: 400,
+            source_image_width: 800,
+            source_image_height: 1000,
+            show_hint: true,
+            click_callback: function (image_anchor, instance_id) {
+                alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+            }
         });
+
+    });
     </script>
+
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -54,6 +51,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         });
     </script>
+
+    <script>
+    jQuery(document).ready(function ($) {
+
+        $('#etalage').etalage({
+            thumb_image_width: 300,
+            thumb_image_height: 400,
+            source_image_width: 800,
+            source_image_height: 1000,
+            show_hint: true,
+            click_callback: function (image_anchor, instance_id) {
+                alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+            }
+        });
+
+    });
+    </script>
+
 
 </head>
 <body>
