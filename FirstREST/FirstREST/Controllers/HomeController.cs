@@ -100,6 +100,13 @@ namespace FirstREST.Controllers
 
 
                      //fazer os recomendados , que acho que nao esta a dar a outra funçao.
+
+                    List<Lib_Primavera.Model.TDU_Comentario> listComs = Lib_Primavera.PriIntegration.ListaComentarios(artigo.ID);
+
+                    ViewBag.comentarios = listComs;
+
+                    //fazer os recomendados , que acho que nao esta a dar a outra funçao.
+
                     //Lib_Primavera.Model.Artigo artigos = Lib_Primavera.PriIntegration.GetArtigoByCategoria(artigo.SubFamilia);
 
                     return View("/Views/ArtigoPage/Index.cshtml");
@@ -126,6 +133,28 @@ namespace FirstREST.Controllers
                     ViewBag.armazens = listArms;
 
                     return View("/Views/ArtigoPage/carrinho.cshtml");
+                }
+            }
+            else if (op == "Encomendas")
+            {
+
+                if (Session["username"] == null)
+                    return View("/Views/Home/Index.cshtml");
+
+                else
+                {
+                    string session = Session["username"].ToString();
+
+                    List<Lib_Primavera.Model.DocVenda> encomendas = Lib_Primavera.PriIntegration.GET_Pedidos(session);
+
+                    ViewBag.Nome = Session["name"];
+
+                    
+
+                   
+
+
+                    return View("/Views/Home/teste.cshtml");
                 }
             }
 
@@ -168,7 +197,7 @@ namespace FirstREST.Controllers
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
             carrinhoLinha.CDU_idProduto = idProduto;
-            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
+            Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.getCarrinhoID(Session["username"].ToString());
             carrinhoLinha.CDU_idCarrinho = carrinho.ID;
 
             erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
@@ -199,6 +228,26 @@ namespace FirstREST.Controllers
 
 
             Response.Redirect("/Home/Artigos");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public void addComentario(string idProduto, string comment)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_Comentario linhaComentario = new Lib_Primavera.Model.TDU_Comentario();
+            linhaComentario.CDU_Conteudo = comment;
+            linhaComentario.CDU_idProduto = idProduto;
+            linhaComentario.CDU_idUtilizador = Session["username"].ToString();
+
+            erro = Lib_Primavera.PriIntegration.InsereComentarioObj(linhaComentario);
+
+            if (erro.Erro == 0)
+            {
+                Console.Write(comment);
+            }
+
+            Console.Write(idProduto);
+            Response.Redirect("/Home/Artigos/" + idProduto);
         }
 
         [System.Web.Mvc.HttpPost]
