@@ -263,6 +263,7 @@ namespace FirstREST.Controllers
         public ActionResult Filtro(string filtro, string categoria)
         {
 
+
             List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
             List<Lib_Primavera.Model.Artigo> artigos2 = new List<Lib_Primavera.Model.Artigo>();
 
@@ -270,7 +271,7 @@ namespace FirstREST.Controllers
             {
                 if (ar.SubFamilia.Equals(categoria))
                 {
-                    artigos2.Add(ar);             
+                    artigos2.Add(ar);
                 }
             }
 
@@ -286,8 +287,26 @@ namespace FirstREST.Controllers
             }
 
             ViewBag.cat = categoria;
-            ViewBag.artigos = artigos2;
-            
+
+            if (categoria != "")
+                ViewBag.artigos = artigos2;
+            else
+            {
+                if (filtro == "caro")
+                {
+                    artigos.Sort((y, x) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+                }
+
+                else
+                {
+                    artigos.Sort((x, y) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+
+                }
+
+                ViewBag.artigos = artigos;
+
+            }
+
             return View("/Views/ArtigoPage/produtos.cshtml");
 
         }
@@ -304,6 +323,13 @@ namespace FirstREST.Controllers
                 if (ar.SubFamilia.Equals(categoria) && float.Parse(ar.Preço) <= float.Parse(priceMaximum) && float.Parse(ar.Preço) >= float.Parse(priceMinimun))
                 {
                     artigos2.Add(ar);
+                }
+
+                else if (categoria.Equals("") && float.Parse(ar.Preço) <= float.Parse(priceMaximum) && float.Parse(ar.Preço) >= float.Parse(priceMinimun))
+                {
+
+                    artigos2.Add(ar);
+
                 }
             }
 
