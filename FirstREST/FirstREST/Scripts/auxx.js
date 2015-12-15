@@ -15,8 +15,8 @@
         });
 
         $(".sum").text(sum.toFixed(2));
-        $(".taxes").text((sum*0.05).toFixed(2));
-        $(".total").text((sum + sum*0.05).toFixed(2));
+        $(".taxes").text((sum*0.23).toFixed(2));
+        $(".total").text((sum + sum*0.23).toFixed(2));
 
       }
 
@@ -43,17 +43,7 @@
     });
 
         $(".sum").text(sum.toFixed(2));
-        $(".taxes").text((sum * 0.05).toFixed(2));
-        $(".total").text((sum + sum * 0.05).toFixed(2));
+        $(".taxes").text((sum * 0.23).toFixed(2));
+        $(".total").text((sum + sum * 0.23).toFixed(2));
      }
   } 
-
-/*function CheckItOut() {
-    
-    var num = document.getElementById("checkoutt").innerHTML;
-    
-    var n = Number(num).toFixed(2);
-     
-    window.open('view_payment.php?price='+n, "_blank", "toolbar=yes, scrollbars=yes, resizable=no, width=800, height=620");
-
-}*/

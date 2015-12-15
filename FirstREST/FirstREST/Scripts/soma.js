@@ -5,5 +5,5 @@
     });
 
         $(".sum").text(sum.toFixed(2));
-        $(".taxes").text((sum * 0.05).toFixed(2));
-        $(".total").text((sum + sum * 0.05).toFixed(2));
+        $(".taxes").text((sum * 0.23).toFixed(2));
+        $(".total").text((sum + sum * 0.23).toFixed(2));
