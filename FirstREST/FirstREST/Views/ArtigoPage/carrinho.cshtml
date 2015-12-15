@@ -45,12 +45,31 @@
                         <button class='item-increase' onclick="Increase('@cart.Marca');return false;">+</button>
                         <button class='item-decrease' onclick="Decrease('@cart.Marca');return false;">-</button>
                         <span id="@cart.Marca">1</span>
+                   
                     </div>
+                        
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                            Armazem
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            @foreach (var armazem in ViewBag.armazens)
+                            {
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@armazem.ID</a></li>
+                                
+                            }
+                        </ul>
+                    </div>
+              
                 </li>
             </ul>
         </div>
     }
-    }
+    }   
+
+  
+
     <div class='summary js-summary'>
         <ul class='steps'>
             <li>

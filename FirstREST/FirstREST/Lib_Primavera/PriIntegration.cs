@@ -1324,6 +1324,44 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static List<Lib_Primavera.Model.Armazem> ListaArmazens()
+        {
+
+            {
+                StdBELista objList;
+
+                List<Model.Armazem> listArmazens = new List<Model.Armazem>();
+
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+
+                    objList = PriEngine.Engine.Consulta("SELECT Armazem, Descricao, Distrito, Pais  FROM  Armazens");
+
+
+                    while (!objList.NoFim())
+                    {
+                        listArmazens.Add(new Model.Armazem
+                        {
+                            ID = objList.Valor("Armazem"),
+                            Descrição = objList.Valor("Descricao"),
+                            Localidade = objList.Valor("Distrito"),
+                            Pais = objList.Valor("Pais")
+
+                        });
+                        objList.Seguinte();
+
+                    }
+
+                    return listArmazens;
+                }
+                else
+                    return null;
+
+            }
+        }
+
         #endregion Carrinho
 
 
