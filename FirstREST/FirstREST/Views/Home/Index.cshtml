@@ -12,11 +12,11 @@
 
                         if (Session["Username"] == null)
                         {
-                            <div class="sign-up1">
+                            <div class="sign-up2">
                                 <a href="/Home/Login">Sign Up</a>
                             </div>
 
-                            <div class="sign-in">
+                            <div class="sign-in1">
                                 <a href="/Home/Login">Sign In</a>
                             </div>
 
@@ -24,7 +24,7 @@
 
                         else
                         {
-                            <div class="sign-in">
+                            <div class="sign-in1">
                                 <a href="/Home/Logout">Logout @Session["name"]</a>
                             </div>
                         }

@@ -209,7 +209,7 @@ i.shipping {
 	width: 33%;
 	margin: 14em auto 0;
 }
-.sign-in a {
+.sign-in1 a {
 	color: #ccd1d9;
 	font-size: 1.2em;
 	text-decoration:none;
@@ -220,10 +220,10 @@ i.shipping {
 	border-top-left-radius: 9px;
 	border-bottom-left-radius: 9px;
 }
-.sign-in a:hover {
+.sign-in1 a:hover {
 	background: #0D4448;
 }
-.sign-up1 a {
+.sign-up2 a {
 	color: #ccd1d9;
 	font-size: 1.2em;
 	text-decoration:none;
@@ -234,15 +234,15 @@ i.shipping {
 	border-top-right-radius: 9px;
 	border-bottom-right-radius: 9px;
 }
-.sign-up1 a:hover {
+.sign-up2 a:hover {
 	background: #2A576C;
 }
-.sign-in {
+.sign-in1 {
 	/* width: 89%; */
 	margin-top: 2%;
 	float: right;
 }
-.sign-up1 {
+.sign-up2 {
 	width: 11%;
 	margin-top: 2.0%;
 	float: right;
