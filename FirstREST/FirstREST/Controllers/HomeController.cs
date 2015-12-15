@@ -155,6 +155,20 @@ namespace FirstREST.Controllers
 
             }
 
+            else if (op == "Register")
+            {
+
+                return View("/Views/Home/Register.cshtml");
+
+            }
+
+            else if (op == "Contacto")
+            {
+
+                return View("/Views/Home/Contacto.cshtml");
+
+            }
+
             else if (op == null && op_dois == null)
             {
 
@@ -267,6 +281,48 @@ namespace FirstREST.Controllers
                 Session.Add("name", Username);
                 Response.Redirect("/Home");
             }
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Register(String Username, String Email, String InputContribuinte, String InputPassword, String InputPassword2, String InputMorada, String InputTelefone)
+        {
+            IEnumerable<Lib_Primavera.Model.Cliente> clientes = Lib_Primavera.PriIntegration.ListaClientes();
+            bool encontrou = false;
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.Cliente cli = new Lib_Primavera.Model.Cliente();
+            cli.NomeCliente = Username;
+            cli.Password = InputPassword;
+            cli.NumContribuinte = InputContribuinte;
+            cli.Email = Email;
+            cli.Morada = InputMorada;
+            cli.Telemóvel = InputTelefone;
+           
+            foreach (var client in clientes)
+            {
+                if (client.NomeCliente.Equals(Username))
+                {
+                    encontrou = true;
+                }
+            }
+
+            if (encontrou || (!InputPassword.Equals(InputPassword2)))
+            {
+                return View("/Views/Home/Register.cshtml");
+            }
+
+            else
+                erro = Lib_Primavera.PriIntegration.InsereClienteObj(cli);
+
+            if (erro.Erro == 0)
+            {
+                return View("/Views/Home/Login.cshtml");
+            }
+
+            else
+            {
+                return View("/Views/Home/Register.cshtml");
+            }
+
         }
 
 
