@@ -919,7 +919,7 @@ namespace FirstREST.Lib_Primavera
                         foreach (Model.Artigo lin in temp)
                         {
                             pvp = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.ID, "EUR", "UN", "PVP1", false, 0);
-                            PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.ID, 1, armazem, "", pvp, desconto);
+                            PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.ID, Int32.Parse(lin.Quantidade), lin.Armazem, "", pvp, desconto);
                         }
                     }
 
@@ -1152,7 +1152,7 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_idCarrinhoProduto, CDU_NomeArtigo, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Quantidade, CDU_idCarrinhoProduto, CDU_NomeArtigo, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
                    
 
                     while (!objListCarrinho.NoFim())
@@ -1170,7 +1170,7 @@ namespace FirstREST.Lib_Primavera
                         art.CDU_Imagem = objListCarrinho.Valor("CDU_Imagem");
                         art.Nome = objListCarrinho.Valor("CDU_NomeArtigo");
                         art.CDU_idCarrinhoProduto = objListCarrinho.Valor("CDU_idCarrinhoProduto").ToString();
-
+                        art.Quantidade = objListCarrinho.Valor("CDU_Quantidade").ToString();
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
                     }

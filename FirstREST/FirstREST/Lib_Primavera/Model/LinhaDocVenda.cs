@@ -35,6 +35,12 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+         public double Armazem
+         {
+             get;
+             set;
+         }
+
          public string Unidade
         {
             get;
