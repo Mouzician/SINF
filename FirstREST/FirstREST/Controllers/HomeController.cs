@@ -20,6 +20,7 @@ namespace FirstREST.Controllers
             {
                 if (op_dois == null)
                 {
+
                     return View("/Views/Home/Index.cshtml");
                 }
 
@@ -72,6 +73,7 @@ namespace FirstREST.Controllers
                     Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(op_dois);
 
                     ViewBag.id = artigo.ID;
+                    ViewBag.model = artigo.Marca;
                     ViewBag.preco = artigo.Preço;
                     ViewBag.descricao = artigo.Descricao;
                     ViewBag.stoke = artigo.SubFamilia;
@@ -156,7 +158,7 @@ namespace FirstREST.Controllers
 
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult addCarrinho(string idProduto)
+        public void addCarrinho(string idProduto)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
@@ -171,12 +173,11 @@ namespace FirstREST.Controllers
                 Console.Write(idProduto);
             }
 
-            Console.Write(idProduto);
-            return View("/Views/Home/Index.cshtml");
+            Response.Redirect("/Home/Artigos");
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult removeCarrinho(string idProduto)
+        public void removeCarrinho(string idProduto)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
@@ -192,7 +193,7 @@ namespace FirstREST.Controllers
             }
 
 
-            return View("/Views/Home/Index.cshtml");
+            Response.Redirect("/Home/Artigos");
         }
 
         [System.Web.Mvc.HttpPost]
@@ -216,7 +217,7 @@ namespace FirstREST.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult Index(String Username, String Password,String Remember)
+        public void Index(String Username, String Password,String Remember)
         {
             IEnumerable<Lib_Primavera.Model.Cliente> clientes = Lib_Primavera.PriIntegration.ListaClientes();
             bool encontrou = false;
@@ -235,18 +236,18 @@ namespace FirstREST.Controllers
             ViewBag.Password = Password;
 
             if (!encontrou)
-                return View("/Views/Home/Login.cshtml");
+                 Response.Redirect("/Home/Login");
             else
             {
-                Session["username"] = idCli;
-                Session["name"] = Username;
-                return View("/Views/Home/Index.cshtml");
+                Session.Add("username", idCli);
+                Session.Add("name", Username);
+                Response.Redirect("/Home");
             }
         }
 
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult pagamento(string s)
+        public void pagamento(string s)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocVenda  dv = new   Lib_Primavera.Model.DocVenda();
@@ -260,7 +261,7 @@ namespace FirstREST.Controllers
             }
 
 
-            return View("/Views/Home/Index.cshtml");
+            Response.Redirect("/Home/Artigos");
         
         }
 

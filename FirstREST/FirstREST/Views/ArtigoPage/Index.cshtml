@@ -48,13 +48,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <div class="clearfix"></div>
                         </div>
                         <div class="desc1 span_3_of_2">
-                            <h3>@ViewBag.id</h3>
+                            <h3>@ViewBag.model</h3>
                             <p> @ViewBag.preco €</p>
 
 
                             <div class="btn_form">
                                 @if (Session["name"] != null) { 
-                                    <a href="/Home/Carrinho">Buy now</a>}
+                                    <form method="post" action="/Home/POST/addCarrinho">
+                                        <input hidden name="idProduto" type="text" id="idProduto" value="@ViewBag.id" />
+                                        <button class="button1"><span>Add to cart</span></button>
+                                    </form>
+                                }
                                 else
                                 {
                                     <a href="/Home/Login">Login to Buy this Product!</a>}

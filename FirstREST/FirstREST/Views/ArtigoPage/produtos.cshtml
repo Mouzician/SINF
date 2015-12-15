@@ -8,7 +8,7 @@
             <ul class="breadcrumbs">
 
                 <li class="home">
-                    <a href="/Home/POST/Index" title="Go to Home Page"><img src="~/Content/site/images/home.png" alt="" /></a>&nbsp;
+                    <a href="/Home" title="Pagina Inicial"><img src="~/Content/site/images/home.png" alt="" /></a>&nbsp;
                     <span>&gt;</span>
                 </li>
                 <li>
@@ -20,7 +20,7 @@
                 </li>
             </ul>
             <ul class="previous">
-                <li><a href="/Home/POST/Index">Back to Previous Page</a></li>
+                <li><a href="/Home">Página Inicial</a></li>
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -34,7 +34,7 @@
                             <form id="myform" method="post" action="/Home/POST/Filtro">
                                 <input name="categoria" type="hidden" value="@ViewBag.cat" hidden>
                                 <select name="filtro" onchange="change()">
-                                    <option disabled selected> -- select an option -- </option>
+                                    <option disabled selected> -- Ordenar por Preço -- </option>
                                     <option value="caro">Preço: mais caro</option>
                                     <option value="barato">Preço: mais barato</option>
                                 </select>
@@ -88,20 +88,21 @@
             <div class="rsidebar span_1_of_left">
                 <section class="sky-form">
 
-                    <h4>Price range</h4>
+                    <h4>Intervalo de Preço</h4>
 
                     <div class="row row1 scroll-pane">
                         <form class="form-inline" role="form" action="/Home/POST/Filtro2" method="post">
                             <div class="col col-4">
                                 <input name="categoria" type="hidden" value="@ViewBag.cat" hidden>
-                                <label for=fader>Maximum Price</label>
+                                <label for=fader>Preço Máximo</label>
                                 <input type=range name=priceMaximum min=0 max=2000 value=2000 id=fader step=1 oninput="outputUpdateMax(value)">
                                 <output for=fader id=pmax>2000</output>
-                                <label for=fader>Minimum Price</label>
+                                <label for=fader>Preço Mínimo</label>
                                 <input type=range name=priceMinimun min=0 max=2000 value=0 id=fader step=1 oninput="outputUpdateMin(value)">
                                 <output for=fader id=pmin>0</output>
+                                
                                 <div class="form-group">
-                                    <input id="submit" type="submit" value="Submit" class="btn btn-default">
+                                    <input id="submit" type="submit" value="Confirmar" class="btn btn-default">
                                 </div>
                                 <script>
                                     function outputUpdateMin(pmin) {
