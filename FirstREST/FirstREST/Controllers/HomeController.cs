@@ -249,7 +249,7 @@ namespace FirstREST.Controllers
             Lib_Primavera.Model.TDU_CarrinhoProduto carrinhoLinha = new Lib_Primavera.Model.TDU_CarrinhoProduto();
             carrinhoLinha.CDU_idCarrinhoProduto = idCarrinhoProduto;
             carrinhoLinha.CDU_Quantidade = Quantidade;
-            carrinhoLinha.CDU_Armazem = armazem;
+            carrinhoLinha.CDU_Armazem = Armazem;
 
             Lib_Primavera.Model.Carrinho carrinho = Lib_Primavera.PriIntegration.GetCarrinhoUser(Session["username"].ToString());
             carrinhoLinha.CDU_idCarrinho = carrinho.ID;
