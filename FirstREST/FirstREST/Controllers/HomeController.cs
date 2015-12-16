@@ -212,6 +212,7 @@ namespace FirstREST.Controllers
                 List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
                 artigos.OrderByDescending(p => p.ID);
+                artigos.Reverse();
 
                 IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
 
