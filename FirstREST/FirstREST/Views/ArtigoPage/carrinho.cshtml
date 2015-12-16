@@ -33,8 +33,8 @@
                                 <h2 class='item__title'>@cart.Nome</h2>
                                 <p class='item__description'>@cart.DescArtigo</p>
                             </div>
-                            <div class='item__price' id="@cart.Marca + price">@cart.Preço</div>
-                            <input type="hidden" id="@cart.Marca + hide" value="@cart.Preço">
+                            <div class='item__price' id="@cart.Nome + price">@cart.Preço</div>
+                            <input type="hidden" id="@cart.Nome + hide" value="@cart.Preço">
                             <div style="position:absolute;right:40px; top:40px;">
                                 <form action="/Home/POST/removeCarrinho" method="POST">
                                     <input hidden name="idProduto" type="text" id="idProduto" value="@cart.ID" />
@@ -42,14 +42,16 @@
                                 </form>
                             </div>
                         </div>
-                        <form action="/Home/POST/atualizaCarrinho" method="POST">
-                            <input name="idCarrinhoProduto" value="@cart.CDU_idCarrinhoProduto" hidden />
-                            <div class='item__interactions'>
-                                <button class='item-increase' onclick="Increase('span @cart.CDU_idCarrinhoProduto');return false;">+</button>
-                                <button class='item-decrease' onclick="Decrease('span @cart.CDU_idCarrinhoProduto');return false;">-</button>
-                                <span id="span @cart.CDU_idCarrinhoProduto">1</span>
-                                <input id="hidden @cart.CDU_idCarrinhoProduto" name="Quantidade" value="1" hidden />
-                            </div>
+                        
+                        <div class='item__interactions'>
+                            <button class='item-increase' onclick="Increase('@cart.Nome');return false;">+</button>
+                            <button class='item-decrease' onclick="Decrease('@cart.Nome');return false;">-</button>
+                            <span id="@cart.Nome">1</span>
+                        </div>
+                                <form action="/Home/POST/atualizaCarrinho" method="POST">
+                                    <input name="idCarrinhoProduto" value="@cart.CDU_idCarrinhoProduto" hidden />
+                                    <input id="hidden @cart.Nome" name="Quantidade" value="1" hidden />
+                            
                             <select name="Armazem">
                                 @foreach (var armazem in ViewBag.armazens)
                                 {

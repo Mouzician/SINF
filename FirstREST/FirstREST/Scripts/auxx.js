@@ -1,12 +1,16 @@
 function Increase(nome) {
 
+    alert(nome);
     var y = document.getElementById(nome).innerHTML;
-    var eleme = document.getElementById("hidden " +nome);
+    var eleme = document.getElementById("hidden " + nome);
     var z = document.getElementById(nome + " + price").innerHTML;
     var x = document.getElementById(nome + " + hide").value;
 
     document.getElementById(nome).innerHTML = Number(y) + 1;
+    alert(eleme.value);
     eleme.value = Number(y) + 1;
+    alert(eleme.value);
+
     document.getElementById(nome + " + price").innerHTML = Number(z) + Number(x);
 
     var sum = 0;
