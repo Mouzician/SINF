@@ -298,7 +298,7 @@ namespace FirstREST.Controllers
             }
 
 
-            Response.Redirect("/Home/Artigos");
+            Response.Redirect("/Home/Carrinho");
         }
 
         [System.Web.Mvc.HttpPost]

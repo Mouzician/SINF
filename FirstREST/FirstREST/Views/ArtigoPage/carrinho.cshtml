@@ -57,8 +57,12 @@
                             <select name="Armazem">
                                 @foreach (var armazem in ViewBag.armazens)
                                 {
+                                   if (@cart.Armazem == @armazem.ID){
+                                        <option value="@armazem.ID" selected>@armazem.ID - @armazem.Localidade</option>
+                                    }
+                                    else { 
                                     <option value="@armazem.ID">@armazem.ID - @armazem.Localidade</option>
-
+                                    }
                                 }
                             </select>
                             <div style="position:absolute;right:40px; top:80px;">

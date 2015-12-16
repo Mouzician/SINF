@@ -1152,7 +1152,7 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Cliente = objList.Valor("CDU_idCliente").ToString();
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
-                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Quantidade, CDU_idCarrinhoProduto, CDU_Nome, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
+                    objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Armazem, CDU_Quantidade, CDU_idCarrinhoProduto, CDU_Nome, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
                    
 
                     while (!objListCarrinho.NoFim())
@@ -1171,6 +1171,7 @@ namespace FirstREST.Lib_Primavera
                         art.Nome = objListCarrinho.Valor("CDU_Nome");
                         art.CDU_idCarrinhoProduto = objListCarrinho.Valor("CDU_idCarrinhoProduto").ToString();
                         art.Quantidade = objListCarrinho.Valor("CDU_Quantidade").ToString();
+                        art.Armazem = objListCarrinho.Valor("CDU_Armazem").ToString();
                         listArtigos.Add(art);
                         objListCarrinho.Seguinte();
                     }
