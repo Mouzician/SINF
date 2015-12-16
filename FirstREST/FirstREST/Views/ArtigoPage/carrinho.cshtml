@@ -34,6 +34,7 @@
                                 <p class='item__description'>@cart.DescArtigo</p>
                             </div>
                             <div class='item__price' id="@cart.Nome + price">@cart.Preço</div>
+                            <input type="hidden" id="@cart.Nome + price + Quantidade" value="@cart.Quantidade">
                             <input type="hidden" id="@cart.Nome + hide" value="@cart.Preço">
                             <div style="position:absolute;right:40px; top:40px;">
                                 <form action="/Home/POST/removeCarrinho" method="POST">
@@ -46,16 +47,17 @@
                         <div class='item__interactions'>
                             <button class='item-increase' onclick="Increase('@cart.Nome');return false;">+</button>
                             <button class='item-decrease' onclick="Decrease('@cart.Nome');return false;">-</button>
-                            <span id="@cart.Nome">1</span>
+                            <span id="@cart.Nome">@cart.Quantidade</span>
                         </div>
                                 <form action="/Home/POST/atualizaCarrinho" method="POST">
                                     <input name="idCarrinhoProduto" value="@cart.CDU_idCarrinhoProduto" hidden />
                                     <input id="hidden @cart.Nome" name="Quantidade" value="1" hidden />
                             
+                                    <p>Armazem: </p>
                             <select name="Armazem">
                                 @foreach (var armazem in ViewBag.armazens)
                                 {
-                                    <option value="@armazem.ID">@armazem.ID</option>
+                                    <option value="@armazem.ID">@armazem.ID - @armazem.Localidade</option>
 
                                 }
                             </select>

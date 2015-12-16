@@ -1,7 +1,12 @@
-  var sum = 0;
+
+var sum = 0;
        var qt = 0;
-        $('.item__price').each(function(){
-        sum += parseFloat($(this).text());  //Or this.innerHTML, this.innerText
+       $('.item__price').each(function () {
+           console.log($(this).text());
+
+           var nextElement = $(this).next();
+
+           sum += parseFloat($(this).text()) * nextElement.val();  //Or this.innerHTML, this.innerText
     });
 
         $(".sum").text(sum.toFixed(2));
