@@ -1787,7 +1787,7 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                objList = PriEngine.Engine.Consulta("SELECT DISTINCT ARTIGO.Artigo, ArtigoMoeda.Artigo,  CDU_Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo,  CDU_Imagem, PVP1 FROM  ARTIGO, ArtigoMoeda  WHERE ARTIGO.Artigo = ArtigoMoeda.Artigo AND (CDU_Descricao LIKE '%" + id + "%' OR Marca LIKE '%" + id + "%' )");
+                objList = PriEngine.Engine.Consulta("SELECT DISTINCT CDU_Nome, ARTIGO.Artigo, ArtigoMoeda.Artigo,  CDU_Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo,  CDU_Imagem, PVP1 FROM  ARTIGO, ArtigoMoeda  WHERE ARTIGO.Artigo = ArtigoMoeda.Artigo AND (CDU_Descricao LIKE '%" + id + "%' OR Marca LIKE '%" + id + "%' )");
        
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -1805,7 +1805,9 @@ namespace FirstREST.Lib_Primavera
                         SubFamilia = objList.Valor("subfamilia"),
                         Marca = objList.Valor("marca"),
                         Modelo = objList.Valor("modelo"),
-                        CDU_Imagem = objList.Valor("CDU_Imagem")
+                        CDU_Imagem = objList.Valor("CDU_Imagem"),
+                        Nome = objList.Valor("CDU_Nome")
+
                     });
                     objList.Seguinte();
                 }
