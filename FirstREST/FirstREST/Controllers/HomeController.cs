@@ -20,6 +20,14 @@ namespace FirstREST.Controllers
             {
                 if (op_dois == null)
                 {
+                    List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                    artigos.OrderByDescending(p => p.ID);
+
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                    ViewBag.top = temp;
+
 
                     return View("/Views/Home/Index.cshtml");
                 }
@@ -117,8 +125,19 @@ namespace FirstREST.Controllers
             {
 
                 if (Session["username"] == null)
+                {
+
+                    List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                    artigos.OrderByDescending(p => p.ID);
+
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                    ViewBag.top = temp;
                     return View("/Views/Home/Index.cshtml");
 
+
+                }
                 else
                 {
                     string session = Session["username"].ToString();
@@ -140,8 +159,18 @@ namespace FirstREST.Controllers
             {
 
                 if (Session["username"] == null)
+                {
+                    List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                    artigos.OrderByDescending(p => p.ID);
+
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                    ViewBag.top = temp;
                     return View("/Views/Home/Index.cshtml");
 
+
+                }
                 else
                 {
                     string session = Session["username"].ToString();
@@ -182,7 +211,7 @@ namespace FirstREST.Controllers
 
                 List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
 
-                artigos.Sort((y, x) => float.Parse(x.Preço).CompareTo(float.Parse(y.Preço)));
+                artigos.OrderByDescending(p => p.ID);
 
                 IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
 
@@ -195,6 +224,13 @@ namespace FirstREST.Controllers
             else if (op == "Logout")
             {
                 Session.Clear();
+                List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                artigos.OrderByDescending(p => p.ID);
+
+                IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                ViewBag.top = temp;
                 return View("/Views/Home/Index.cshtml");
             }
        
