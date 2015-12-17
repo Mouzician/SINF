@@ -14,7 +14,7 @@
 
     @if (ViewBag.produtos == null)
     {
-        Response.Redirect("/Home/POST/Index");
+        <!--Response.Redirect("/Home/POST/Index");-->
     }
     else
     {
@@ -33,7 +33,7 @@
                                 <h2 class='item__title'>@cart.Nome</h2>
                                 <p class='item__description'>@cart.DescArtigo</p>
                             </div>
-                            <div class='item__price' id="@cart.Nome + price">@cart.Preço</div>
+                            <div class='item__price' id="@cart.Nome + price">@cart.Preço €</div>
                             <input type="hidden" id="@cart.Nome + price + Quantidade" value="@cart.Quantidade">
                             <input type="hidden" id="@cart.Nome + hide" value="@cart.Preço">
                             <div style="position:absolute;right:40px; top:40px;">
@@ -88,15 +88,18 @@
             <li>
                 <b>IVA (23%):</b>
                 <span class='taxes'></span>
+                <b>€</b>
             </li>
         </ul>
         <ul class='checkout'>
             <li>
                 <b>Total:</b>
                 <span class='total js-total' id="checkoutt"></span>
+                <b>€</b>
             </li>
             <li id="checkout-bt">
                 <form action="/Home/POST/pagamento" method="post">
+                    <input hidden name="idCar" type="text" id="idCar" value="@ViewBag.idCar" />
                     <button type="submit" class='button js-checkout-button'>Checkout</button>
                 </form>
             </li>

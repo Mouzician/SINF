@@ -1153,7 +1153,6 @@ namespace FirstREST.Lib_Primavera
                     String idTemp = objList.Valor("CDU_idProduto").ToString();
 
                     objListCarrinho = PriEngine.Engine.Consulta("SELECT CDU_Armazem, CDU_Quantidade, CDU_idCarrinhoProduto, CDU_Nome, ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, CDU_Descricao, Desconto, STKActual, PVP1, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_CarrinhoProduto, ArtigoMoeda WHERE ARTIGO.Artigo = '" + idTemp + "' AND CDU_idProduto = ARTIGO.Artigo AND ARTIGO.Artigo = ArtigoMoeda.Artigo");
-                   
 
                     while (!objListCarrinho.NoFim())
                     {
@@ -1179,8 +1178,6 @@ namespace FirstREST.Lib_Primavera
                     carr.ID_Produtos = listArtigos;
                     objList.Seguinte();
                 }
-
-
 
                 return carr;
 
@@ -1482,6 +1479,52 @@ namespace FirstREST.Lib_Primavera
 
             }
 
+        }
+
+        public static Lib_Primavera.Model.RespostaErro DelAllCarrinho(Model.TDU_CarrinhoProduto carrinho)
+        {
+            StdBELista objList;
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_carrinho = new StdBECamposChave();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_CarrinhoProduto WHERE CDU_idCarrinho = '" + carrinho.CDU_idCarrinho + "'");
+
+                    while (!objList.NoFim())
+                    {
+                        String temp1, temp2, temp3;
+                        temp1 = carrinho.CDU_idCarrinho;
+                        temp2 = objList.Valor("CDU_idCarrinhoProduto").ToString();
+                        temp3 = objList.Valor("CDU_idProduto").ToString();
+                        tdu_carrinho.AddCampoChave("CDU_idCarrinho", carrinho.CDU_idCarrinho);
+                        tdu_carrinho.AddCampoChave("CDU_idCarrinhoProduto", objList.Valor("CDU_idCarrinhoProduto").ToString());
+                        tdu_carrinho.AddCampoChave("CDU_idProduto", objList.Valor("CDU_idProduto").ToString());
+
+                        //se forem so estas as chaves da tabela CarrinhoProduto
+                        PriEngine.Engine.TabelasUtilizador.Remove("TDU_CarrinhoProduto", tdu_carrinho);
+                    }
+                   
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
         }
 
         public static List<Lib_Primavera.Model.Armazem> ListaArmazens()

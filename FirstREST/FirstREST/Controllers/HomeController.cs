@@ -144,13 +144,15 @@ namespace FirstREST.Controllers
 
                     Lib_Primavera.Model.Carrinho cart = Lib_Primavera.PriIntegration.GetCarrinhoUser(session);
 
+                    ViewBag.idCar = cart.ID;
                     ViewBag.owner = cart.ID_Cliente;
                     ViewBag.Nome = Session["name"];
-                    ViewBag.produtos = cart.ID_Produtos;
+                        ViewBag.produtos = cart.ID_Produtos;
 
-                    List<Lib_Primavera.Model.Armazem> listArms = Lib_Primavera.PriIntegration.ListaArmazens();
+                        List<Lib_Primavera.Model.Armazem> listArms = Lib_Primavera.PriIntegration.ListaArmazens();
 
-                    ViewBag.armazens = listArms;
+                        ViewBag.armazens = listArms;
+                   
 
                     return View("/Views/ArtigoPage/carrinho.cshtml");
                 }
@@ -395,7 +397,7 @@ namespace FirstREST.Controllers
 
 
         [System.Web.Mvc.HttpPost]
-        public void pagamento(string s)
+        public void pagamento(string s, string idCar)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             Lib_Primavera.Model.DocVenda  dv = new   Lib_Primavera.Model.DocVenda();
@@ -405,7 +407,9 @@ namespace FirstREST.Controllers
 
             if (erro.Erro == 0)
             {
-                ;
+                Lib_Primavera.Model.TDU_CarrinhoProduto carrinho = new Lib_Primavera.Model.TDU_CarrinhoProduto();
+                carrinho.CDU_idCarrinho = idCar;
+                Lib_Primavera.PriIntegration.DelAllCarrinho(carrinho);
             }
 
 
