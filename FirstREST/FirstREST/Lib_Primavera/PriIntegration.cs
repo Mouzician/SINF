@@ -377,7 +377,7 @@ namespace FirstREST.Lib_Primavera
                     double stokeAtual = objList.Valor("STKActual");
                     myArt.STKActual = stokeAtual.ToString();
                     double preco = objList.Valor("PVP1");
-                    myArt.Preço = preco.ToString();
+                    myArt.Preço = Math.Round(Convert.ToDouble(preco) * 1.23, 2).ToString();
                     myArt.Familia = objList.Valor("Familia");
                     myArt.SubFamilia = objList.Valor("SubFamilia");
                     myArt.Marca = objList.Valor("Marca");
@@ -450,7 +450,7 @@ namespace FirstREST.Lib_Primavera
                     double stokeAtual = objList.Valor("STKActual");
                     myArt.STKActual = stokeAtual.ToString();
                     double preco = objList.Valor("PVP1");
-                    myArt.Preço = preco.ToString();
+                    myArt.Preço = Math.Round(Convert.ToDouble(preco) * 1.23, 2).ToString();
                     myArt.Familia = objList.Valor("Familia");
                     myArt.SubFamilia = objList.Valor("SubFamilia");
                     myArt.Marca = objList.Valor("Marca");
@@ -491,7 +491,7 @@ namespace FirstREST.Lib_Primavera
                     art.DescArtigo = objList.Valor("descricao");
                     art.Desconto = objList.Valor("desconto").ToString();
                     art.STKActual = objList.Valor("stkactual").ToString();
-                    art.Preço = objList.Valor("PVP1").ToString();
+                    art.Preço = Math.Round(Convert.ToDouble(objList.Valor("PVP1")) * 1.23, 2).ToString();
                     art.Familia = objList.Valor("familia");
                     art.SubFamilia = objList.Valor("subfamilia");
                     art.Marca = objList.Valor("marca");
@@ -1837,7 +1837,7 @@ namespace FirstREST.Lib_Primavera
                         Descricao = objList.Valor("CDU_Descricao"),
                         Desconto = objList.Valor("desconto").ToString(),
                         STKActual = objList.Valor("stkactual").ToString(),
-                        Preço = objList.Valor("PVP1").ToString(),
+                        Preço = Math.Round(Convert.ToDouble(objList.Valor("PVP1")) * 1.23, 2).ToString(),
                         Familia = objList.Valor("familia"),
                         SubFamilia = objList.Valor("subfamilia"),
                         Marca = objList.Valor("marca"),

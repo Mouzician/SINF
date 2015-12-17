@@ -82,7 +82,7 @@ namespace FirstREST.Controllers
 
                     ViewBag.id = artigo.ID;
                     ViewBag.model = artigo.Marca;
-                    ViewBag.preco = artigo.Preço;
+                    ViewBag.preco = Math.Round(double.Parse(artigo.Preço) * (1 + 23.0 / 100.0), 2);
                     ViewBag.descricao = artigo.Descricao;
                     ViewBag.stoke = artigo.SubFamilia;
                     ViewBag.imagem = artigo.CDU_Imagem;
