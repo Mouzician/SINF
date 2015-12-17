@@ -11,7 +11,8 @@ namespace FirstREST.Controllers
 {
     public class WishlistController : ApiController
     {
-        // GET api/Wishlist/ALCAD    
+        // GET api/Wishlist/
+    
         public Wishlist Get(string id)
         {
             Lib_Primavera.Model.Wishlist wish = Lib_Primavera.PriIntegration.GetWishlistUser(id);

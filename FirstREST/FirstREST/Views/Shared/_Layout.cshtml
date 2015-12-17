@@ -52,10 +52,10 @@
             <div class="container">
                 <div class="logo">
                     <a href="/Home"><img src="/Content/site/images/logo.png" alt="" /></a>
-                </div>
-                <div class="header-top-right">
-                    <!-- start search-->
+                    
+
                     <div class="search-box">
+
                         <div id="sb-search" class="sb-search">
                             <form method="post" action="/Home/POST/Search">
                                 <input class="sb-search-input" placeholder="Enter your search term..." type="wordsearch" name="wordsearch" id="wordsearch">
@@ -65,16 +65,23 @@
 
                         </div>
                     </div>
-                    <!-- search-scripts -->
-                    <script src="~/Content/site/js/classie.js"></script>
-                    <script src="~/Content/site/js/uisearch.js"></script>
-                    <script>
-                        new UISearch(document.getElementById('sb-search'));
-                    </script>
+                </div>
+                <!-- search-scripts -->
+                <script src="~/Content/site/js/classie.js"></script>
+                <script src="~/Content/site/js/uisearch.js"></script>
+                <script>
+                    new UISearch(document.getElementById('sb-search'));
+                </script>
+
+                <div class="header-top-right">
+
+                    <!-- start search-->
+                  
                     <!-- //search-scripts -->
 
                     <a href="/Home/Carrinho"><i class="cart"></i></a>
-                    <a href="/Home/Encomendas"><i class="cart" style="background: url('/Content/site/images/document.png');"></i></a>
+                    <a href="/Home/Wishlist"><i class="cart" style="background: url('/Content/site/images/document.png');"></i></a>
+                    <a href="/Home/Encomendas"><i class="cart" style="background: url('/Content/site/images/document.png');"></i></a>           
                 </div>
                 <div class="navigation">
                     <div>

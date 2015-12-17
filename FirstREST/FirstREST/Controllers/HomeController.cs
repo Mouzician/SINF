@@ -187,6 +187,38 @@ namespace FirstREST.Controllers
                 }
             }
 
+            else if (op == "Wishlist")
+            {
+
+                if (Session["username"] == null)
+                {
+                    List<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.ListaArtigos();
+
+                    artigos.OrderByDescending(p => p.ID);
+
+                    IEnumerable<Lib_Primavera.Model.Artigo> temp = artigos.Take(3);
+
+                    ViewBag.top = temp;
+                    return View("/Views/Home/Index.cshtml");
+
+
+                }
+                else
+                {
+                    string session = Session["username"].ToString();
+
+                    Lib_Primavera.Model.Wishlist wishlist = Lib_Primavera.PriIntegration.GetWishlistUser(Session["username"].ToString());
+
+                    ViewBag.Nome = Session["name"];
+                    ViewBag.Wishlist = wishlist.ID_Produtos;
+
+
+                    return View("/Views/ArtigoPage/Wishlist.cshtml");
+                }
+            }
+
+
+
             else if (op == "Login")
             {
 
@@ -259,6 +291,26 @@ namespace FirstREST.Controllers
             }
 
             Response.Redirect("/Home/Artigos");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public void addWishlist(string idProduto)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            Lib_Primavera.Model.TDU_WishlistProduto wishlistLinha = new Lib_Primavera.Model.TDU_WishlistProduto();
+            Lib_Primavera.Model.Wishlist Wishlist = new Lib_Primavera.Model.Wishlist();
+            Wishlist = Lib_Primavera.PriIntegration.GetWishlistUser(Session["username"].ToString());
+            wishlistLinha.CDU_idProduto = idProduto;
+            wishlistLinha.CDU_idWishlist = Wishlist.idWishlist;
+
+            erro = Lib_Primavera.PriIntegration.InsereWishlistObj(wishlistLinha);
+
+            if (erro.Erro == 0)
+            {
+                Console.Write(idProduto);
+            }
+
+            Response.Redirect("/Home/Wishlist");
         }
 
         [System.Web.Mvc.HttpPost]

@@ -407,14 +407,14 @@ namespace FirstREST.Lib_Primavera
                     }
 
                  
-                    objWishlist = PriEngine.Engine.Consulta("SELECT * FROM TDU_Wishlist, TDU_WishlistProduto WHERE CDU_idUtilizador ='" + "ALCAD" + "' AND CDU_idProduto='" + myArt.ID + "' AND TDU_Wishlist.CDU_idWishlist = TDU_WishlistProduto.CDU_idWishlist");
+                    /*objWishlist = PriEngine.Engine.Consulta("SELECT * FROM TDU_Wishlist, TDU_WishlistProduto WHERE CDU_idUtilizador ='" + "ALCAD" + "' AND CDU_idProduto='" + myArt.ID + "' AND TDU_Wishlist.CDU_idWishlist = TDU_WishlistProduto.CDU_idWishlist");
                     if (!objWishlist.NoFim())
                     {
                         myArt.Wishlist = "True";
                     }
                     else
                         myArt.Wishlist = "False";
-
+                    */
                     objList.Seguinte();
 
                 }
@@ -1673,21 +1673,23 @@ namespace FirstREST.Lib_Primavera
                     wish.idClient = id_user;
                     wish.idWishlist = objList.Valor("CDU_idWishlist").ToString();
 
-                    objProdutos = PriEngine.Engine.Consulta(" SELECT Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_WishlistProduto WHERE Artigo = CDU_idProduto AND CDU_idWishlist = '" + wish.idWishlist + "'");
+                    objProdutos = PriEngine.Engine.Consulta(" SELECT ARTIGO.Artigo, ArtigoMoeda.Artigo, CDU_Imagem, desconto, STKActual, CDU_Descricao, PVP1, Familia, SubFamilia, Marca, CDU_Nome, Modelo FROM  ARTIGO,ArtigoMoeda, TDU_WishlistProduto WHERE ARTIGO.Artigo = CDU_Produto AND ARTIGO.Artigo = ArtigoMoeda.Artigo AND CDU_Wishlist = '" + wish.idWishlist + "'");      
                     listArtigos = new List<Model.Artigo>();
 
                     while (!objProdutos.NoFim())
                     {
                         art = new Model.Artigo();
                         art.ID = objProdutos.Valor("artigo");
-                        art.DescArtigo = objProdutos.Valor("descricao");
+                        art.DescArtigo = objProdutos.Valor("CDU_Descricao");
                         art.Desconto = objProdutos.Valor("desconto").ToString();
-                        art.STKActual = objProdutos.Valor("stkactual").ToString();
-                        art.Preço = objProdutos.Valor("pcpadrao").ToString();
+                        art.Preço = objProdutos.Valor("PVP1").ToString();
+                        art.STKActual = objProdutos.Valor("STKActual").ToString();
+                        art.CDU_Imagem = objProdutos.Valor("CDU_Imagem");
                         art.Familia = objProdutos.Valor("familia");
                         art.SubFamilia = objProdutos.Valor("subfamilia");
                         art.Marca = objProdutos.Valor("marca");
                         art.Modelo = objProdutos.Valor("modelo");
+                        art.Nome = objProdutos.Valor("cdu_nome");
 
                         listArtigos.Add(art);
                         objProdutos.Seguinte();
@@ -1696,13 +1698,6 @@ namespace FirstREST.Lib_Primavera
                     wish.ID_Produtos = listArtigos;
                     objList.Seguinte();
                 }
-
-                /*
-                 Consulta("SELECT CDU_idCarrinho, CDU_idCliente, CDU_idCarrinhoCompras, Artigo, Descricao, Desconto, STKActual, PCPadrao, Familia, SubFamilia, Marca, Modelo FROM  ARTIGO, TDU_idCarrinhoCompras, TDU_CarrinhoProduto WHERE CDU_idProduto = Artigo");
-
-                 * 
-                 * */
-
 
                 return wish;
 
@@ -1765,23 +1760,22 @@ namespace FirstREST.Lib_Primavera
             {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
-                    objList = PriEngine.Engine.Consulta("SELECT MAX(CDU_idWishlistProduto) AS max FROM TDU_WishlistProduto");
+                    objList = PriEngine.Engine.Consulta("SELECT COUNT(*) AS max FROM TDU_WishlistProduto");
 
                     //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
                     int nextid = 1;
-                    while (!objList.NoFim())
+                    if (objList != null)
                     {
                         nextid += objList.Valor("max");
-
                         objList.Seguinte();
                     }
 
-                    CDU_idWishlist.Nome = "CDU_idWishlist";
+                    CDU_idWishlist.Nome = "CDU_Wishlist";
 
 
                      
-                    CDU_idProduto.Nome = "CDU_idProduto";
-                    CDU_idWishlistProduto.Nome = "CDU_idWishlistProduto";
+                    CDU_idProduto.Nome = "CDU_Produto";
+                    CDU_idWishlistProduto.Nome = "CDU_WishlistProduto";
 
 
 
